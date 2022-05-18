@@ -1,0 +1,38 @@
+#-----------------------------------------------------------------------------------------------------------------
+# Example configuration for adding a S3 artifact account to spinnaker.
+#
+# Documentation: https://docs.armory.io/docs/spinnaker-user-guides/s3-artifacts-use/
+#-----------------------------------------------------------------------------------------------------------------
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  spinnakerConfig: {}
+  expose:
+    type: service
+    service:
+      type: NodePort
+  kustomize:
+    deck:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: deck-tcp
+                port: 443
+                targetPort: 9000
+                nodePort: 30725
+    gate:
+      service:
+        patches:
+        - |
+          spec:
+            type: NodePort
+            ports:
+            - name: gate-tcp
+              port: 443
+              targetPort: 8084
+              nodePort: 31395

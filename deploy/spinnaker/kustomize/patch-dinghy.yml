@@ -1,0 +1,80 @@
+#-----------------------------------------------------------------------------------------------------------------
+# Example configuration for enabling dinghy (pipelines as code stored in source control).
+#
+# Feature documentation: https://docs.armory.io/docs/spinnaker/using-dinghy/
+#-----------------------------------------------------------------------------------------------------------------
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  spinnakerConfig:
+    config:
+      armory:
+        dinghy:
+          enabled: true
+          templateOrg: ChristineZhaoArmory        # SCM organization or namespace where application and template repositories are located
+          templateRepo: dinghy-templates          # SCM repository where module templates are located
+#           fiatUser: dinghy-sa                   # Service account for dinghy to use, required if fiat is enabled
+          # --- github settings
+          # personal token dinghy, repo, workflow, hook
+          githubToken: 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
+          # githubToken: encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token # (Secret). GitHub token
+          githubEndpoint: https://api.github.com                   # (Default: https://api.github.com) Github API endpoint. Useful if you’re using Github Enterprise
+          # --- bitbucket/stash settings
+#          stashUsername: stash_user                                     # Stash username
+#          stashToken: encrypted:k8s!n:spin-secrets!k:bitbucket-password # (Secret). Stash token
+#          stashEndpoint: https://my-endpoint                            # Stash API endpoint. If you're using Bitbucket Server, update the endpoint to include the api e.g. https://your-endpoint-here.com/rest/api/1.0
+          # --- gitlab settings
+#          gitlabToken: encrypted:k8s!n:spin-secrets!k:gitlab-token # (Secret). GitLab token
+#          gitlabEndpoint: https://my-endpoint                      # GitLab endpoint
+          autoLockPipelines: true
+          dinghyFilename: dinghyfile
+          notifiers:
+            slack:
+              enabled: false       # Whether or not Slack notifications are enabled for dinghy events
+              channel: christine-notification-test # Slack channel where notifications will be sent to
+
+          # githubEndpoint: https://api.github.com # (Default: https://api.github.com) GitHub API endpoint. Useful if you’re using GitHub Enterprise
+          # fiatUser: "christine-sa"
+          # notifiers:
+          #   enabled: true         # Enable to allow any notifier type to occur
+          #   slack:
+          #     enabled: true       # Whether or not Slack notifications are enabled for dinghy events
+          #     channel: christine-notification-test # Slack channel where notifications will be sent to
+          #   github:
+          #     enabled: true       # (Default: true) Whether or not github notifications are enabled for Dinghy events, once spec.spinnakerConfig.profles.dinghy.notifiers are enabled   
+          # redis:
+          #   baseUrl: "redis://spin-redis:6379"
+          #   password: "password"
+          #  
+          # baseUrl: mysql:3306
+          # databaseName: dinghy
+          # password: password
+          # user: user
+          # webhookValidationEnabledProviders:
+          # - github
+          # webhookValidations:
+          # - enabled: true
+          #   versionControlProvider: github
+          #   organization: ChristineZhaoArmory
+          #   repo: dinghy-templates
+          #   secret: testSecret # What is the secret ???
+          # - enabled: true
+          #   versionControlProvider: github
+          #   organization: armory
+          #   repo: test-repo
+          #   secret: testSecret
+
+    profiles:
+      dinghy:
+#        parserFormat: hcl   # Must be one of: hcl, yaml, json. Use an alternate format for dinghy files.
+        # Custom branch configuration (see https://docs.armory.io/docs/spinnaker/install-dinghy/#custom-branch-configuration)
+        repoConfig:
+          - branch: main
+            provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
+            repo: dinghy-templates
+        # Use an external redis instance (recommended for production)
+#        redis:
+#          baseUrl: "redis://redis.myorg:6379"
+#          password: encrypted:k8s!n:spin-secrets!k:redis-password

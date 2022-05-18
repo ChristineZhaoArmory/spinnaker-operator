@@ -13,7 +13,7 @@ spec:
     #   - Use the | YAML symbol to indicate a block-style multiline string
     #   - We currently only support string files
     #   - NOTE: Kubernetes has a manifest size limitation of 1MB
-    files:
+    files: {}
 #      profiles__rosco__packer__example-packer-config.json: |
 #        {
 #          "packerSetting": "someValue"

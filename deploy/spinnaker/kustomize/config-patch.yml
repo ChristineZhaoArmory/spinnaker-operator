@@ -7,9 +7,89 @@ spec:
   spinnakerConfig:
   # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.15.0  # the version of Spinnaker to be deployed
+      version: 2.27.3  # the version of Spinnaker to be deployed
+      artifacts:
+        gitrepo:
+          enabled: true
+          accounts:
+            - name: AT_GitRepo
+              username: ChristineZhaoArmory                # Git username.
+              token: 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
+        github:
+          enabled: true
+          accounts:
+            - name: AT_Github
+              username: ChristineZhaoArmory                # Git username.
+              token: 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
+        s3:
+          enabled: true
+          accounts:
+          - name: AT_S3
+            region: us-east-2
+            awsAccessKeyId: ASIA3ZQRIGO2IAYHKOVJ
+            awsSecretAccessKey: KLsX7s6fdk8+YEGFuD2VA4wkJ7Pl/Sqhlo2n25mQ
       persistentStorage:
         persistentStoreType: s3
         s3:
-          bucket: mybucket
+          bucket: christine-zhao-3
           rootFolder: front50
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://christine-spin-gate.tse-armory.io  # Specify your DNS name for Gate with https scheme
+        uiSecurity:
+          overrideBaseUrl: https://christine-spin-deck.tse-armory.io       # Specify your DNS name for Deck with https scheme
+        authn:
+          oauth2:
+            enabled: true
+            client:
+              clientId: f074440fd5b990f4aca0
+              clientSecret: encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token
+              userAuthorizationUri: https://github.com/login/oauth/authorize
+              scope: user:org,user:email
+              preEstablishedRedirectUri: https://christine-spin-gate.tse-armory.io/login
+            provider: GITHUB
+      providers:
+        kubernetes:
+          enabled: true
+          accounts:
+          - name: christine-sa
+            requiredGroupMembership: []
+            providerVersion: V2
+            permissions: {}
+            dockerRegistries: []
+            configureImagePullSecrets: true
+            cacheThreads: 1
+            namespaces: []
+            omitNamespaces: []
+            kinds: []
+            omitKinds: []
+            customResources: []
+            cachingPolicies: []
+            oAuthScopes: []
+            onlySpinnakerManaged: true
+            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+          primaryAccount: christine-sa
+      deploymentEnvironment:
+        customSizing:
+          echo:
+            limits:
+              cpu: 250m
+            # memory: 512Mi
+            # requests:
+            #   cpu: 100m
+            #   memory: 128Mi
+          spin-clouddriver:
+            # sreplicas: 2
+            limits:
+              # cpu: 600m
+              memory: 3Gi
+            # requests:
+            #   cpu: 250m
+            #   memory: 512Mi
+          clouddriver:
+            limits:
+              # cpu: 801m
+              memory: 2Gi
+            # requests:
+            #   cpu: 250m
+            #   memory: 512Mi
