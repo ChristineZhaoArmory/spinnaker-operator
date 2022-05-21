@@ -10,5 +10,5 @@ patchesStrategicMerge:
 - service-patch.yml
 
 # Armory features
-#- patch-dinghy.yml         # Store spinnaker pipelines as code under source control
-#- patch-terraformer.yml    # Store infrastructure as code under source control
+- patch-dinghy.yml         # Store spinnaker pipelines as code under source control
+- patch-terraformer.yml    # Store infrastructure as code under source control

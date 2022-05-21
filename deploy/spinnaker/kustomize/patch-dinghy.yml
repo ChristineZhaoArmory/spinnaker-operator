@@ -32,7 +32,7 @@ spec:
           dinghyFilename: dinghyfile
           notifiers:
             slack:
-              enabled: false       # Whether or not Slack notifications are enabled for dinghy events
+              enabled: true       # Whether or not Slack notifications are enabled for dinghy events
               channel: christine-notification-test # Slack channel where notifications will be sent to
 
           # githubEndpoint: https://api.github.com # (Default: https://api.github.com) GitHub API endpoint. Useful if you’re using GitHub Enterprise

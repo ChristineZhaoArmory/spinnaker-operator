@@ -14,20 +14,20 @@ spec:
           accounts:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
-              token: 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
+              token: encrypted:k8s!n:spin-secrets!k:github-token
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
-              token: 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
-        s3:
-          enabled: true
-          accounts:
-          - name: AT_S3
-            region: us-east-2
-            awsAccessKeyId: ASIA3ZQRIGO2IAYHKOVJ
-            awsSecretAccessKey: KLsX7s6fdk8+YEGFuD2VA4wkJ7Pl/Sqhlo2n25mQ
+              token: encrypted:k8s!n:spin-secrets!k:github-token
+        # s3:
+        #   enabled: true
+        #   accounts:
+        #   - name: AT_S3
+        #     region: us-east-2
+        #     awsAccessKeyId: ASIA3ZQRIGO2HPDJUWHD
+        #     awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
       persistentStorage:
         persistentStoreType: s3
         s3:
@@ -93,3 +93,6 @@ spec:
             # requests:
             #   cpu: 250m
             #   memory: 512Mi
+      armory:
+        terraform:
+          enabled: true

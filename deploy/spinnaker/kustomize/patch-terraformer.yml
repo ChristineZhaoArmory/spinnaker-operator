@@ -15,14 +15,14 @@ spec:
       armory:
         terraform:
           enabled: true
-      artifacts:
-        # Gitrepo support, so that terraformer downloads terraform scripts from git repositories
-        gitrepo:
-          enabled: true
-          accounts:
-            - name: gitrepo
-              username: ChristineZhaoArmory                # Git username.
-              token: encrypted:k8s!n:spin-secrets!k:github-token # (Secret). Git token.
+      # artifacts:
+      #   # Gitrepo support, so that terraformer downloads terraform scripts from git repositories
+      #   gitrepo:
+      #     enabled: true
+      #     accounts:
+      #       - name: gitrepo
+      #         username: ChristineZhaoArmory                # Git username.
+      #         token: encrypted:k8s!n:spin-secrets!k:github-token # (Secret). Git token.
 #              password: xyz                    # (Secret). Git password.
 #              tokenFile: token.txt             # (Secret). File containing a Git authentication token. File needs to be present on the machine running Spinnaker.
 #              usernamePasswordFile: creds.txt  # (Secret). File containing “username:password” to use for GitHub authentication. File needs to be present on the machine running Spinnaker.
@@ -49,7 +49,7 @@ spec:
               - kind: static
                 options:
                   name: AWS_ACCESS_KEY_ID
-                  value: ASIA3ZQRIGO2NNIHB5OZ
+                  value: ASIA3ZQRIGO2HPDJUWHD
               - kind: static
                 options:
                   name: AWS_SECRET_ACCESS_KEY
