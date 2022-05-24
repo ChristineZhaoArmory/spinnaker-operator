@@ -1,0 +1,48 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker  # name doesn't matter since this is a patch
+spec:
+  # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  spinnakerConfig:
+    # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
+    profiles:
+      clouddriver: # is the contents of ~/.hal/default/profiles/clouddriver.yml
+        serviceLimits:
+          defaults:
+          rateLimit: 10.0
+        sql:
+          enabled: true
+          read-only: false 
+          taskRepository:
+            enabled: true
+          cache:
+            enabled: true
+            readBatchSize: 500
+            writeBatchSize: 300
+          scheduler:
+            enabled: true
+          unknown-agent-cleanup-agent:
+            enabled: false
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              user: clouddriver_service
+              password: armory
+            tasks:
+              user: clouddriver_service
+              jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              password: armory
+          migration:
+            user: clouddriver_migrate
+            jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+            password: armory
+        redis:
+          enabled: false
+          cache:
+            enabled: false
+          scheduler:
+            enabled: false
+          taskRepository:
+            enabled: false
