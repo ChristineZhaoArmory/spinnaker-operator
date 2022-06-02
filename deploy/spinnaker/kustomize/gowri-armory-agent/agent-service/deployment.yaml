@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: armory-agent
+    app.kubernetes.io/name: armory-agent
+    app.kubernetes.io/part-of: spinnaker
+  name: armory-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: armory-agent
+  template:
+    metadata:
+      labels:
+        app: armory-agent
+        app.kubernetes.io/name: armory-agent
+        app.kubernetes.io/part-of: spinnaker
+    spec:
+      containers:
+      - image: armory/agent-k8s:1.0.22
+        imagePullPolicy: IfNotPresent
+        name: armory-agent
+        ports:
+          - name: health
+            containerPort: 8082
+            protocol: TCP
+          - name: metrics
+            containerPort: 8008
+            protocol: TCP
+        readinessProbe:
+          httpGet:
+            port: health
+            path: /health
+          failureThreshold: 3
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/armory/config
+          name: volume-agent-config
+        - mountPath: /kubeconfigfiles
+          name: volume-agent-kubeconfigs
+      restartPolicy: Always
+      volumes:
+      - name: volume-agent-config
+        configMap:
+          name: agent-config
+      - name: volume-agent-kubeconfigs
+        secret:
+          defaultMode: 420
+          secretName: kubeconfigs-secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: armory-agent-metrics
+  labels:
+    app: armory-agent
+spec:
+  ports:
+  - name: metrics
+    port: 8008
+    targetPort: metrics
+    protocol: TCP
+  selector:
+    app: armory-agent

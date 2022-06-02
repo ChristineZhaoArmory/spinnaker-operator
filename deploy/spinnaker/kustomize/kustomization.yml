@@ -1,13 +1,31 @@
 resources:
 - SpinnakerService.yml
+- k8s-sql-debug.yml
+- armory-agent/service.clouddriver.yml
+
+#- spin-agent-clouddriver.yml  # agent step 2: This create spin-clouddriver-gRPC service to acconnect clouddriver plugin
+# move spin-agent-clouddriver to armory-agent/kustomization.yaml
+
+#- armory-agent/role-binding.yml # agent step 3: This create serviceaccount christine-agent-na in christine-agent namespace
+# move spin-agent-clouddriver to armory-agent/kustomization.yaml
+
+#- armory-agent/configmap.yml # This is defined in armory-agent/kustomization.yaml
+# move spin-agent-clouddriver to armory-agent/kustomization.yaml
+
+#- monitor_from_austin.yml
 
 # Apply the patches top down order
 patchesStrategicMerge:
 - config-patch.yml
 - profiles-patch.yml
+- profile-clouddriver.yml
+- notifications/patch-email.yml
 - files-patch.yml
 - service-settings-patch.yml
 - service-patch.yml
+- armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
+#- plugin-observability.yml
+#- monitor_from_austin.yml
 
 # Armory features
 - patch-dinghy.yml         # Store spinnaker pipelines as code under source control

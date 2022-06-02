@@ -39,7 +39,7 @@ spec:
             jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
             password: armory
         redis:
-          enabled: false
+          enabled: true # Christine- 2022-05-31 change from false to true
           cache:
             enabled: false
           scheduler:

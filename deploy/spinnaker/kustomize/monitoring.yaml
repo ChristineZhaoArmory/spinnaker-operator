@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: spinnaker-all-metrics
+  namespace: christine-zhao
+  labels:
+    app: spin
+    release: prometheus-operator-7649c7454f
+spec:
+  selector:
+    matchLabels:
+      app: spin
+  endpoints:
+  - interval: 10s
+    path: "/aop-prometheus"

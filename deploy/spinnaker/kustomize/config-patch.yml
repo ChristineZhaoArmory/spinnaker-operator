@@ -60,7 +60,7 @@ spec:
             configureImagePullSecrets: true
             cacheThreads: 1
             namespaces: []
-            omitNamespaces: []
+            omitNamespaces: [default,meghu-spinnaker]
             kinds: []
             omitKinds: []
             customResources: []
@@ -79,20 +79,30 @@ spec:
             #   cpu: 100m
             #   memory: 128Mi
           spin-clouddriver:
-            # sreplicas: 2
+            sreplicas: 2
             limits:
               # cpu: 600m
-              memory: 3Gi
+            #  memory: 3Gi
             # requests:
             #   cpu: 250m
             #   memory: 512Mi
           clouddriver:
             limits:
               # cpu: 801m
-              memory: 2Gi
+            #  memory: 2Gi
             # requests:
             #   cpu: 250m
             #   memory: 512Mi
       armory:
         terraform:
           enabled: true
+
+        # christine- 2022-05-31 below is enable diagnostics and logging
+        # https://docs.armory.io/armory-enterprise/armory-admin/observe/diagnostics-configure/
+        # diagnostics:
+        #   enabled:    true
+        #   uuid:       # Enter uniquely Generated UUID
+        #   logging:
+        #     enabled:    # true/false to enable
+        #     endpoint:   # Enter Endpoint, e.g. https://debug.armory.io/v1/logs
+        # christine- 2022-05-31 above is enable diagnostics and logging

@@ -16,6 +16,10 @@ spec:
         # settings-local.js - contents of ~/.hal/default/profiles/settings-local.js
         # Use the | YAML symbol to indicate a block-style multiline string
         settings-local.js: |
+          window.spinnakerSettings = window.spinnakerSettings || {};
+          window.spinnakerSettings.notifications = window.spinnakerSettings.notifications || {};
+          window.spinnakerSettings.notifications.email = window.spinnakerSettings.notifications.email || {};
+          window.spinnakerSettings.notifications.email.enabled = true;
           window.spinnakerSettings.feature.kustomizeEnabled = true;
           window.spinnakerSettings.feature.artifactsRewrite = true;
           window.spinnakerSettings.feature.terraform = true;
