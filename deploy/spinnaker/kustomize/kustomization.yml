@@ -3,6 +3,9 @@ resources:
 - k8s-sql-debug.yml
 - armory-agent/service.clouddriver.yml
 
+- armory-agent/agent.configmap.yml
+- armory-agent/agent.deployment.yml
+
 #- spin-agent-clouddriver.yml  # agent step 2: This create spin-clouddriver-gRPC service to acconnect clouddriver plugin
 # move spin-agent-clouddriver to armory-agent/kustomization.yaml
 

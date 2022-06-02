@@ -1,0 +1,56 @@
+[
+    {
+      "deployManifest": {
+        "account": "christine-sa",
+        "enableTraffic": true,
+        "optionalArtifacts": [],
+        "cloudProvider": "kubernetes",
+        "trafficManagement": {
+          "options": {
+            "enableTraffic": false
+          },
+          "enabled": false
+        },
+        "moniker": {
+          "app": "test"
+        },
+        "source": "text",
+        "skipExpressionEvaluation": true,
+        "requiredArtifacts": [],
+        "manifests": [
+          {
+            "apiVersion": "apps/v1",
+            "kind": "Deployment",
+            "metadata": {
+              "name": "nginx",
+              "namespace": "spin-agent"
+            },
+            "spec": {
+              "replicas": 2,
+              "selector": {
+                "matchLabels": {
+                  "app": "nginx"
+                }
+              },
+              "template": {
+                "metadata": {
+                  "labels": {
+                    "app": "nginx"
+                  }
+                },
+                "spec": {
+                  "containers": [
+                    {
+                      "image": "nginx:1.14.2",
+                      "imagePullPolicy": "IfNotPresent",
+                      "name": "nginx"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    }
+  ]

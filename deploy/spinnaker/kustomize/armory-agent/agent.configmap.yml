@@ -17,7 +17,7 @@ data:
         # oAuthScopes:
         # serviceAccount: true
         # serviceAccountName: christine-spin-sa
-        # namespaces: []
+        # namespaces: [spin-agent,christine-agent]
         # omitNamespaces: []
         # onlyNamespacedResources:
         kinds: []

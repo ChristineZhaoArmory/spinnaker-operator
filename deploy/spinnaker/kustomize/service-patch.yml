@@ -22,7 +22,7 @@ spec:
               type: NodePort
               ports:
               - name: deck-tcp
-                port: 443
+                port: 9000
                 targetPort: 9000
                 nodePort: 30725
     gate:
@@ -33,6 +33,6 @@ spec:
             type: NodePort
             ports:
             - name: gate-tcp
-              port: 443
+              port: 8084
               targetPort: 8084
               nodePort: 31395
