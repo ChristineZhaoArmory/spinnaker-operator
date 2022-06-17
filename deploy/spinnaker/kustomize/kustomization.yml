@@ -17,6 +17,8 @@ resources:
 
 #- monitor_from_austin.yml
 
+#- infrastructure/opa.yml
+
 # Apply the patches top down order
 patchesStrategicMerge:
 - config-patch.yml
@@ -33,3 +35,11 @@ patchesStrategicMerge:
 # Armory features
 - patch-dinghy.yml         # Store spinnaker pipelines as code under source control
 - patch-terraformer.yml    # Store infrastructure as code under source control
+- patch-policy-and-agent-plugins.yml # Added 2022-06-13 for policy engine
+
+# configMapGenerator:  # Added 2022-06-13 for policy engine
+#   # ConfigMap holding OPA policy definitions to use by Armory's policy engine. Required by patch-policyengine.yml
+#   - name: spin-policies
+#     files:
+#     - policies/pipelinepersistance.rego
+#     - policies/manual-judgement.rego

@@ -21,12 +21,13 @@ spec:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
               token: encrypted:k8s!n:spin-secrets!k:github-token
+        # christine- 2022-06-13 have problem. Need check later
         # s3:
         #   enabled: true
         #   accounts:
         #   - name: AT_S3
         #     region: us-east-2
-        #     awsAccessKeyId: ASIA3ZQRIGO2HPDJUWHD
+        #     awsAccessKeyId: ASIA3ZQRIGO2LOT4OUGH
         #     awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
       persistentStorage:
         persistentStoreType: s3

@@ -36,7 +36,7 @@ spec:
                 spec:
                   initContainers:
                   - name: armory-agent-plugin
-                    image: docker.io/armory/kubesvc-plugin:0.10.37 # must be compatible with your Armory Enterprise version
+                    image: docker.io/armory/kubesvc-plugin:0.10.38 # must be compatible with your Armory Enterprise version
                     volumeMounts:
                       - mountPath: /opt/plugin/target
                         name: armory-agent-plugin-vol
