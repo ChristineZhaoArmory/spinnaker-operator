@@ -16,7 +16,7 @@ spec:
       spinnaker:
         armory:
           policyEngine:
-            #failOpen: true
+            failOpen: true # Christine 2022-06-17 Default is false, so turn it on to PASS PolicyEngine
             opa:
               # Replace with the actual URL to your Open Policy Agent deployment
               baseUrl: http://opa.opa.svc.cluster.local:8181/v1/data  # This is opa deployment in namespace opa
@@ -36,19 +36,33 @@ spec:
             plugins:
               Armory.PolicyEngine:
                 enabled: true
+                version: 0.2.1
             deck-proxy:
               enabled: true
               plugins:
-                Armory.PolicyEngine:
+                Armory.RandomWaitPlugin:
                   enabled: true
-                  version: 0.2.1
+                  version: 1.2.1
+            repositories:
+              examplePluginsRepo:
+                url: https://raw.githubusercontent.com/spinnaker-plugin-examples/examplePluginRepository/master/plugins.json
       orca:
         spinnaker:
           extensibility:
             plugins:
               Armory.PolicyEngine:
                 enabled: true
-
+              Armory.CustomArtifact:
+                enabled: true
+              Armory.RandomWaitPlugin:
+                enabled: true
+                version: 1.2.1
+                config:
+                  defaultMaxWaitTime: 15
+            repositories:
+              examplePluginsRepo:
+                id: examplePluginsRepo
+                url: https://raw.githubusercontent.com/spinnaker-plugin-examples/examplePluginRepository/master/plugins.json
       front50:
         spinnaker:
           extensibility:
