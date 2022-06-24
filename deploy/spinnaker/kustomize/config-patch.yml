@@ -32,8 +32,9 @@ spec:
       persistentStorage:
         persistentStoreType: s3
         s3:
-          bucket: christine-zhao-3
+          bucket: christine-zhao-s3
           rootFolder: front50
+          region: us-east-2
       security:
         apiSecurity:
           overrideBaseUrl: https://christine-spin-gate.tse-armory.io  # Specify your DNS name for Gate with https scheme

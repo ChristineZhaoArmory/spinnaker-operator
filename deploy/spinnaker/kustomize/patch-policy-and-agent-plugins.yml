@@ -27,7 +27,7 @@ spec:
           extensibility:
             repositories:
               policyEngine:
-                enabled: true
+                enabled: false
                 # The init container will install plugins.json to this path.
                 url: https://raw.githubusercontent.com/armory-plugins/policy-engine-releases/master/repositories.json
       gate:
@@ -35,8 +35,8 @@ spec:
           extensibility:
             plugins:
               Armory.PolicyEngine:
-                enabled: true
-                version: 0.2.1
+                enabled: false
+                version: 0.2.2
             deck-proxy:
               enabled: true
               plugins:
@@ -51,7 +51,7 @@ spec:
           extensibility:
             plugins:
               Armory.PolicyEngine:
-                enabled: true
+                enabled: false
               Armory.CustomArtifact:
                 enabled: true
               Armory.RandomWaitPlugin:
@@ -68,7 +68,7 @@ spec:
           extensibility:
             plugins:
               Armory.PolicyEngine:
-                enabled: true
+                enabled: false
 
       clouddriver:
         spinnaker:
@@ -78,7 +78,7 @@ spec:
               Armory.Kubesvc:
                 enabled: true
               Armory.PolicyEngine:
-                enabled: true
+                enabled: false
         
         kubesvc:
           cluster: kubernetes

@@ -25,7 +25,7 @@ spec:
           accounts:
           - name: s3bucket
             bucket: spinnaker
-            #region: us-west-2
+            region: us-east-2
             rootFolder: kayenta
             accessKeyId: minio  # (Optional). Your AWS Access Key ID. If not provided, Operator/Spinnaker will try to find AWS credentials as described at http://docs.aws.amazon.com/sdk-for-java/v1/developer-guide/credentials.html#credentials-default
             secretAccessKey: encrypted:k8s!n:spin-secrets!k:minioAccessKey

@@ -37,6 +37,8 @@ patchesStrategicMerge:
 - patch-terraformer.yml    # Store infrastructure as code under source control
 - patch-policy-and-agent-plugins.yml # Added 2022-06-13 for policy engine
 
+- patch-startupprobes.yml
+
 # configMapGenerator:  # Added 2022-06-13 for policy engine
 #   # ConfigMap holding OPA policy definitions to use by Armory's policy engine. Required by patch-policyengine.yml
 #   - name: spin-policies
