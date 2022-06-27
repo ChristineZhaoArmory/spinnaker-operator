@@ -22,13 +22,11 @@ spec:
               username: ChristineZhaoArmory                # Git username.
               token: encrypted:k8s!n:spin-secrets!k:github-token
         # christine- 2022-06-13 have problem. Need check later
-        s3:
-          enabled: true
-          accounts:
-          - name: AT_S3
-            region: us-east-2
-          - name: us_east_1_S3
-            region: us-east-1
+        # s3:
+        #   enabled: true
+        #   accounts:
+        #   - name: AT_S3
+        #     region: us-east-2
         #     awsAccessKeyId: ASIA3ZQRIGO2LOT4OUGH
         #     awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
       persistentStorage:
@@ -54,30 +52,29 @@ spec:
             provider: GITHUB
       providers:
         kubernetes:
-          enabled: true
           accounts:
-          - name: christine-sa
-            requiredGroupMembership: []
-            providerVersion: V2
-            permissions: {}
-            dockerRegistries: []
-            configureImagePullSecrets: true
-            cacheThreads: 1
-            namespaces: []
-            omitNamespaces: [default,meghu-spinnaker]
-            kinds: []
-            omitKinds: []
-            customResources: []
-            cachingPolicies: []
-            oAuthScopes: []
-            onlySpinnakerManaged: true
-            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
-          primaryAccount: christine-sa
+            - cacheThreads:  1
+              cachingPolicies: []
+              configureImagePullSecrets:  true
+              customResources: []
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              name: shlomo-da
+              namespaces: []
+              oAuthScopes: []
+              omitKinds:  []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              providerVersion: V2
+              requiredGroupMembership: []
+          enabled: true
+          primaryAccount: shlomo-da
         aws:
           accounts:
           - accountId: ‘810711266228’
             providerVersion: V1
-            name: christine-aws
+            name: shlomo-aws
             regions:
             - name: us-east-2
             - name: us-east-1
@@ -114,7 +111,7 @@ spec:
           features:
             cloudFormation:
               enabled: true
-          primaryAccount: christine-aws
+          primaryAccount: shlomo-aws
       deploymentEnvironment:
         customSizing:
           echo:

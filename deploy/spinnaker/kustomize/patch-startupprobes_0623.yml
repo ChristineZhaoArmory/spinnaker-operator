@@ -4,6 +4,11 @@ metadata:
   name: spinnaker
 spec:
   # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  expose:
+      service:
+        overrides: {}
+        type: NodePort
+      type: service
   kustomize:
       gate:
         deployment:
@@ -17,7 +22,12 @@ spec:
                       startupProbe:
                         exec:
                           command:
-                          - "true"
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8084/health
+                        initialDelaySeconds: 100
                         failureThreshold: 300
                         periodSeconds: 10
                         successThreshold: 1
@@ -33,8 +43,13 @@ spec:
                     - name: clouddriver
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:7002/health
+                        initialDelaySeconds: 600
                         failureThreshold: 30
                         periodSeconds: 10
                         successThreshold: 1
@@ -50,8 +65,13 @@ spec:
                     - name: echo
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8089/health
+                        initialDelaySeconds: 600
                         failureThreshold: 30
                         periodSeconds: 10
                         successThreshold: 1
@@ -67,8 +87,13 @@ spec:
                     - name: fiat
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:7003/health
+                        initialDelaySeconds: 600
                         failureThreshold: 30
                         periodSeconds: 10
                         successThreshold: 1
@@ -84,8 +109,13 @@ spec:
                     - name: front50
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8080/health
+                        initialDelaySeconds: 600
                         failureThreshold: 30
                         periodSeconds: 10
                         successThreshold: 1
@@ -101,8 +131,13 @@ spec:
                     - name: igor
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8088/health
+                        initialDelaySeconds: 600
                         failureThreshold: 30
                         periodSeconds: 10
                         successThreshold: 1
@@ -118,8 +153,13 @@ spec:
                     - name: orca
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8083/health
+                        initialDelaySeconds: 100
                         failureThreshold: 300
                         periodSeconds: 10
                         successThreshold: 1
@@ -135,43 +175,14 @@ spec:
                     - name: rosco
                       startupProbe:
                         exec:
-                            command:
-                            - "true"
+                          command:
+                          - wget
+                          - --no-check-certificate
+                          - --spider
+                          - -q
+                          - http://localhost:8087/health
+                        initialDelaySeconds: 100
                         failureThreshold: 300
                         periodSeconds: 10
                         successThreshold: 1
                         timeoutSeconds: 1  
-      dinghy:
-        deployment:
-          patchesStrategicMerge:
-            - |
-              spec:
-                template:
-                  spec:
-                   containers:
-                    - name: dinghy
-                      startupProbe:
-                        exec:
-                            command:
-                            - "true"
-                        failureThreshold: 300
-                        periodSeconds: 10
-                        successThreshold: 1
-                        timeoutSeconds: 1   
-      terraformer:
-        deployment:
-          patchesStrategicMerge:
-            - |
-              spec:
-                template:
-                  spec:
-                   containers:
-                    - name: terraformer
-                      startupProbe:
-                        exec:
-                            command:
-                            - "true"
-                        failureThreshold: 300
-                        periodSeconds: 10
-                        successThreshold: 1
-                        timeoutSeconds: 1 
