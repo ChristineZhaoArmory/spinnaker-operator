@@ -31,6 +31,8 @@ patchesStrategicMerge:
 - armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
 #- plugin-observability.yml
 #- monitor_from_austin.yml
+- patch-dockerhub.yml
+- patch-external-authz.yml
 
 # Armory features
 - patch-dinghy.yml         # Store spinnaker pipelines as code under source control

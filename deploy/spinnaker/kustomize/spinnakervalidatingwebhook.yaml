@@ -1,0 +1,65 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: "2020-03-05T00:43:24Z"
+  generation: 240
+  name: spinnakervalidatingwebhook
+  resourceVersion: "491997561"
+  uid: 522f1b77-5e7a-11ea-a27a-025886230e9e
+webhooks:
+- admissionReviewVersions:
+  - v1beta1
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMzakNDQWNhZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFnTVI0d0hBWURWUVFERXhWemNHbHUKYm1GclpYSXRiM0JsY21GMGIzSXRZMkV3SGhjTk1qSXdOakl6TVRJMU5ESTRXaGNOTXpJd05qSXdNVEkxTkRJNApXakFnTVI0d0hBWURWUVFERXhWemNHbHVibUZyWlhJdGIzQmxjbUYwYjNJdFkyRXdnZ0VpTUEwR0NTcUdTSWIzCkRRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQzFaQ2NwdVJ4QkhFZ2dvQjM5NW1udHVGNXBkb3pqTldkbGxXaHcKbWNjUWtVWCt0TDh5S2dqWGpjUFNXN2ZHUlg3YmdNYmtNVXBkRmpDeUo3NU11cDBkMXFCUXdBOXJIYWJaR0I0ZQo1ZjZ6RHFrcDA0U2taTkdqNjVMRlZXSGcyTkVxZVQ5eDlWK3pna1MyTS9ZVzNESTMrelQveWs2eUNxUFhMV0pHCnVvc3Bpa3kxbHlLVEV3aTIwbWgzdWNTT3RSdjlGc1dTVDM2NFl0Z28wNTVONjBYZUpGZHBGRlRXRjRLUEpzM3YKK0IwWmlnZDlmbnNRRWZ3SWNObmwrcHpHdTFZWWd2VktOc2F1Yjl4bzhkcEMyRHdDRkJpWnY0SHBBek1JRm1xRAo0alplSExpVWUrSnhEejRUV0dESmF4QmU3eGlORHN2N3J1RE1MVEozOTFsVUhCdEZBZ01CQUFHakl6QWhNQTRHCkExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUIKQVFBcXZWQ2V0NTMrdi9hVitZUHhXc1lQbFc2S283WElzTHFaekxLYXUycmV3N0xKL2hPT2N2QkFYU1ZmTTZzTQpnS0ZKd01qWUV3dVArR0luTElEUERBcjZmajQrVnAxUmxkSmExeEFVQ3JRL2VZWnVwL2ZPUWl6UHJ3RTRmcUh2CitVS3AwQkw0cSsvMk1ZSStkb0RVd09nYStaU3dEYktTV1AvWE8yV20vZVV4ak8zaWY0TlZXeUMvNUpsenp2WVYKcTRFUkJWMHhRVVpDcDlYc3J1SHBTL2NqVWN0cE9SRUQvZnlhbFhuMGhYTUxBakFIQVI5QVIrakIvSVIvUXNRRgo2WERvQmo1L21xVDZJTmc3enQxa25JSUJHeHh2V2g1VUxpMWFUMzZhR3pIZ0JTdHJsUHQ2RGI2WGRYNERvanF0CnhGejNKbThNVzg1Q1BtZ0RJbGhPUFJOVgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    service:
+      name: spinnaker-operator
+      namespace: armory-operator
+      path: /validate-spinnaker-armory-io-v1alpha2-spinnakerservice
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: webhook-spinnakerservices-v1alpha2.spinnaker.armory.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - spinnaker.armory.io
+    apiVersions:
+    - v1alpha2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - spinnakerservices
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
+- admissionReviewVersions:
+  - v1beta1
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUMzakNDQWNhZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFnTVI0d0hBWURWUVFERXhWemNHbHUKYm1GclpYSXRiM0JsY21GMGIzSXRZMkV3SGhjTk1qSXdOakl6TVRJMU5ESTRXaGNOTXpJd05qSXdNVEkxTkRJNApXakFnTVI0d0hBWURWUVFERXhWemNHbHVibUZyWlhJdGIzQmxjbUYwYjNJdFkyRXdnZ0VpTUEwR0NTcUdTSWIzCkRRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQzFaQ2NwdVJ4QkhFZ2dvQjM5NW1udHVGNXBkb3pqTldkbGxXaHcKbWNjUWtVWCt0TDh5S2dqWGpjUFNXN2ZHUlg3YmdNYmtNVXBkRmpDeUo3NU11cDBkMXFCUXdBOXJIYWJaR0I0ZQo1ZjZ6RHFrcDA0U2taTkdqNjVMRlZXSGcyTkVxZVQ5eDlWK3pna1MyTS9ZVzNESTMrelQveWs2eUNxUFhMV0pHCnVvc3Bpa3kxbHlLVEV3aTIwbWgzdWNTT3RSdjlGc1dTVDM2NFl0Z28wNTVONjBYZUpGZHBGRlRXRjRLUEpzM3YKK0IwWmlnZDlmbnNRRWZ3SWNObmwrcHpHdTFZWWd2VktOc2F1Yjl4bzhkcEMyRHdDRkJpWnY0SHBBek1JRm1xRAo0alplSExpVWUrSnhEejRUV0dESmF4QmU3eGlORHN2N3J1RE1MVEozOTFsVUhCdEZBZ01CQUFHakl6QWhNQTRHCkExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQTBHQ1NxR1NJYjNEUUVCQ3dVQUE0SUIKQVFBcXZWQ2V0NTMrdi9hVitZUHhXc1lQbFc2S283WElzTHFaekxLYXUycmV3N0xKL2hPT2N2QkFYU1ZmTTZzTQpnS0ZKd01qWUV3dVArR0luTElEUERBcjZmajQrVnAxUmxkSmExeEFVQ3JRL2VZWnVwL2ZPUWl6UHJ3RTRmcUh2CitVS3AwQkw0cSsvMk1ZSStkb0RVd09nYStaU3dEYktTV1AvWE8yV20vZVV4ak8zaWY0TlZXeUMvNUpsenp2WVYKcTRFUkJWMHhRVVpDcDlYc3J1SHBTL2NqVWN0cE9SRUQvZnlhbFhuMGhYTUxBakFIQVI5QVIrakIvSVIvUXNRRgo2WERvQmo1L21xVDZJTmc3enQxa25JSUJHeHh2V2g1VUxpMWFUMzZhR3pIZ0JTdHJsUHQ2RGI2WGRYNERvanF0CnhGejNKbThNVzg1Q1BtZ0RJbGhPUFJOVgotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+    service:
+      name: spinnaker-operator
+      namespace: armory-operator
+      path: /validate-spinnaker-armory-io-v1alpha2-armoryaccount
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: webhook-spinnakeraccounts-v1alpha2.spinnaker.armory.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - spinnaker.armory.io
+    apiVersions:
+    - v1alpha2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - spinnakeraccounts
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
