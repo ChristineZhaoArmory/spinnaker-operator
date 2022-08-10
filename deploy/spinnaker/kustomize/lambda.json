@@ -1,0 +1,394 @@
+{
+    "appConfig": {},
+    "description": "Test the various AWS Lambda stages and routes/deployment strategies",
+    "keepWaitingPipelines": false,
+    "lastModifiedBy": "ChristineZhaoArmory",
+    "limitConcurrent": true,
+    "parameterConfig": [
+      {
+        "default": "new",
+        "description": "What type of rollout is this",
+        "hasOptions": true,
+        "label": "",
+        "name": "rolloutType",
+        "options": [
+          {
+            "value": "new"
+          },
+          {
+            "value": "codeUpdate"
+          },
+          {
+            "value": "blue/green"
+          },
+          {
+            "value": "weighted/canary"
+          }
+        ],
+        "pinned": true,
+        "required": true
+      }
+    ],
+    "schema": "1",
+    "spelEvaluator": "v4",
+    "stages": [
+      {
+        "account": "christine-aws",
+        "aliases": [
+          "live"
+        ],
+        "cloudProvider": "aws",
+        "deadLetterConfig": {
+          "targetArn": ""
+        },
+        "description": "Lambda Python JSON Input Function",
+        "detailName": "01",
+        "enableLambdaAtEdge": false,
+        "envVariables": {},
+        "functionName": "awstest-dev-01-spinroute",
+        "functionUid": "spinroute",
+        "handler": "lambda_function.lambda_handler",
+        "memorySize": 128,
+        "name": "AWS Lambda Deployment",
+        "publish": true,
+        "refId": "1",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "16"
+        ],
+        "role": "arn:aws:iam::569630529054:role/service-role/awstest-lambda-S3-trigger-role",
+        "runtime": "python3.7",
+        "s3bucket": "armory-spin-alc-dev-bucket-kb3o3el4g4",
+        "s3key": "${lambdaS3Key}",
+        "securityGroupIds": [
+          "sg-0f4a52341b94f21b9"
+        ],
+        "stackName": "dev",
+        "subnetIds": [
+          "subnet-07251e6ceb42fc9a7",
+          "subnet-07881f943b6d11804",
+          "subnet-030f6f29f160b8351"
+        ],
+        "tags": {
+          "owner": "alice@armory.io"
+        },
+        "timeout": 3,
+        "tracingConfig": {
+          "mode": "PassThrough"
+        },
+        "type": "Aws.LambdaDeploymentStage",
+        "vpcId": "vpc-0b496dbcfbc72d591"
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "comments": "Route 40% of traffic to the new deployment (live alias)",
+        "deploymentStrategy": "$WEIGHTED",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Route 40% to New Deployment - live",
+        "refId": "8",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "9"
+        ],
+        "trafficPercentA": 40,
+        "type": "Aws.LambdaTrafficRoutingStage",
+        "versionNameA": "$LATEST",
+        "versionNameB": "$PREVIOUS"
+      },
+      {
+        "comments": "Routes some percentage of traffic to the new deployment (live alias). This can be used for canary and/or rolling blue/green (traffic shifting) deployments",
+        "completeOtherBranchesThenFail": false,
+        "continuePipeline": false,
+        "failPipeline": true,
+        "name": "If Weighted/Canary Rollout",
+        "preconditions": [
+          {
+            "context": {
+              "expression": "${ parameters.rolloutType == 'weighted/canary' }"
+            },
+            "failPipeline": false,
+            "type": "expression"
+          }
+        ],
+        "refId": "9",
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "type": "checkPreconditions"
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "comments": "Not canary deployment so immediately route 100% traffic to new function",
+        "deploymentStrategy": "$SIMPLE",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Route 100% to New Version on Success - live",
+        "refId": "10",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "11"
+        ],
+        "stageEnabled": {
+          "expression": "${#judgment(\"Check Canary\") == 'Yes'}",
+          "type": "expression"
+        },
+        "trafficPercentA": 100,
+        "type": "Aws.LambdaTrafficRoutingStage",
+        "versionNameA": "$LATEST"
+      },
+      {
+        "failPipeline": true,
+        "instructions": "Logs from Invoke located at https://console.aws.amazon.com/cloudwatch/home?region=us-east-1#logsV2:log-groups/log-group/$252Faws$252Flambda$252Fawstest-dev-01-spinroute",
+        "judgmentInputs": [
+          {
+            "value": "Yes"
+          },
+          {
+            "value": "No"
+          }
+        ],
+        "name": "Check Canary",
+        "notifications": [],
+        "refId": "11",
+        "requisiteStageRefIds": [
+          "17"
+        ],
+        "type": "manualJudgment"
+      },
+      {
+        "account": "christine-aws",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Delete - Cleanup old version",
+        "refId": "12",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "10"
+        ],
+        "retentionNumber": 1,
+        "stageEnabled": {
+          "expression": "${#judgment(\"Check Canary\") == 'Yes'}",
+          "type": "expression"
+        },
+        "type": "Aws.LambdaDeleteStage",
+        "version": "$PREVIOUS"
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "deploymentStrategy": "$SIMPLE",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Route 100% to Previous Version on Failure",
+        "refId": "13",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "11"
+        ],
+        "stageEnabled": {
+          "expression": "${#judgment(\"Check Canary\") == 'No'}",
+          "type": "expression"
+        },
+        "trafficPercentA": 100,
+        "type": "Aws.LambdaTrafficRoutingStage",
+        "versionNameA": "$PREVIOUS"
+      },
+      {
+        "account": "christine-aws",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Delete - Cleanup new version",
+        "refId": "14",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "13"
+        ],
+        "stageEnabled": {
+          "expression": "${#judgment(\"Check Canary\") == 'No'}",
+          "type": "expression"
+        },
+        "type": "Aws.LambdaDeleteStage",
+        "version": "$LATEST"
+      },
+      {
+        "failOnFailedExpressions": true,
+        "name": "Eval Lambda S3 Key",
+        "refId": "16",
+        "requisiteStageRefIds": [],
+        "type": "evaluateVariables",
+        "variables": [
+          {
+            "key": "lambdaS3Key",
+            "value": "${ parameters.rolloutType == \"new\" || parameters.rolloutType == \"codeUpdate\" ? \"lambda/awstest-py-route1.zip\" : \"lambda/awstest-py-route3.zip\" }"
+          }
+        ]
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "executionCount": 5,
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Invoke",
+        "payloadArtifact": {
+          "account": "alc-s3-art",
+          "artifact": {
+            "artifactAccount": "alc-s3-art",
+            "id": "9959237a-f269-48d5-8b2a-b2d7e7f533f3",
+            "reference": "s3://armory-spin-alc-dev-bucket-kb3o3el4g4/lambda/awstest-lambda-payload.json",
+            "type": "s3/object"
+          }
+        },
+        "refId": "17",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "8"
+        ],
+        "timeout": 3,
+        "type": "Aws.LambdaInvokeStage"
+      },
+      {
+        "account": "christine-aws",
+        "comments": "With Publish checked this creates a new version and associates with the LATEST alias",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Update Code",
+        "publish": true,
+        "refId": "18",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "26"
+        ],
+        "s3bucket": "armory-spin-alc-dev-bucket-kb3o3el4g4",
+        "s3key": "lambda/awstest-py-route2.zip",
+        "type": "Aws.LambdaUpdateCodeStage"
+      },
+      {
+        "comments": "The live alias is not explicitly associated with the new deployment version. It's associated with the LATEST version deployed though.",
+        "name": "If Initial/New Rollout",
+        "preconditions": [
+          {
+            "context": {
+              "expression": "${ parameters.rolloutType == 'new' }"
+            },
+            "failPipeline": false,
+            "type": "expression"
+          }
+        ],
+        "refId": "19",
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "type": "checkPreconditions"
+      },
+      {
+        "comments": "The live alias is not changed. A new version of the function is deployed",
+        "name": "If Code Update",
+        "preconditions": [
+          {
+            "context": {
+              "expression": "${ parameters.rolloutType == 'codeUpdate' }"
+            },
+            "failPipeline": false,
+            "type": "expression"
+          }
+        ],
+        "refId": "21",
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "type": "checkPreconditions"
+      },
+      {
+        "comments": "Typical blue/green. If cleanup is required then a AWS Lambda Delete stage should be added after the route blue/green stage.",
+        "name": "If Blue/Green Rollout",
+        "preconditions": [
+          {
+            "context": {
+              "expression": "${ parameters.rolloutType == 'blue/green' }"
+            },
+            "failPipeline": false,
+            "type": "expression"
+          }
+        ],
+        "refId": "22",
+        "requisiteStageRefIds": [
+          "1"
+        ],
+        "type": "checkPreconditions"
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "deploymentStrategy": "$BLUEGREEN",
+        "destroyOnFail": true,
+        "functionName": "awstest-dev-01-spinroute",
+        "healthCheckType": "$LAMBDA",
+        "name": "AWS Lambda Route Blue/Green",
+        "outputArtifact": {
+          "account": "alc-s3-art",
+          "artifact": {
+            "artifactAccount": "alc-s3-art",
+            "id": "b9e9ba62-c7d8-4637-bb34-fbf913c19a93",
+            "reference": "s3://armory-spin-alc-dev-bucket-kb3o3el4g4/lambda/awstest-lambda-bg-output.txt",
+            "type": "s3/object"
+          }
+        },
+        "payloadArtifact": {
+          "account": "alc-s3-art",
+          "artifact": {
+            "artifactAccount": "alc-s3-art",
+            "id": "5179c0fd-f7ad-4269-8f8e-df7119912e0c",
+            "reference": "s3://armory-spin-alc-dev-bucket-kb3o3el4g4/lambda/awstest-lambda-payload.json",
+            "type": "s3/object"
+          }
+        },
+        "refId": "23",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "22"
+        ],
+        "timeout": 10,
+        "type": "Aws.LambdaTrafficRoutingStage"
+      },
+      {
+        "account": "christine-aws",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Delete All Except last 2",
+        "refId": "24",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "18"
+        ],
+        "retentionNumber": 2,
+        "type": "Aws.LambdaDeleteStage",
+        "version": "$MOVING"
+      },
+      {
+        "account": "christine-aws",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Delete All Previous Versions",
+        "refId": "25",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "19"
+        ],
+        "retentionNumber": 1,
+        "type": "Aws.LambdaDeleteStage",
+        "version": "$MOVING"
+      },
+      {
+        "account": "christine-aws",
+        "aliasName": "live",
+        "deploymentStrategy": "$SIMPLE",
+        "functionName": "awstest-dev-01-spinroute",
+        "name": "AWS Lambda Route 100% to New Deployment - live",
+        "refId": "26",
+        "region": "us-east-1",
+        "requisiteStageRefIds": [
+          "21"
+        ],
+        "trafficPercentA": 100,
+        "type": "Aws.LambdaTrafficRoutingStage",
+        "versionNameA": "$LATEST"
+      }
+    ],
+    "triggers": [],
+    "updateTs": "1635448120000"
+  }

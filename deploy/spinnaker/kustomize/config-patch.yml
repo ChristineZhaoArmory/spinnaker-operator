@@ -9,6 +9,11 @@ spec:
     config:
       version: 2.27.3  # the version of Spinnaker to be deployed
       artifacts:
+        helm:
+          enabled: true
+          accounts:
+            name: jfrog
+            repository: https://charts.jfrog.io
         gitrepo:
           enabled: true
           accounts:
@@ -75,7 +80,7 @@ spec:
           primaryAccount: christine-sa
         aws:
           accounts:
-          - accountId: ‘810711266228’
+          - accountId: 810711266228
             providerVersion: V1
             name: christine-aws
             regions:
