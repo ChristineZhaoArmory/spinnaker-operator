@@ -1,6 +1,6 @@
 kubernetes:
   accounts:
-    - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+    - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
       name: christine-agent-config
       kinds: []
       omitKinds: []
@@ -13,7 +13,7 @@ kubernetes:
 #    - name: remote
 #      kinds: []
 #      omitKinds: []
-#      kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+#      kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
 
 clouddriver:
   # grpc: spin-clouddriver-grpc:9091

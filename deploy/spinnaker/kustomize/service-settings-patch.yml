@@ -8,7 +8,13 @@ spec:
     # spec.spinnakerConfig.service-settings - This section contains the YAML of the service's service-setting
     # see https://www.spinnaker.io/reference/halyard/custom/#tweakable-service-settings for available settings
     service-settings:
-      clouddriver: {}
+      clouddriver:
+        kubernetes:
+          volumes:
+          - id: logback-config
+            type: configMap
+            mountPath: /opt/spinnaker/config/logging
+            defaultMode: 420
       deck: {}
       echo: {}
       fiat: {}

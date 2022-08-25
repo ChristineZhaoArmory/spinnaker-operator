@@ -8,9 +8,39 @@ spec:
     # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
     profiles:
       clouddriver: # is the contents of ~/.hal/default/profiles/clouddriver.yml
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-access
+              lambdaEnabled: true
+              name: christine-aws
+          features:
+            lambda:
+              enabled: true
+            launch-templates:
+              allowed-accounts: support-dev
+              allowed-applications:
+                all-applications:
+                  enabled: true
+              enabled: true
         serviceLimits:
           defaults:
           rateLimit: 10.0
+          implementationLimits:
+            ## Examples - default rate limit is 10, reducing these can reduce AWS API calls preventing throttling but it's FAR better to get a support ticket in...  and increase the API limits.
+            AmazonAutoScaling:
+              defaults:
+                rateLimit: 3.0
+            AmazonElasticLoadBalancing:
+              defaults:
+                rateLimit: 10.0   # default max req/second
+          cloudProviderOverrides:
+            aws:
+              rateLimit: 10.0
+        logging:
+          level:
+            com.netflix.spinnaker.clouddriver: DEBUG
+          config: /opt/spinnaker/config/logging/logback-config.xml
         sql:
           enabled: true
           read-only: false 

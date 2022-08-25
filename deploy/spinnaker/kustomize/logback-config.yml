@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: logback-config
+data:
+  logback-config.xml: |
+    <configuration>
+      <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter" />
+
+      <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+          <pattern>%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} [%X{X-SPINNAKER-USER}] %m%n
+          </pattern>
+        </encoder>
+      </appender>
+
+      <appender name="ROLLING" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/tmp/output.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+          <fileNamePattern>/tmp/output-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+          <maxFileSize>1KB</maxFileSize>
+          <maxHistory>1</maxHistory>
+          <totalSizeCap>5KB</totalSizeCap>
+        </rollingPolicy>
+        <encoder>
+          <pattern>
+            %clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} [%X{X-SPINNAKER-USER}] %m%n
+          </pattern>
+        </encoder>
+      </appender>
+
+      <logger name="com.netflix.spinnaker.kork.expressions.ExpressionTransform" level="ERROR" />
+      <logger name="com.netflix.spinnaker.orca.pipeline.util.ContextParameterProcessor" level="ERROR" />
+
+      <root level="INFO">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="ROLLING" />
+      </root>
+    </configuration>

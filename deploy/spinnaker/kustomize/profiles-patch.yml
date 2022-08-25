@@ -11,6 +11,17 @@ spec:
         serviceLimits:
           defaults:
           rateLimit: 10.0
+        #   implementationLimits:
+        #     ## Examples - default rate limit is 10, reducing these can reduce AWS API calls preventing throttling but it's FAR better to get a support ticket in...  and increase the API limits.
+        #     AmazonAutoScaling:
+        #       defaults:
+        #         rateLimit: 3.0
+        #     AmazonElasticLoadBalancing:
+        #       defaults:
+        #         rateLimit: 10.0   # default max req/second
+        #   cloudProviderOverrides:
+        #     aws:
+        #       rateLimit: 10.0
       # deck has a special key "settings-local.js" for the contents of settings-local.js
       deck:
         # settings-local.js - contents of ~/.hal/default/profiles/settings-local.js
@@ -23,11 +34,49 @@ spec:
           window.spinnakerSettings.feature.kustomizeEnabled = true;
           window.spinnakerSettings.feature.artifactsRewrite = true;
           window.spinnakerSettings.feature.terraform = true;
-      echo: {}    # is the contents of ~/.hal/default/profiles/echo.yml
+          window.spinnakerSettings.feature.functions = true;
+          window.spinnakerSettings.pubsubProviders = ['google', 'amazon'];
+          window.spinnakerSettings.providers.aws.serverGroups = {
+              enableLaunchTemplates: true,
+              enableIPv6: true,
+              enableIMDSv2: true,
+              enableCpuCredits: true,
+          };
+      echo: {}   # is the contents of ~/.hal/default/profiles/echo.yml
+        # pubsub:
+        #   enabled: true
+        #   amazon:
+        #     enabled: true
+        #     subscriptions:
+        #     - name: christine-pubsub-2n
+        #       #topicARN: arn:aws:sns:us-east-2:810711266228:christine-pubsub-topic-2         # (Required).
+        #       #queueARN: arn:aws:sqs:us-east-2:810711266228:christine-pubsub-test-queue-2    # (Required).
+        #       topicARN: arn:aws:sns:us-east-2:810711266228:sunny-test-topic                                                   # (Required).
+        #       queueARN: arn:aws:sqs:us-east-2:810711266228:sunny-test-queue
+        #       messageFormat: NONE
+        #     # - name: christine-pubsub                                                      # (Required).
+        #     #   topicARN: arn:aws:sns:us-east-2:810711266228:spin-alc-pubsub-topic         # (Required).
+        #     #   queueARN: arn:aws:sqs:us-east-2:810711266228:spin-alc-pubsub-test-queue    # (Required).
+        #     #   messageFormat: S3
+        # #logging.level.com.netflix.spinnaker.echo: DEBUG
+        # logging.level.com.netflix.spinnaker.echo.pubsub.aws: DEBUG
+        # logging.level.com.netflix.spinnaker.echo.config.AmazonPubsubProperties: DEBUG
       fiat: {}    # is the contents of ~/.hal/default/profiles/fiat.yml
       front50: {} # is the contents of ~/.hal/default/profiles/front50.yml
       gate: {}    # is the contents of ~/.hal/default/profiles/gate.yml
       igor: {}    # is the contents of ~/.hal/default/profiles/igor.yml
       kayenta: {} # is the contents of ~/.hal/default/profiles/kayenta.yml
-      orca: {}    # is the contents of ~/.hal/default/profiles/orca.yml
+      orca:       # is the contents of ~/.hal/default/profiles/orca.yml
+        queue:
+          zombieCheck:
+            enabled: true 
+        # orca-local.yml: | # 2022-08-17 No -local.yml any more since those for old halyard
+        pollers:
+          oldPipelineCleanup:
+            enabled: true                  # This enables old pipeline execution cleanup (default: false)
+            intervalMs: 3600000            # How many milliseconds between pipeline cleanup runs (default: 1hr or 3600000 milliseconds)
+            thresholdDays: 30              # How old a pipeline execution must be to be deleted (default: 30)
+            minimumPipelineExecutions: 5   # How many executions to keep around (default: 5)
+        tasks:
+          daysOfExecutionHistory: 180      # How many days to keep old task executions around
       rosco: {}   # is the contents of ~/.hal/default/profiles/rosco.yml

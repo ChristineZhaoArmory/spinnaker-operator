@@ -1,0 +1,413 @@
+{
+    "kind": "NodeMetricsList",
+    "apiVersion": "metrics.k8s.io/v1beta1",
+    "metadata": {},
+    "items": [
+        {
+            "metadata": {
+                "name": "ip-192-168-102-178.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2c",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-102-178.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2c"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:35Z",
+            "window": "10.051s",
+            "usage": {
+                "cpu": "227301718n",
+                "memory": "6516068Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-104-164.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2c",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-104-164.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2c"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:32Z",
+            "window": "10.025s",
+            "usage": {
+                "cpu": "189527810n",
+                "memory": "4095376Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-109-193.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2c",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-109-193.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2c"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:39Z",
+            "window": "20.072s",
+            "usage": {
+                "cpu": "290845164n",
+                "memory": "6580620Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-117-157.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2c",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-117-157.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2c"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:34Z",
+            "window": "10.118s",
+            "usage": {
+                "cpu": "1994490454n",
+                "memory": "15004448Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-121-206.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2c",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-121-206.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2c"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:38Z",
+            "window": "20.115s",
+            "usage": {
+                "cpu": "813912011n",
+                "memory": "8432252Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-140-95.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2b",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-140-95.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2b"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:30Z",
+            "window": "10.026s",
+            "usage": {
+                "cpu": "1424750953n",
+                "memory": "13624948Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-146-191.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2b",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-146-191.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2b"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:31Z",
+            "window": "10.054s",
+            "usage": {
+                "cpu": "765718099n",
+                "memory": "9479992Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-147-56.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2b",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-147-56.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2b"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:35Z",
+            "window": "20.074s",
+            "usage": {
+                "cpu": "98345992n",
+                "memory": "1078148Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-149-47.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2b",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-149-47.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2b"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:38Z",
+            "window": "20.054s",
+            "usage": {
+                "cpu": "733319091n",
+                "memory": "7684720Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-165-195.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2a",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-165-195.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2a"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:38Z",
+            "window": "20.062s",
+            "usage": {
+                "cpu": "1206447844n",
+                "memory": "7121Mi"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-166-87.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2a",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-166-87.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2a"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:39Z",
+            "window": "20.158s",
+            "usage": {
+                "cpu": "1363486370n",
+                "memory": "8495172Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-172-195.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2a",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-172-195.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2a"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:36Z",
+            "window": "20.076s",
+            "usage": {
+                "cpu": "279280864n",
+                "memory": "5311860Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-183-183.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2a",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-183-183.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2a"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:39Z",
+            "window": "20.16s",
+            "usage": {
+                "cpu": "1603096589n",
+                "memory": "8553872Ki"
+            }
+        },
+        {
+            "metadata": {
+                "name": "ip-192-168-189-191.us-east-2.compute.internal",
+                "creationTimestamp": "2022-08-24T19:58:53Z",
+                "labels": {
+                    "beta.kubernetes.io/arch": "amd64",
+                    "beta.kubernetes.io/instance-type": "r5.large",
+                    "beta.kubernetes.io/os": "linux",
+                    "eks.amazonaws.com/capacityType": "ON_DEMAND",
+                    "eks.amazonaws.com/nodegroup": "r5large-by-azeem",
+                    "eks.amazonaws.com/nodegroup-image": "ami-07109d69738d6e1ee",
+                    "failure-domain.beta.kubernetes.io/region": "us-east-2",
+                    "failure-domain.beta.kubernetes.io/zone": "us-east-2a",
+                    "k8s.io/cloud-provider-aws": "b18f772a304ff89737a2c1eadff798b0",
+                    "kubernetes.io/arch": "amd64",
+                    "kubernetes.io/hostname": "ip-192-168-189-191.us-east-2.compute.internal",
+                    "kubernetes.io/os": "linux",
+                    "node.kubernetes.io/instance-type": "r5.large",
+                    "topology.kubernetes.io/region": "us-east-2",
+                    "topology.kubernetes.io/zone": "us-east-2a"
+                }
+            },
+            "timestamp": "2022-08-24T19:58:35Z",
+            "window": "20.055s",
+            "usage": {
+                "cpu": "425653896n",
+                "memory": "8002848Ki"
+            }
+        }
+    ]
+}

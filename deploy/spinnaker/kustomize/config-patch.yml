@@ -7,33 +7,35 @@ spec:
   spinnakerConfig:
   # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.27.3  # the version of Spinnaker to be deployed
+      version: 2.28.0  # the version of Spinnaker to be deployed
       artifacts:
-        helm:
-          enabled: true
-          accounts:
-            name: jfrog
-            repository: https://charts.jfrog.io
+        # helm:
+        #   enabled: true
+        #   accounts:
+        #     name: jfrog
+        #     repository: https://charts.jfrog.io
         gitrepo:
           enabled: true
           accounts:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
-              token: encrypted:k8s!n:spin-secrets!k:github-token
+              #token: encrypted:k8s!n:spin-secrets!k:github-token 
+              token: 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  #2022-08-18 change to text token
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
-              token: encrypted:k8s!n:spin-secrets!k:github-token
+              # token: encrypted:k8s!n:spin-secrets!k:github-token
+              token: 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  #2022-08-18 change to text token
         # christine- 2022-06-13 have problem. Need check later
         s3:
           enabled: true
           accounts:
           - name: AT_S3
             region: us-east-2
-          - name: us_east_1_S3
-            region: us-east-1
+          # - name: us_east_1_S3
+          #   region: us-east-1
         #     awsAccessKeyId: ASIA3ZQRIGO2LOT4OUGH
         #     awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
       persistentStorage:
@@ -69,18 +71,19 @@ spec:
             configureImagePullSecrets: true
             cacheThreads: 1
             namespaces: []
-            omitNamespaces: [default,meghu-spinnaker]
+            omitNamespaces: []
             kinds: []
             omitKinds: []
             customResources: []
             cachingPolicies: []
             oAuthScopes: []
             onlySpinnakerManaged: true
-            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
           primaryAccount: christine-sa
+        # BEGIN 2022-08-15 close for removing exceptions
         aws:
           accounts:
-          - accountId: 810711266228
+          - accountId: '810711266228'
             providerVersion: V1
             name: christine-aws
             regions:
@@ -120,11 +123,21 @@ spec:
             cloudFormation:
               enabled: true
           primaryAccount: christine-aws
+        # END 2022-08-15 close for removing exceptions
+        # ecs:
+        #   enabled: true
+        #   accounts:
+        #   - name: aws-dev-ecs
+        #     requiredGroupMembership: []
+        #     providerVersion: V1
+        #     permissions: {}
+        #     awsAccount: aws-dev                   # Must be one of the configured AWS accounts
+        #   primaryAccount: aws-dev-ecs             # Must be one of the configured AWS ECS accounts
       deploymentEnvironment:
         customSizing:
           echo:
             limits:
-              cpu: 250m
+            #  cpu: 250m
             # memory: 512Mi
             # requests:
             #   cpu: 100m

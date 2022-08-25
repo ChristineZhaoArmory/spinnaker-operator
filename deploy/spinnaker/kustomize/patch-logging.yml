@@ -1,0 +1,24 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+#-----------------------------------------------------------------------------------------------------------------
+# Example configuration for configuring spinnaker to utilize cert manager ssl certs (stored in a secret and mounted and refreshed automatically)
+#
+# Note: default key alias for cert-manager is certificate
+#-----------------------------------------------------------------------------------------------------------------
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  # Public-facing spinnaker urls. If not configured, load balancer urls will be used automatically
+  spinnakerConfig:
+    profiles:
+      clouddriver:
+        logging:
+          config: /opt/spinnaker/config/logging/logback-config.xml
+    service-settings:
+      clouddriver:
+        kubernetes:
+          volumes:
+          - id: logback-config
+            type: configMap
+            mountPath: /opt/spinnaker/config/logging
+            defaultMode: 420

@@ -1,0 +1,63 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  creationTimestamp: "2022-08-20T12:03:51Z"
+  generation: 2
+  name: spinnakervalidatingwebhook
+  resourceVersion: "535811584"
+  uid: ac75f7ce-0c7f-4f67-baef-72d6ed2849ab
+webhooks:
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURIekNDQWdlZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFnTVI0d0hBWURWUVFERXhWemNHbHUKYm1GclpYSXRiM0JsY21GMGIzSXRZMkV3SGhjTk1qSXdPREkwTVRjd09UQXlXaGNOTXpJd09ESXhNVGN3T1RBeQpXakFnTVI0d0hBWURWUVFERXhWemNHbHVibUZyWlhJdGIzQmxjbUYwYjNJdFkyRXdnZ0VpTUEwR0NTcUdTSWIzCkRRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQ1lQV1dtQ0lrN1N1ZW5yZXRnaHFxQklrdVlJa2Vwait4TU51VmwKTkpiQzFTVFpiRUljL3NBRmc4R2lZVnJOdHd0QmlhVmg2ZlpwaUo4dXJxaS91cS8vT1VoNGIvQ0tzNUhDZXZvNwpaUVpUK1dpSFU4QkZxZkFOZ2tyeGlBdWNHYnA1WUJ0VlgraFUxdzVQenl4QS92c3dOYnZxWUV3aEh3WFp5ckc0CmlWYWtKanNhMi9Va0k3bFI3eU1FZVJMVks5R2p1bndVQzYyNjFyRG8vQmFOQkg5V1Z2cHJHQmkwM09BRTI3azgKOHdPd2ZnY2t1b1pRd0QrVTRTWnNJK0VUemYxSHg1enFzWS94dGhVWTNqNEZwMExhelFPWDdVem5DRk96TUZ4SwpSczZBTzN4YTBCcUw0SXZqRHdsQ2E4Ry8vV2d5SGZpMmpZTFBFMmpsOWQ4dDRPa3hBZ01CQUFHalpEQmlNQTRHCkExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlR2Qjhva2dEVXIKZ1pXNGhMc3R4QlZtNTVzZ0xUQWdCZ05WSFJFRUdUQVhnaFZ6Y0dsdWJtRnJaWEl0YjNCbGNtRjBiM0l0WTJFdwpEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQWdBTWZ3NHJaRllGSDNScmNqQjNlSUxHdXlGdlZHc25tMFhxa2wzClovNUNXZHgzekxEL1JjVWJFa3JzVk5IUU45WkpQOFFORVN0OVpmYTBkMW9EbnpOQU5TTThzWW44alBXMFdyclgKYWJMdlBJTnVVZXB6dzZoNmlURzFEeElLa0hjdkNoUUJodkRETFNxYURLNmJQRW9QTE12QzBPWERNS1k5bEt6VgpDc1pabGprcmNnYkRRMHEyY3RoUFZ3QWwvYjZxUEx0NUhyKzFTTDFoZE40R3doN0lzOVZ4OFRFQmpkSVh1NnR1Ci9OQ2VJcTdkSVZFN1pSNzFHUmZ4SWx2Y0RVL0ViS3JrakJoRm9nRzZxWjVOOUxEUS9LQWJ2RWt5Nm52M0VVUi8KNitML3h4eUh6Uko5R3JWeS9qYXRXeGs0dzUxNGNGOXlQQ2FNK3lxWlc4NTcwR3c9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: spinnaker-operator
+      namespace: spinnaker-operator
+      path: /validate-spinnaker-io-v1alpha2-spinnakerservice
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: webhook-spinnakerservices-v1alpha2.spinnaker.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - spinnaker.io
+    apiVersions:
+    - v1alpha2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - spinnakerservices
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10
+- admissionReviewVersions:
+  - v1
+  clientConfig:
+    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSURIekNDQWdlZ0F3SUJBZ0lCQURBTkJna3Foa2lHOXcwQkFRc0ZBREFnTVI0d0hBWURWUVFERXhWemNHbHUKYm1GclpYSXRiM0JsY21GMGIzSXRZMkV3SGhjTk1qSXdPREkwTVRjd09UQXlXaGNOTXpJd09ESXhNVGN3T1RBeQpXakFnTVI0d0hBWURWUVFERXhWemNHbHVibUZyWlhJdGIzQmxjbUYwYjNJdFkyRXdnZ0VpTUEwR0NTcUdTSWIzCkRRRUJBUVVBQTRJQkR3QXdnZ0VLQW9JQkFRQ1lQV1dtQ0lrN1N1ZW5yZXRnaHFxQklrdVlJa2Vwait4TU51VmwKTkpiQzFTVFpiRUljL3NBRmc4R2lZVnJOdHd0QmlhVmg2ZlpwaUo4dXJxaS91cS8vT1VoNGIvQ0tzNUhDZXZvNwpaUVpUK1dpSFU4QkZxZkFOZ2tyeGlBdWNHYnA1WUJ0VlgraFUxdzVQenl4QS92c3dOYnZxWUV3aEh3WFp5ckc0CmlWYWtKanNhMi9Va0k3bFI3eU1FZVJMVks5R2p1bndVQzYyNjFyRG8vQmFOQkg5V1Z2cHJHQmkwM09BRTI3azgKOHdPd2ZnY2t1b1pRd0QrVTRTWnNJK0VUemYxSHg1enFzWS94dGhVWTNqNEZwMExhelFPWDdVem5DRk96TUZ4SwpSczZBTzN4YTBCcUw0SXZqRHdsQ2E4Ry8vV2d5SGZpMmpZTFBFMmpsOWQ4dDRPa3hBZ01CQUFHalpEQmlNQTRHCkExVWREd0VCL3dRRUF3SUNwREFQQmdOVkhSTUJBZjhFQlRBREFRSC9NQjBHQTFVZERnUVdCQlR2Qjhva2dEVXIKZ1pXNGhMc3R4QlZtNTVzZ0xUQWdCZ05WSFJFRUdUQVhnaFZ6Y0dsdWJtRnJaWEl0YjNCbGNtRjBiM0l0WTJFdwpEUVlKS29aSWh2Y05BUUVMQlFBRGdnRUJBQWdBTWZ3NHJaRllGSDNScmNqQjNlSUxHdXlGdlZHc25tMFhxa2wzClovNUNXZHgzekxEL1JjVWJFa3JzVk5IUU45WkpQOFFORVN0OVpmYTBkMW9EbnpOQU5TTThzWW44alBXMFdyclgKYWJMdlBJTnVVZXB6dzZoNmlURzFEeElLa0hjdkNoUUJodkRETFNxYURLNmJQRW9QTE12QzBPWERNS1k5bEt6VgpDc1pabGprcmNnYkRRMHEyY3RoUFZ3QWwvYjZxUEx0NUhyKzFTTDFoZE40R3doN0lzOVZ4OFRFQmpkSVh1NnR1Ci9OQ2VJcTdkSVZFN1pSNzFHUmZ4SWx2Y0RVL0ViS3JrakJoRm9nRzZxWjVOOUxEUS9LQWJ2RWt5Nm52M0VVUi8KNitML3h4eUh6Uko5R3JWeS9qYXRXeGs0dzUxNGNGOXlQQ2FNK3lxWlc4NTcwR3c9Ci0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+    service:
+      name: spinnaker-operator
+      namespace: spinnaker-operator
+      path: /validate-spinnaker-io-v1alpha2-spinnakeraccount
+      port: 443
+  failurePolicy: Fail
+  matchPolicy: Equivalent
+  name: webhook-spinnakeraccounts-v1alpha2.spinnaker.io
+  namespaceSelector: {}
+  objectSelector: {}
+  rules:
+  - apiGroups:
+    - spinnaker.io
+    apiVersions:
+    - v1alpha2
+    operations:
+    - CREATE
+    - UPDATE
+    resources:
+    - spinnakeraccounts
+    scope: '*'
+  sideEffects: None
+  timeoutSeconds: 10

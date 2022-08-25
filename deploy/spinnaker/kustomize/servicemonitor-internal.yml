@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: spinnaker-internal-metrics
+  namespace: christine-zhao
+  labels:
+    app: spin
+    # This label is here to match the prometheus operator serviceMonitorSelector attribute
+    # prometheus.prometheusSpec.serviceMonitorSelector
+    # https://github.com/helm/charts/tree/master/stable/prometheus-operator
+    release: prometheus-operator
+spec:
+  selector:
+    matchLabels:
+      cluster: spin-gate
+  endpoints:
+  - interval: 10s
+    path: "/api/v1/aop-prometheus"
+    # If Prometheus returns the error "http: server gave HTTP response to HTTPS client" then
+    # replace scheme with targetPort:
+    # Note that "port" is string only. "targetPort" is integer or string.
+    # For example, targetPort: 8084
+    scheme: "https"
+    tlsConfig:
+      insecureSkipVerify: true

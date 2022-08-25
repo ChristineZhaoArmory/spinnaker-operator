@@ -11,7 +11,7 @@ data:
     kubernetes:
       accounts:
       - name: christine-agent
-        kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+        kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
         #kubeconfigFile: encryptedFile:vault!e:secret!p:spinnaker/kubernetes!k:config
         # insecure:
         # context:

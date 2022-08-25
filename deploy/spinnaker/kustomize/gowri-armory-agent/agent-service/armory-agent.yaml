@@ -2,7 +2,7 @@ kubernetes:
   accounts: 
   # Add your accounts here, /kubeconfigfiles is the path where kubeconfig files added
   # to kustomization.yaml are mounted. ######## This will not take into effect if Dynamic account is enabled
-  - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+  - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
     name: christine-spinnaker
     metrics: false
     kinds: []

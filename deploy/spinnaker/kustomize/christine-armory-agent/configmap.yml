@@ -10,7 +10,7 @@ data:
       insecure: true
     kubernetes:
       accounts:
-        - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+        - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
           name: christine-agent-sa
           insecure:
           context:

@@ -12,54 +12,6 @@ spec:
             plugins:
               Armory.Kubesvc:
                 enabled: true
-                extensions:
-                  armory.kubesvc:
-                    enabled: true
-              Armory.PreConfiguredJobPlugin.RunScript:
-                enabled: true
-                config:
-                  account: kubernetes
-                  credentials: kubernetes
-                  artifactServiceUrl: http://localhost:7002
-                  gitArtifactAccount: AT_GitRepo
-                # Optional: override default init container image 
-                  initContainerImage: myrepo/fetch-artifact:latest
-        aws:
-          features:
-            lambda:
-              enabled: true
-          accounts:
-          - name: christine-aws                        # NOTE: profiles.clouddriver.aws.accounts is merged with config.provider.aws.accounts by INDEX not accounts.name
-            lambdaEnabled: true
-            accountId: 810711266228            # (Required). Your AWS account ID to manage. See the AWS IAM User Guide for more information.
-            assumeRole: role/aws-spin-support-managedrole
-      gate:
-        spinnaker:
-          extensibility:
-              deck-proxy:
-                enabled: true
-                plugins:
-                  Aws.LambdaDeploymentPlugin:
-                    enabled: true
-                    version: 1.0.10
-              repositories:
-                awsLambdaDeploymentPluginRepo:
-                  url: https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
-      orca:
-        spinnaker:
-          extensibility:
-            plugins:
-              Aws.LambdaDeploymentPlugin:
-                enabled: true
-                version: 1.0.10
-              extensions:
-                lambdaDeploymentStage:
-                  config:
-                    defaultMaxWaitTime: 20    # default 20
-            repositories:
-              awsLambdaDeploymentPluginRepo:
-                id: awsLambdaDeploymentPluginRepo
-                url: https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
         # Plugin config
         kubesvc:
           cluster: kubernetes

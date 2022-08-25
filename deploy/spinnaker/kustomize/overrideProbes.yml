@@ -1,0 +1,182 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  kustomize:
+    dinghy:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+    echo:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: echo
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8089
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    front50:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: front50
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8080
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    fiat:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: fiat
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8080
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    gate:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: gate
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /api/v1/health
+                        port: 8084
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    igor:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: igor
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8088
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    kayenta:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 360
+                  containers:
+                  - name: kayenta
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8088
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    orca:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 1800
+                  containers:
+                  - name: orca
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8083
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    rosco:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 3600
+                  containers:
+                  - name: rosco
+                    startupProbe:
+                      failureThreshold: 10
+                      httpGet:
+                        path: /health
+                        port: 8087
+                        scheme: HTTPS
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1
+                      initialDelaySeconds: 60
+    terraformer:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  terminationGracePeriodSeconds: 3600

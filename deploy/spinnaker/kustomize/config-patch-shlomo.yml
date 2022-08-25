@@ -7,7 +7,7 @@ spec:
   spinnakerConfig:
   # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.27.3  # the version of Spinnaker to be deployed
+      version: 2.28.0  # the version of Spinnaker to be deployed
       artifacts:
         gitrepo:
           enabled: true
@@ -59,7 +59,7 @@ spec:
               customResources: []
               dockerRegistries: []
               kinds: []
-              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
               name: shlomo-da
               namespaces: []
               oAuthScopes: []
