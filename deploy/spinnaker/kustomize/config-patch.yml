@@ -19,15 +19,15 @@ spec:
           accounts:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
-              #token: encrypted:k8s!n:spin-secrets!k:github-token 
-              token: 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  #2022-08-18 change to text token
+              token: encrypted:k8s!n:spin-secrets!k:github-token 
+              #token: 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  #2022-08-25 change to text token
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
-              # token: encrypted:k8s!n:spin-secrets!k:github-token
-              token: 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  #2022-08-18 change to text token
+              token: encrypted:k8s!n:spin-secrets!k:github-token
+              #token: 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  #2022-08-25 change to text token
         # christine- 2022-06-13 have problem. Need check later
         s3:
           enabled: true
@@ -110,6 +110,14 @@ spec:
                 spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
                 sshUserName: admin
                 virtualizationType: hvm
+              - instanceType: t2.micro
+                region: us-east-2
+                # sourceAmi: ami-0d70546e43a941d70 #ubuntu
+                sourceAmi: ami-071e6cafc48327ca2
+                spotPrice: “0”
+                spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
+                sshUserName: admin
+                virtualizationType: hvm
           defaultKeyPairTemplate: ‘{{“{{“}}name{{“}}“}}-keypair’
           defaultRegions:
           - name: us-east-1
@@ -133,6 +141,19 @@ spec:
         #     permissions: {}
         #     awsAccount: aws-dev                   # Must be one of the configured AWS accounts
         #   primaryAccount: aws-dev-ecs             # Must be one of the configured AWS ECS accounts
+      ci:
+        jenkins:
+          enabled: true
+          masters:
+          # - name: jenkins-master
+          #   address: $YOUR_JENKINS_URL_HERE # The address your jenkins master is reachable at.
+          #   username: $USERNAME    # The username of the jenkins user to authenticate as.
+          #   password: $PASSWORD                # The password of the jenkins user to authenticate as. This field support "encrypted" secret references.
+            - name: jenkins-master
+              address: https://christine-jenkins.tse-armory.io/
+              csrf: true
+              password: admin
+              username: admin
       deploymentEnvironment:
         customSizing:
           echo:

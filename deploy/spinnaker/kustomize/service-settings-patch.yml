@@ -8,6 +8,13 @@ spec:
     # spec.spinnakerConfig.service-settings - This section contains the YAML of the service's service-setting
     # see https://www.spinnaker.io/reference/halyard/custom/#tweakable-service-settings for available settings
     service-settings:
+      # 2022-09-27 added below 4607 autodesk 
+      # https://spinnaker.io/docs/setup/productionize/caching/externalize-redis/
+      # https://spinnaker.io/docs/reference/halyard/custom/#custom-service-settings
+      #redis:
+        #overrideBaseUrl: redis://christine-redis-2.uyh0wx.ng.0001.use2.cache.amazonaws.com:6379
+        #skipLifeCycleManagement: true
+      #
       clouddriver:
         kubernetes:
           volumes:

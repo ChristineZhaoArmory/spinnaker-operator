@@ -7,6 +7,17 @@ spec:
   spinnakerConfig:
     # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
     profiles:
+      spinnaker:
+        spinnaker:  # This second `spinnaker` is required
+          extensibility:
+            plugins:
+              Armory.EvaluateArtifactsPlugin:
+                enabled: true
+                version: 0.1.1 # Replace with the version you want to use. For example, use 0.1.0.
+            repositories:
+              evaluateArtifacts:
+                url: https://raw.githubusercontent.com/armory-plugins/evaluate-artifacts-releases/master/repositories.json
+                #url: https://raw.githubusercontent.com/armory-plugins/evaluate-artifacts-releases/master/plugins.json
       clouddriver: # is the contents of ~/.hal/default/profiles/clouddriver.yml
         serviceLimits:
           defaults:
@@ -42,7 +53,9 @@ spec:
               enableIMDSv2: true,
               enableCpuCredits: true,
           };
-      echo: {}   # is the contents of ~/.hal/default/profiles/echo.yml
+          window.spinnakerSettings.feature.quietPeriod = true;
+      echo:   # is the contents of ~/.hal/default/profiles/echo.yml
+        orca.enabled: true # 2022-09-15 https://support.armory.io/support?sys_kb_id=08b0efa41ba1f01013d4fe6fdc4bcb58&id=kb_article_view&sysparm_rank=33&sysparm_tsqueryId=0e3f1fbf1b751d5004ef3377cc4bcb79
         # pubsub:
         #   enabled: true
         #   amazon:
@@ -63,7 +76,22 @@ spec:
         # logging.level.com.netflix.spinnaker.echo.config.AmazonPubsubProperties: DEBUG
       fiat: {}    # is the contents of ~/.hal/default/profiles/fiat.yml
       front50: {} # is the contents of ~/.hal/default/profiles/front50.yml
-      gate: {}    # is the contents of ~/.hal/default/profiles/gate.yml
+      gate: #{}      # is the contents of ~/.hal/default/profiles/gate.yml
+        # 2022-09-27 added below 4607 autodesk 
+        # https://spinnaker.io/docs/setup/productionize/caching/externalize-redis/
+        # redis:
+        #   configuration:
+        #     secure: true
+        #
+        #2022-09-26 below for EvaluateArtifactsPlugin
+        spinnaker:
+          extensibility:
+            deck-proxy:
+              enabled: true
+              plugins:
+                Armory.EvaluateArtifactsPlugin:
+                  enabled: true
+                  version: 0.1.1 # Replace with the version you want to use. For example, use 0.1.0.
       igor: {}    # is the contents of ~/.hal/default/profiles/igor.yml
       kayenta: {} # is the contents of ~/.hal/default/profiles/kayenta.yml
       orca:       # is the contents of ~/.hal/default/profiles/orca.yml
@@ -79,4 +107,147 @@ spec:
             minimumPipelineExecutions: 5   # How many executions to keep around (default: 5)
         tasks:
           daysOfExecutionHistory: 180      # How many days to keep old task executions around
+
+        # 2022-09-26 temporary close for orca cannot start
+        # job:
+        #   preconfigured:
+        #     kubernetes:
+        #       - label: PollingGiithubActionWorkflow
+        #         type: pollingWorkflow
+        #         description: Polling GitHub Action Workflow status
+        #         cloudProvider: kubernetes
+        #         account: christine-sa
+        #         credentials: christine-sa
+        #         waitForCompletion: true
+        #         application: k8s2
+        #         parameters:
+        #           - name: owner
+        #             label: Organization
+        #             description: Organization for the git repository
+        #             mapping: manifest.spec.template.spec.containers[0].env[0].value
+        #             defaultValue: ChristineZhaoArmory
+        #           - name: repo
+        #             label: Repository
+        #             description: Git repository name
+        #             mapping: manifest.spec.template.spec.containers[0].env[1].value
+        #             defaultValue: my_project
+        #           - name: ref
+        #             label: Reference
+        #             description: The reference can be a branch, tag, or a commit SHA.
+        #             mapping: manifest.spec.template.spec.containers[0].env[2].value
+        #             defaultValue: main
+        #           - name: JSONSPHRASE
+        #             label: Jsons to merge
+        #             description: Jsons to be merged.
+        #             mapping: manifest.spec.template.spec.containers[0].env[0].value
+        #             defaultValue: "Hello world!"
+        #         manifest:
+        #           apiVersion: batch/v1
+        #           kind: Job
+        #           metadata:
+        #             name: polling-gha-workflow
+        #             namespace: christine-zhao
+        #           spec:
+        #             backoffLimit: 0
+        #             template:
+        #               spec:
+        #                 restartPolicy: Never
+        #                 containers: 
+        #                   - name: polling-gha-wf-status
+        #                     image: alpine:latest
+        #                     env:
+        #                       - name: owner
+        #                         value: placeholder
+        #                       - name: repo
+        #                         value: placeholder
+        #                       - name: ref
+        #                         value: placeholder
+        #                     command: ["/bin/sh", "-c"]
+        #                     args:
+        #                     - echo "polling:" https://api.github.com/repos/$owner/$repo/dispatches;
+        #                     - echo "write some logic ...";
+        #       - label: MergerJson
+        #         type: echoPhrase
+        #         description: Merger Jsons with maximum values
+        #         cloudProvider: kubernetes
+        #         account: christine-sa
+        #         credentials: christine-sa
+        #         waitForCompletion: true
+        #         application: k8s2
+        #         parameters:
+        #           - name: JSONSPHRASE
+        #             label: Jsons to merge
+        #             description: Jsons to be merged.
+        #             mapping: manifest.spec.template.spec.containers[0].env[0].value
+        #             defaultValue: "Hello world!"
+        #         manifest:
+        #           apiVersion: batch/v1
+        #           kind: Job
+        #           metadata:
+        #             name: say-hello
+        #             namespace: christine-zhao
+        #           spec:
+        #             backoffLimit: 0
+        #             template:
+        #               spec:
+        #                 restartPolicy: Never
+        #                 containers: 
+        #                   - name: hello
+        #                     image: alpine:latest
+        #                     env:
+        #                       - name: JSONSPHRASE
+        #                         value: placeholder
+        #                     command: ["/bin/sh", "-c"]
+        #                     args:
+        #                     - echo "JSONMERGED:" $JSONSPHRASE;
+        # webhook:
+        #   preconfigured:
+        #   - label: GitHub Action Workflow Status
+        #     type: githubWorkflowStatus
+        #     enabled: true
+        #     description: Get GitHub Action Workflow status
+        #     method: GET
+        #     url: https://api.github.com/repos/${parameterValues.organization}/${parameterValues.project}/statuses/${parameterValues.workflowId}
+        #     waitForCompletion: true # can this be here?
+        #     customHeaders:
+        #       Authorization:
+        #         - encrypted:s3!r:encryptedapikey
+        #       Content-Type:
+        #         - application/json
+        #     parameters:
+        #       - label: Organization
+        #         name: organization
+        #         description: Organization for the git repository
+        #         defaultValue: something
+        #       - label: Project
+        #         name: project
+        #         description: Git repository name
+        #         defaultValue: ${ execution.application }
+        #       - label: Workflow ID
+        #         name: workflowId
+        #         description: The workflow_id
+        #         defaultValue: '35484811'
+        #         type: string
+          
+        #   - label: Get GitHub Latest Release
+        #     type: getGithubLatestRelease
+        #     enabled: true
+        #     description: Get GitHub Latest Release
+        #     method: GET
+        #     url: https://api.github.com/repos/${parameterValues.organization}/${parameterValues.project}/releases/latest
+        #     customHeaders:
+        #       Authorization:
+        #         - encrypted:s3!r:encryptedapikey
+        #       Content-Type:
+        #         - application/json
+        #     parameters:
+        #       - label: Organization
+        #         name: organization
+        #         description: Organization for the git repository
+        #         defaultValue: something
+        #       - label: Project
+        #         name: project
+        #         description: Git repository name
+        #         defaultValue: ${ execution.application }
+
       rosco: {}   # is the contents of ~/.hal/default/profiles/rosco.yml

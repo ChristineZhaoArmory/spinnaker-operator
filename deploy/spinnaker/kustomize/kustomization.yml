@@ -3,13 +3,17 @@ kind: Kustomization
 
 resources:
 - SpinnakerService.yml
-- k8s-sql-debug.yml
-- jenkins.yml # 2022-08-22 added
-- servicemonitor.yml
-- infrastructure/debugging-tools.yml # (Optional). A pod with some tools for troubleshooting spinnaker (curl, kubectl, vault, etc.)
+
+#--------------------THIS ARE TOOLS. CANNOT BE REMVOED--------------------
+#- k8s-sql-debug.yml
+#- jenkins.yml # 2022-08-22 added
+#- servicemonitor.yml
+#- infrastructure/debugging-tools.yml # (Optional). A pod with some tools for troubleshooting spinnaker (curl, kubectl, vault, etc.)
+#--------------------THIS ARE TOOLS. CANNOT BE REMVOED--------------------
 
 # #- clouddriver-logback.yml # 2022-08-23 add logback
-- logback-config.yml # 2022-08-24 add generic logback
+#- logback-config.yml # 2022-08-24 add generic logback
+                      # 2022-08-27 closed because too much logs
 
 - armory-agent/service.clouddriver.yml
 
@@ -58,10 +62,10 @@ patchesStrategicMerge:
 
 #- patch-policy-and-agent-plugins.yml # Added 2022-06-13 for policy engine
                                        # 2022-08-17 resume agent later
-- patch-policy-engine-plugin.yml # 2022-08-11 Change to this version for testing
-                                 # 2022-08-24 temporary close to test others
+# - patch-policy-engine-plugin.yml # 2022-08-11 Change to this version for testing
+                                 # 2022-08-25 temporary close to test others
 
-- patch-startupprobes.yml
+#- patch-startupprobes.yml
 
 # configMapGenerator:  # Added 2022-06-13 for policy engine
 #   # ConfigMap holding OPA policy definitions to use by Armory's policy engine. Required by patch-policyengine.yml

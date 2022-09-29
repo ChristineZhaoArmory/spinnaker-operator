@@ -20,8 +20,8 @@ spec:
 #           fiatUser: dinghy-sa                   # Service account for dinghy to use, required if fiat is enabled
           # --- github settings
           # personal token dinghy, repo, workflow, hook
-          githubToken: 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 #2022-08-18 change to text token
-          #githubToken: encrypted:k8s!n:spin-secrets!k:github-token
+          # githubToken: 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 #2022-08-25 change to text token
+          githubToken: encrypted:k8s!n:spin-secrets!k:github-token
           # githubToken: encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token # (Secret). GitHub token
           githubEndpoint: https://api.github.com                   # (Default: https://api.github.com) Github API endpoint. Useful if you’re using Github Enterprise
           # --- bitbucket/stash settings

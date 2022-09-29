@@ -1,0 +1,1021 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"spinnaker.armory.io/v1alpha2","kind":"SpinnakerService","metadata":{"annotations":{},"name":"spinnaker","namespace":"shlomo-operspin"},"spec":{"expose":{"service":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"http"},"overrides":{},"type":"NodePort"},"type":"service"},"kustomize":{"clouddriver":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name:
+      clouddriver\n        startupProbe:\n          exec:\n             
+      command:\n              - \"true\"\n          failureThreshold:
+      30\n          periodSeconds: 10\n          successThreshold: 1\n         
+      timeoutSeconds: 1 \n"]}},"deck":{"service":{"patches":["spec:\n  type:
+      NodePort\n  ports:\n  - name: http\n    port: 9000\n    targetPort:
+      9000\n    nodePort:
+      31473\n"]}},"dinghy":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: dinghy\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 300\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1  
+      \n"]}},"echo":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: echo\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 30\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1
+      \n"]}},"fiat":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: fiat\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 30\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1
+      \n"]}},"front50":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: front50\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 30\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1
+      \n"]}},"gate":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: gate\n       
+      startupProbe:\n          exec:\n            exec:\n             
+      command:\n              - \"true\"\n          failureThreshold:
+      300\n          periodSeconds: 10\n          successThreshold: 1\n         
+      timeoutSeconds: 1  \n"]},"service":{"patches":["spec:\n  type: NodePort\n 
+      ports:\n  - name: http\n    port: 8084\n    targetPort: 8084\n   
+      nodePort:
+      31115\n"]}},"igor":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: igor\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 30\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1
+      \n"]}},"orca":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: orca\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 300\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1 
+      \n"]}},"rosco":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name: rosco\n       
+      startupProbe:\n          exec:\n              command:\n              -
+      \"true\"\n          failureThreshold: 300\n          periodSeconds:
+      10\n          successThreshold: 1\n          timeoutSeconds: 1 
+      \n"]}},"terraformer":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      containers:\n      - name:
+      terraformer\n        startupProbe:\n          exec:\n             
+      command:\n              - \"true\"\n          failureThreshold:
+      300\n          periodSeconds: 10\n          successThreshold: 1\n         
+      timeoutSeconds: 1
+      "]}}},"spinnakerConfig":{"config":{"armory":{"dinghy":{"autoLockPipelines":true,"dinghyFilename":"dinghyfile","enabled":true,"githubEndpoint":"https://api.github.com","githubToken":"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","notifiers":{"slack":{"enabled":false}},"templateOrg":"shlomodaari","templateRepo":"dinghy"},"terraform":{"enabled":true}},"artifacts":{"github":{"accounts":[{"name":"AT_Github","token":"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"}],"enabled":true},"gitrepo":{"accounts":[{"name":"AT_GitRepo","token":"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"}],"enabled":true},"maven":{"accounts":[{"name":"artifactory-maven","repositoryUrl":"https://shlomodaari.jfrog.io//artifactory/default-maven-local/"}],"enabled":true},"s3":{"accounts":[{"name":"s3-bucket","region":"us-east-2"}],"enabled":true}},"ci":{"jenkins":{"enabled":true,"masters":[{"address":"https://shlomo-jenkins.tse-armory.io/","csrf":true,"name":"jenkins-master","password":"bitnami","username":"user"},{"address":"https://shlomo-jenkins.tse-armory.io/","csrf":true,"name":"jenkins-master-2","password":"daari","username":"shlomo"}]}},"deploymentEnvironment":{"customSizing":{"spin-clouddriver":{"replicas":1}}},"features":{"artifacts":true,"fiat":true},"notifications":{"slack":{"botName":"spinnaker-notification-bot","enabled":true,"token":"xoxp-3599704306245-3596007241750-3588067037447-d8a1a2196e0e90c12b7bcc06e2330bae"}},"persistentStorage":{"persistentStoreType":"s3","s3":{"bucket":"shlomodaaris3","region":"us-east-2","rootFolder":"front50"}},"providers":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/aws-spin-support-managedrole","name":"shlomo-aws","providerVersion":"V1","regions":[{"name":"us-east-2"},{"name":"us-east-1"},{"name":"us-west-1"},{"name":"us-west-2"}],"requiredGroupMembership":[]}],"bakeryDefaults":{"baseImages":[{"baseImage":{"detailedDescription":"debian11","id":"debian","packageType":"deb","shortDescription":"v11","templateFile":"aws-ebs.json"},"virtualizationSettings":[{"instanceType":"t2.micro","region":"us-west-2","sourceAmi":"ami-071e6cafc48327ca2","spotPrice":"0","spotPriceAutoProduct":"Linux/UNIX
+      (Amazon
+      VPC)","sshUserName":"admin","virtualizationType":"hvm"}]}]},"defaultKeyPairTemplate":"‘{{“{{“}}name{{“}}“}}-keypair’","defaultRegions":[{"name":"us-east-1"},{"name":"us-east-2"},{"name":"us-west-1"},{"name":"us-west-2"}],"defaults":{"iamRole":"BaseIAMRole"},"enabled":true,"primaryAccount":"shlomo-aws"},"kubernetes":{"accounts":[{"cacheThreads":1,"cachingPolicies":[],"configureImagePullSecrets":true,"customResources":[],"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1","name":"shlomo-da","namespaces":[],"oAuthScopes":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":true,"providerVersion":"V2","requiredGroupMembership":[]},{"cacheThreads":1,"cachingPolicies":[],"configureImagePullSecrets":true,"customResources":[],"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret","name":"Christine-sa-k8s-account","namespaces":[],"oAuthScopes":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":true,"providerVersion":"V2","requiredGroupMembership":[]}],"enabled":true,"primaryAccount":"shlomo-da"}},"repository":{"artifactory":{"enabled":true,"searches":[{"baseUrl":"https://shlomodaari.jfrog.io","groupId":null,"name":"spinnaker-docker","password":"awz4eqx7bdm8JZY*abz","repo":"spinnaker-docker","repoType":null,"username":"shlomo.daari@armory.io"}]}},"security":{"apiSecurity":{"overrideBaseUrl":"https://shlomo-spin-gate.tse-armory.io"},"authn":{"enabled":true,"oauth2":{"client":{"accessTokenUri":"https://github.com/login/oauth/access_token","clientId":"84ce32f217d29e93688d","clientSecret":"cc603e7a3eba848bcb684e6797c505d9511cae9a","scope":"user:email","userAuthorizationUri":"https://github.com/login/oauth/authorize"},"enabled":true,"provider":"GITHUB","resource":{"userInfoUri":"https://api.github.com/user"}}},"uiSecurity":{"overrideBaseUrl":"https://shlomo-spin-deck.tse-armory.io"}},"version":"2.27.3"},"files":{},"profiles":{"clouddriver":{"executionRepository":{"redis":{"enabled":false},"sql":{"enabled":true}},"kubernetes":{"imagePullSecrets":["regcred"]},"kubesvc":{"cache":{"cleanDataWithUnusedAccounts":true}},"logging":{"level":{"com.netflix.spinnaker.igor":"DEBUG"}},"redis":{"cache":{"enabled":false},"enabled":false,"scheduler":{"enabled":false},"taskRepository":{"enabled":false}},"sql":{"cache":{"enabled":true,"readBatchSize":500,"writeBatchSize":300},"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"admin","user":"clouddriver_service"},"tasks":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"admin","user":"clouddriver_service"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"admin","user":"clouddriver_migrate"},"read-only":false,"scheduler":{"enabled":true},"taskRepository":{"enabled":true},"unknown-agent-cleanup-agent":{"enabled":true}}},"deck":{"settings-local.js":"window.spinnakerSettings.feature.terraform
+      = true;\nwindow.spinnakerSettings.feature.kustomizeEnabled =
+      true;\nwindow.spinnakerSettings.feature.artifactsRewrite =
+      true;\nwindow.spinnakerSettings.feature.managedServiceAccounts =
+      true;\nwindow.spinnakerSettings.authEnabled =
+      true;\n"},"dinghy":{"repoConfig":[{"branch":"main","provider":"github","repo":"dinghy"}]},"echo":{},"fiat":{"auth.permissions.provider.application":"aggregate","auth.permissions.source.application.prefix":{"enabled":true,"prefixes":[{"permissions":{"CREATE":["admin"],"EXECUTE":["admin"],"READ":["admin","read-only","read\u0026write"],"WRITE":["admin","read\u0026write"]},"prefix":"*","users":[{"roles":["admin"],"username":"admin"},{"roles":["read-only"],"username":"read-only"},{"roles":["read\u0026write"],"username":"read\u0026write"}]}]},"fiat.restrictApplicationCreation":true},"front50":{"migrations":{"migrateToManagedServiceAccounts":true},"redis":{"cache":{"enabled":false},"enabled":false,"scheduler":{"enabled":false},"taskRepository":{"enabled":false}},"serviceAccount":true,"sql":[{"cache":{"enabled":true,"readBatchSize":500,"writeBatchSize":300},"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50","password":"admin","user":"front50_service"},"tasks":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50","password":"admin","user":"front50_service"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50","password":"admin","user":"front50_migrate"},"read-only":false,"scheduler":{"enabled":true},"taskRepository":{"enabled":true},"unknown-agent-cleanup-agent":{"enabled":false}}]},"gate":{},"igor":{},"kayenta":{},"orca":{"executionRepository":{"redis":{"enabled":false},"sql":{"enabled":true}},"spinnaker":{"baseUrl":{"www":"https://shlomo-spin-deck.tse-armory.io/"}},"sql":{"cache":{"enabled":true,"readBatchSize":500,"writeBatchSize":300},"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca","password":"admin","user":"orca_service"},"tasks":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca","password":"admin","user":"orca_service"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca","password":"admin","user":"orca_migrate"},"read-only":false,"scheduler":{"enabled":true},"taskRepository":{"enabled":true},"unknown-agent-cleanup-agent":{"enabled":false}},"tasks":{"useManagedServiceAccounts":false}},"rosco":{}},"service-settings":{"clouddriver":{"kubernetes":{"serviceAccountName":"spin-sa"}},"deck":{},"dinghy":{"kubernetes":{"serviceAccountName":"spin-sa"}},"echo":{"kubernetes":{"serviceAccountName":"spin-sa"}},"fiat":{"kubernetes":{"serviceAccountName":"spin-sa"},"logging":{"level":{"com.netflix.spinnaker.igor":"DEBUG"}}},"front50":{"kubernetes":{"serviceAccountName":"spin-sa"}},"gate":{"kubernetes":{"serviceAccountName":"spin-sa"}},"igor":{"kubernetes":{"serviceAccountName":"spin-sa"}},"kayenta":{"kubernetes":{"serviceAccountName":"spin-sa"}},"orca":{"kubernetes":{"serviceAccountName":"spin-sa"}},"rosco":{"kubernetes":{"serviceAccountName":"spin-sa"}},"terraformer":{"kubernetes":{"serviceAccountName":"spin-sa"}}}}}}
+  creationTimestamp: '2022-08-23T22:16:53Z'
+  generation: 7
+  managedFields:
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:expose:
+            .: {}
+            f:service:
+              .: {}
+              f:annotations:
+                .: {}
+                f:service.beta.kubernetes.io/aws-load-balancer-backend-protocol: {}
+              f:overrides: {}
+              f:type: {}
+            f:type: {}
+          f:kustomize:
+            .: {}
+            f:clouddriver:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:deck:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+            f:dinghy:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:echo:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:fiat:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:front50:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:gate:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+              f:service:
+                .: {}
+                f:patches: {}
+            f:igor:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:orca:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:rosco:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:terraformer:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+          f:spinnakerConfig:
+            .: {}
+            f:config:
+              .: {}
+              f:armory: {}
+              f:artifacts: {}
+              f:ci: {}
+              f:deploymentEnvironment: {}
+              f:features: {}
+              f:notifications: {}
+              f:persistentStorage: {}
+              f:providers: {}
+              f:repository: {}
+              f:security: {}
+              f:version: {}
+            f:files: {}
+            f:profiles:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:executionRepository: {}
+                f:kubernetes: {}
+                f:kubesvc: {}
+                f:logging: {}
+                f:redis: {}
+                f:sql: {}
+              f:deck:
+                .: {}
+                f:settings-local.js: {}
+              f:dinghy:
+                .: {}
+                f:repoConfig: {}
+              f:echo: {}
+              f:fiat:
+                .: {}
+                f:auth.permissions.provider.application: {}
+                f:auth.permissions.source.application.prefix: {}
+                f:fiat.restrictApplicationCreation: {}
+              f:front50:
+                .: {}
+                f:migrations: {}
+                f:redis: {}
+                f:serviceAccount: {}
+                f:sql: {}
+              f:gate: {}
+              f:igor: {}
+              f:kayenta: {}
+              f:orca:
+                .: {}
+                f:executionRepository: {}
+                f:spinnaker: {}
+                f:sql: {}
+                f:tasks: {}
+              f:rosco: {}
+            f:service-settings:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:kubernetes: {}
+              f:deck: {}
+              f:dinghy:
+                .: {}
+                f:kubernetes: {}
+              f:echo:
+                .: {}
+                f:kubernetes: {}
+              f:fiat:
+                .: {}
+                f:kubernetes: {}
+                f:logging: {}
+              f:front50:
+                .: {}
+                f:kubernetes: {}
+              f:gate:
+                .: {}
+                f:kubernetes: {}
+              f:igor:
+                .: {}
+                f:kubernetes: {}
+              f:kayenta:
+                .: {}
+                f:kubernetes: {}
+              f:orca:
+                .: {}
+                f:kubernetes: {}
+              f:rosco:
+                .: {}
+                f:kubernetes: {}
+              f:terraformer:
+                .: {}
+                f:kubernetes: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2022-08-26T20:45:43Z'
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiUrl: {}
+          f:lastDeployed:
+            .: {}
+            f:account-Kubernetes-Christine-sa-k8s-account:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:account-Kubernetes-shlomo-da:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:config:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:kustomize:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:validation:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+          f:registrationId: {}
+          f:serviceCount: {}
+          f:services:
+            .: {}
+            k:{"name":"spin-clouddriver"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-deck"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-dinghy"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-echo"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-front50"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-gate"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-igor"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-orca"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-redis"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-rosco"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-terraformer"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+          f:status: {}
+          f:uiUrl: {}
+          f:version: {}
+      manager: spinnaker-operator
+      operation: Update
+      time: '2022-08-27T20:16:37Z'
+  name: spinnaker
+  namespace: shlomo-operspin
+  resourceVersion: '538116940'
+  uid: 920caf80-82fc-4e14-af77-3d61d3c5bade
+  selfLink: >-
+    /apis/spinnaker.armory.io/v1alpha2/namespaces/shlomo-operspin/spinnakerservices/spinnaker
+status:
+  apiUrl: https://shlomo-spin-gate.tse-armory.io
+  lastDeployed:
+    account-Kubernetes-Christine-sa-k8s-account:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-08-24T16:50:07Z'
+    account-Kubernetes-shlomo-da:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-08-24T16:50:07Z'
+    config:
+      hash: 1690b7912f7ae04ce98ce3fcf8a7be56
+      lastUpdatedAt: '2022-08-27T21:53:09Z'
+    kustomize:
+      hash: 207cd0fb18a9c4118b76cf3de29cafc7
+      lastUpdatedAt: '2022-08-27T21:53:09Z'
+    validation:
+      hash: 99a5e1fc374a42a720c55b319b15b725
+      lastUpdatedAt: '2022-08-24T16:50:07Z'
+  registrationId: 93e8d352-ea78-4fdb-8d27-e206e91b3127
+  serviceCount: 11
+  services:
+    - image: docker.io/armory/gate:2.27.3
+      name: spin-gate
+      readyReplicas: 1
+      replicas: 1
+    - image: us-docker.pkg.dev/spinnaker-community/redis/redis-cluster:v2
+      name: spin-redis
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/echo:2.27.3
+      name: spin-echo
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/terraformer:2.27.3
+      name: spin-terraformer
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/clouddriver:2.27.3
+      name: spin-clouddriver
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/igor:2.27.3
+      name: spin-igor
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/orca:2.27.3
+      name: spin-orca
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/dinghy:2.27.3
+      name: spin-dinghy
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/deck:2.27.3
+      name: spin-deck
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/front50:2.27.3
+      name: spin-front50
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/rosco:2.27.3
+      name: spin-rosco
+      readyReplicas: 1
+      replicas: 1
+  status: OK
+  uiUrl: https://shlomo-spin-deck.tse-armory.io
+  version: 2.27.3
+spec:
+  expose:
+    service:
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+      overrides: {}
+      type: NodePort
+    type: service
+  kustomize:
+    clouddriver:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: clouddriver
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+    deck:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 9000
+                targetPort: 9000
+                nodePort: 31473
+    dinghy:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: dinghy
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 300
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1   
+    echo:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: echo
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+    fiat:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: fiat
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+    front50:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: front50
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+    gate:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: gate
+                    startupProbe:
+                      exec:
+                        exec:
+                          command:
+                          - "true"
+                      failureThreshold: 300
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1  
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 8084
+                targetPort: 8084
+                nodePort: 31115
+    igor:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: igor
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 30
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+    orca:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: orca
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 300
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1  
+    rosco:
+      deployment:
+        patchesStrategicMerge:
+          - |
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: rosco
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 300
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1  
+    terraformer:
+      deployment:
+        patchesStrategicMerge:
+          - |-
+            spec:
+              template:
+                spec:
+                  containers:
+                  - name: terraformer
+                    startupProbe:
+                      exec:
+                          command:
+                          - "true"
+                      failureThreshold: 300
+                      periodSeconds: 10
+                      successThreshold: 1
+                      timeoutSeconds: 1 
+  spinnakerConfig:
+    config:
+      armory:
+        dinghy:
+          autoLockPipelines: true
+          dinghyFilename: dinghyfile
+          enabled: true
+          githubEndpoint: https://api.github.com
+          githubToken: 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
+          notifiers:
+            slack:
+              enabled: false
+          templateOrg: shlomodaari
+          templateRepo: dinghy
+        terraform:
+          enabled: true
+      artifacts:
+        github:
+          accounts:
+            - name: AT_Github
+              token: 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
+          enabled: true
+        gitrepo:
+          accounts:
+            - name: AT_GitRepo
+              token: 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
+          enabled: true
+        maven:
+          accounts:
+            - name: artifactory-maven
+              repositoryUrl: https://shlomodaari.jfrog.io//artifactory/default-maven-local/
+          enabled: true
+        s3:
+          accounts:
+            - name: s3-bucket
+              region: us-east-2
+          enabled: true
+      ci:
+        jenkins:
+          enabled: true
+          masters:
+            - address: https://shlomo-jenkins.tse-armory.io/
+              csrf: true
+              name: jenkins-master
+              password: bitnami
+              username: user
+            - address: https://shlomo-jenkins.tse-armory.io/
+              csrf: true
+              name: jenkins-master-2
+              password: daari
+              username: shlomo
+      deploymentEnvironment:
+        customSizing:
+          spin-clouddriver:
+            replicas: 1
+      features:
+        artifacts: true
+        fiat: true
+      notifications:
+        slack:
+          botName: spinnaker-notification-bot
+          enabled: true
+          token: >-
+            xoxp-3599704306245-3596007241750-3588067037447-d8a1a2196e0e90c12b7bcc06e2330bae
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: shlomodaaris3
+          region: us-east-2
+          rootFolder: front50
+      providers:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-managedrole
+              name: shlomo-aws
+              providerVersion: V1
+              regions:
+                - name: us-east-2
+                - name: us-east-1
+                - name: us-west-1
+                - name: us-west-2
+              requiredGroupMembership: []
+          bakeryDefaults:
+            baseImages:
+              - baseImage:
+                  detailedDescription: debian11
+                  id: debian
+                  packageType: deb
+                  shortDescription: v11
+                  templateFile: aws-ebs.json
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    region: us-west-2
+                    sourceAmi: ami-071e6cafc48327ca2
+                    spotPrice: '0'
+                    spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
+                    sshUserName: admin
+                    virtualizationType: hvm
+          defaultKeyPairTemplate: ‘{{“{{“}}name{{“}}“}}-keypair’
+          defaultRegions:
+            - name: us-east-1
+            - name: us-east-2
+            - name: us-west-1
+            - name: us-west-2
+          defaults:
+            iamRole: BaseIAMRole
+          enabled: true
+          primaryAccount: shlomo-aws
+        kubernetes:
+          accounts:
+            - cacheThreads: 1
+              cachingPolicies: []
+              configureImagePullSecrets: true
+              customResources: []
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              name: shlomo-da
+              namespaces: []
+              oAuthScopes: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              providerVersion: V2
+              requiredGroupMembership: []
+            - cacheThreads: 1
+              cachingPolicies: []
+              configureImagePullSecrets: true
+              customResources: []
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: >-
+                encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+              name: Christine-sa-k8s-account
+              namespaces: []
+              oAuthScopes: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              providerVersion: V2
+              requiredGroupMembership: []
+          enabled: true
+          primaryAccount: shlomo-da
+      repository:
+        artifactory:
+          enabled: true
+          searches:
+            - baseUrl: https://shlomodaari.jfrog.io
+              groupId: null
+              name: spinnaker-docker
+              password: awz4eqx7bdm8JZY*abz
+              repo: spinnaker-docker
+              repoType: null
+              username: shlomo.daari@armory.io
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://shlomo-spin-gate.tse-armory.io
+        authn:
+          enabled: true
+          oauth2:
+            client:
+              accessTokenUri: https://github.com/login/oauth/access_token
+              clientId: 84ce32f217d29e93688d
+              clientSecret: cc603e7a3eba848bcb684e6797c505d9511cae9a
+              scope: user:email
+              userAuthorizationUri: https://github.com/login/oauth/authorize
+            enabled: true
+            provider: GITHUB
+            resource:
+              userInfoUri: https://api.github.com/user
+        uiSecurity:
+          overrideBaseUrl: https://shlomo-spin-deck.tse-armory.io
+      version: 2.27.3
+    files: {}
+    profiles:
+      clouddriver:
+        executionRepository:
+          redis:
+            enabled: false
+          sql:
+            enabled: true
+        kubernetes:
+          imagePullSecrets:
+            - regcred
+        kubesvc:
+          cache:
+            cleanDataWithUnusedAccounts: true
+        logging:
+          level:
+            com.netflix.spinnaker.igor: DEBUG
+        redis:
+          cache:
+            enabled: false
+          enabled: false
+          scheduler:
+            enabled: false
+          taskRepository:
+            enabled: false
+        sql:
+          cache:
+            enabled: true
+            readBatchSize: 500
+            writeBatchSize: 300
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: >-
+                jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              password: admin
+              user: clouddriver_service
+            tasks:
+              jdbcUrl: >-
+                jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              password: admin
+              user: clouddriver_service
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+            password: admin
+            user: clouddriver_migrate
+          read-only: false
+          scheduler:
+            enabled: true
+          taskRepository:
+            enabled: true
+          unknown-agent-cleanup-agent:
+            enabled: true
+      deck:
+        settings-local.js: |
+          window.spinnakerSettings.feature.terraform = true;
+          window.spinnakerSettings.feature.kustomizeEnabled = true;
+          window.spinnakerSettings.feature.artifactsRewrite = true;
+          window.spinnakerSettings.feature.managedServiceAccounts = true;
+          window.spinnakerSettings.authEnabled = true;
+      dinghy:
+        repoConfig:
+          - branch: main
+            provider: github
+            repo: dinghy
+      echo: {}
+      fiat:
+        auth.permissions.provider.application: aggregate
+        auth.permissions.source.application.prefix:
+          enabled: true
+          prefixes:
+            - permissions:
+                CREATE:
+                  - admin
+                EXECUTE:
+                  - admin
+                READ:
+                  - admin
+                  - read-only
+                  - read&write
+                WRITE:
+                  - admin
+                  - read&write
+              prefix: '*'
+              users:
+                - roles:
+                    - admin
+                  username: admin
+                - roles:
+                    - read-only
+                  username: read-only
+                - roles:
+                    - read&write
+                  username: read&write
+        fiat.restrictApplicationCreation: true
+      front50:
+        migrations:
+          migrateToManagedServiceAccounts: true
+        redis:
+          cache:
+            enabled: false
+          enabled: false
+          scheduler:
+            enabled: false
+          taskRepository:
+            enabled: false
+        serviceAccount: true
+        sql:
+          - cache:
+              enabled: true
+              readBatchSize: 500
+              writeBatchSize: 300
+            connectionPools:
+              default:
+                default: true
+                jdbcUrl: >-
+                  jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50
+                password: admin
+                user: front50_service
+              tasks:
+                jdbcUrl: >-
+                  jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50
+                password: admin
+                user: front50_service
+            enabled: true
+            migration:
+              jdbcUrl: >-
+                jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50
+              password: admin
+              user: front50_migrate
+            read-only: false
+            scheduler:
+              enabled: true
+            taskRepository:
+              enabled: true
+            unknown-agent-cleanup-agent:
+              enabled: false
+      gate: {}
+      igor: {}
+      kayenta: {}
+      orca:
+        executionRepository:
+          redis:
+            enabled: false
+          sql:
+            enabled: true
+        spinnaker:
+          baseUrl:
+            www: https://shlomo-spin-deck.tse-armory.io/
+        sql:
+          cache:
+            enabled: true
+            readBatchSize: 500
+            writeBatchSize: 300
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: >-
+                jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+              password: admin
+              user: orca_service
+            tasks:
+              jdbcUrl: >-
+                jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+              password: admin
+              user: orca_service
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://shlomo-aurora-db-mysql-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+            password: admin
+            user: orca_migrate
+          read-only: false
+          scheduler:
+            enabled: true
+          taskRepository:
+            enabled: true
+          unknown-agent-cleanup-agent:
+            enabled: false
+        tasks:
+          useManagedServiceAccounts: false
+      rosco: {}
+    service-settings:
+      clouddriver:
+        kubernetes:
+          serviceAccountName: spin-sa
+      deck: {}
+      dinghy:
+        kubernetes:
+          serviceAccountName: spin-sa
+      echo:
+        kubernetes:
+          serviceAccountName: spin-sa
+      fiat:
+        kubernetes:
+          serviceAccountName: spin-sa
+        logging:
+          level:
+            com.netflix.spinnaker.igor: DEBUG
+      front50:
+        kubernetes:
+          serviceAccountName: spin-sa
+      gate:
+        kubernetes:
+          serviceAccountName: spin-sa
+      igor:
+        kubernetes:
+          serviceAccountName: spin-sa
+      kayenta:
+        kubernetes:
+          serviceAccountName: spin-sa
+      orca:
+        kubernetes:
+          serviceAccountName: spin-sa
+      rosco:
+        kubernetes:
+          serviceAccountName: spin-sa
+      terraformer:
+        kubernetes:
+          serviceAccountName: spin-sa

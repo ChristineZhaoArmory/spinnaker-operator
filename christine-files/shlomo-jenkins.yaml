@@ -1,0 +1,212 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: jenkins-6f74694758-8rj7t
+  generateName: jenkins-6f74694758-
+  namespace: shlomo-operspin
+  uid: bf7a0889-d7e0-4798-b867-f796ff195829
+  resourceVersion: '535294715'
+  creationTimestamp: '2022-08-23T22:16:31Z'
+  labels:
+    app: jenkins
+    pod-template-hash: 6f74694758
+  annotations:
+    kubernetes.io/psp: e2e-test-privileged-psp
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      name: jenkins-6f74694758
+      uid: 31490256-1fff-4f7e-af82-4d336996d4e7
+      controller: true
+      blockOwnerDeletion: true
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-08-23T22:16:31Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:generateName: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:pod-template-hash: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"31490256-1fff-4f7e-af82-4d336996d4e7"}:
+              .: {}
+              f:apiVersion: {}
+              f:blockOwnerDeletion: {}
+              f:controller: {}
+              f:kind: {}
+              f:name: {}
+              f:uid: {}
+        f:spec:
+          f:containers:
+            k:{"name":"jenkins"}:
+              .: {}
+              f:image: {}
+              f:imagePullPolicy: {}
+              f:name: {}
+              f:ports:
+                .: {}
+                k:{"containerPort":8080,"protocol":"TCP"}:
+                  .: {}
+                  f:containerPort: {}
+                  f:protocol: {}
+              f:resources: {}
+              f:terminationMessagePath: {}
+              f:terminationMessagePolicy: {}
+              f:volumeMounts:
+                .: {}
+                k:{"mountPath":"/var/jenkins_home"}:
+                  .: {}
+                  f:mountPath: {}
+                  f:name: {}
+          f:dnsPolicy: {}
+          f:enableServiceLinks: {}
+          f:restartPolicy: {}
+          f:schedulerName: {}
+          f:securityContext: {}
+          f:terminationGracePeriodSeconds: {}
+          f:volumes:
+            .: {}
+            k:{"name":"jenkins-home"}:
+              .: {}
+              f:emptyDir: {}
+              f:name: {}
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2022-08-23T22:16:33Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            k:{"type":"ContainersReady"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Initialized"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Ready"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+          f:containerStatuses: {}
+          f:hostIP: {}
+          f:phase: {}
+          f:podIP: {}
+          f:podIPs:
+            .: {}
+            k:{"ip":"192.168.116.142"}:
+              .: {}
+              f:ip: {}
+          f:startTime: {}
+  selfLink: /api/v1/namespaces/shlomo-operspin/pods/jenkins-6f74694758-8rj7t
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-08-23T22:16:31Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-08-23T22:16:33Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-08-23T22:16:33Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-08-23T22:16:31Z'
+  hostIP: 192.168.102.178
+  podIP: 192.168.116.142
+  podIPs:
+    - ip: 192.168.116.142
+  startTime: '2022-08-23T22:16:31Z'
+  containerStatuses:
+    - name: jenkins
+      state:
+        running:
+          startedAt: '2022-08-23T22:16:33Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: bitnami/jenkins:latest
+      imageID: >-
+        docker-pullable://bitnami/jenkins@sha256:e6cc75d7a854f345910e61b168fd12ade4de5b0a8929cc1d5921bc4df3b2bc27
+      containerID: >-
+        docker://7417fb8c44cc67ff6c36b07485bdae9f1fca6e86447021c9105aa411592f3371
+      started: true
+  qosClass: BestEffort
+spec:
+  volumes:
+    - name: jenkins-home
+      emptyDir: {}
+    - name: kube-api-access-z7pll
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+        defaultMode: 420
+  containers:
+    - name: jenkins
+      image: bitnami/jenkins:latest
+      ports:
+        - containerPort: 8080
+          protocol: TCP
+      resources: {}
+      volumeMounts:
+        - name: jenkins-home
+          mountPath: /var/jenkins_home
+        - name: kube-api-access-z7pll
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: Always
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 30
+  dnsPolicy: ClusterFirst
+  serviceAccountName: default
+  serviceAccount: default
+  nodeName: ip-192-168-102-178.us-east-2.compute.internal
+  securityContext: {}
+  schedulerName: default-scheduler
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+  priority: 0
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority

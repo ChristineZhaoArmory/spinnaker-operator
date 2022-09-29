@@ -37,10 +37,10 @@ spec:
           cloudProviderOverrides:
             aws:
               rateLimit: 10.0
-        logging:
-          level:
-            com.netflix.spinnaker.clouddriver: DEBUG
-          config: /opt/spinnaker/config/logging/logback-config.xml
+        # logging:
+        #   level:
+        #     com.netflix.spinnaker.clouddriver: DEBUG
+        #   config: /opt/spinnaker/config/logging/logback-config.xml #2022-08-27 closed because too much logs
         sql:
           enabled: true
           read-only: false 

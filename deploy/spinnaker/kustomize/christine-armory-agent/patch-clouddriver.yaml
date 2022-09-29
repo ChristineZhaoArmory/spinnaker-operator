@@ -52,6 +52,12 @@ spec:
             accountId: "810711266228"            # (Required). Your AWS account ID to manage. See the AWS IAM User Guide for more information.
             assumeRole: role/aws-spin-support-managedrole
       gate:
+        # 2022-09-27 added below 4607 autodesk 
+        # https://spinnaker.io/docs/setup/productionize/caching/externalize-redis/
+        redis:
+            configuration:
+                secure:
+                      true
         spinnaker:
           extensibility:
               deck-proxy:

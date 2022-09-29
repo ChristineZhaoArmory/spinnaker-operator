@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: jenkins
+  namespace: shlomo-operspin
+  uid: ef9a4a6a-b179-475f-8c1c-364e22776ca4
+  resourceVersion: '534458319'
+  creationTimestamp: '2022-08-22T16:31:47Z'
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"name":"jenkins","namespace":"shlomo-operspin"},"spec":{"ports":[{"nodePort":31479,"port":8080,"targetPort":8080}],"selector":{"app":"jenkins"},"type":"NodePort"}}
+  managedFields:
+    - manager: kubectl-client-side-apply
+      operation: Update
+      apiVersion: v1
+      time: '2022-08-22T16:31:47Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          f:externalTrafficPolicy: {}
+          f:ports:
+            .: {}
+            k:{"port":8080,"protocol":"TCP"}:
+              .: {}
+              f:nodePort: {}
+              f:port: {}
+              f:protocol: {}
+              f:targetPort: {}
+          f:selector:
+            .: {}
+            f:app: {}
+          f:sessionAffinity: {}
+          f:type: {}
+  selfLink: /api/v1/namespaces/shlomo-operspin/services/jenkins
+status:
+  loadBalancer: {}
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+      nodePort: 31479
+  selector:
+    app: jenkins
+  clusterIP: 10.100.20.196
+  clusterIPs:
+    - 10.100.20.196
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack

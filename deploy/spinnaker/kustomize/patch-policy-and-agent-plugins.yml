@@ -99,7 +99,7 @@ spec:
   #               spec:
   #                 initContainers:
   #                   - name: policy-engine-install
-  #                     image: armory/policy-engine-plugin:0.2.1
+  #                     image: armory/policy-engine-plugin:0.3.0-rc.1
   #                     imagePullPolicy: Always
   #                     args:
   #                       - -install-path
@@ -124,7 +124,7 @@ spec:
   #               spec:
   #                 initContainers:
   #                   - name: policy-engine-install
-  #                     image: armory/policy-engine-plugin:0.2.1
+  #                     image: armory/policy-engine-plugin:0.3.0-rc.1
   #                     imagePullPolicy: Always
   #                     args:
   #                       - -install-path
@@ -149,7 +149,7 @@ spec:
   #               spec:
   #                 initContainers:
   #                   - name: policy-engine-install
-  #                     image: armory/policy-engine-plugin:0.2.1
+  #                     image: armory/policy-engine-plugin:0.3.0-rc.1
   #                     imagePullPolicy: Always
   #                     args:
   #                       - -install-path
@@ -174,7 +174,7 @@ spec:
   #               spec:
   #                 initContainers:
   #                   - name: policy-engine-install
-  #                     image: armory/policy-engine-plugin:0.2.1
+  #                     image: armory/policy-engine-plugin:0.3.0-rc.1
   #                     imagePullPolicy: Always
   #                     args:
   #                       - -install-path

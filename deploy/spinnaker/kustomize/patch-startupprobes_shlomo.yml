@@ -28,7 +28,11 @@ spec:
           startupProbe:
             exec:
               command:
-              - "true"
+                - wget
+                - --no-check-certificate
+                - --spider
+                - -q
+                - http://localhost:7002/health
             initialDelaySeconds: 60
             periodSeconds: 10
             timeoutSeconds: 1

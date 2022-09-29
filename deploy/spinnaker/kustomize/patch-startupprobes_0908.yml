@@ -1,0 +1,177 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  kustomize:
+      gate:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: gate
+                      startupProbe:
+                        exec:
+                          command:
+                          - "true"
+                        failureThreshold: 300
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1  
+      clouddriver:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: clouddriver
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+      echo:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: echo
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+      fiat:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: fiat
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+      front50:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: front50
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+      igor:
+         deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: igor
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+      orca:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: orca
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 300
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1  
+      rosco:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: rosco
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 300
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1  
+      dinghy:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: dinghy
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 300
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1   
+      terraformer:
+        deployment:
+          patchesStrategicMerge:
+            - |
+              spec:
+                template:
+                  spec:
+                   containers:
+                    - name: terraformer
+                      startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 300
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
