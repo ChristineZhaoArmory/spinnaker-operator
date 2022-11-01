@@ -1,0 +1,618 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"spinnaker.armory.io/v1alpha2","kind":"SpinnakerService","metadata":{"annotations":{},"name":"spinnaker","namespace":"joshua-operspin"},"spec":{"expose":{"service":{"overrides":{},"type":"NodePort"},"type":"service"},"kustomize":{"deck":{"service":{"patches":["spec:\n 
+      type: NodePort\n  ports:\n  - name: http\n    port: 9000\n    targetPort:
+      9000\n    nodePort:  30342\n"]}},"gate":{"service":{"patches":["spec:\n 
+      type: NodePort\n  ports:\n  - name: http\n    port: 8084\n    targetPort:
+      8084\n    nodePort:
+      31961"]}}},"spinnakerConfig":{"config":{"armory":{"dinghy":{"autoLockPipelines":true,"dinghyFilename":"Dinghyfile","enabled":true,"githubEndpoint":"https://api.github.com","githubToken":"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","notifiers":{"slack":{"enabled":true}},"templateOrg":"joshua-armory","templateRepo":"dinghy"},"terraform":{"enabled":true}},"artifacts":{"bitbucket":{"accounts":[{"name":"artifact-test","password":"PW9VutE22N6FTmkbvJv9","username":"joshuaokosun"}],"enabled":true},"gitrepo":{"accounts":[{"name":"AT_GitRepo","token":"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"}],"enabled":true},"s3":{"accounts":[{"name":"joshuaookosun","region":"us-east-2"}],"enabled":true}},"canary":{"defaultJudge":"NetflixACAJudge-v1.0","defaultMetricsAccount":"canary-aws","defaultMetricsStore":"prometheus","defaultStorageAccount":"canary-aws","enabled":true,"reduxLoggerEnabled":true,"showAllConfigsEnabled":true,"stagesEnabled":true,"templatesEnabled":true},"deploymentEnvironment":{"customSizing":{"clouddriver":{"limits":{"memory":"2Gi"}},"echo":{"limits":{"cpu":"250m"}},"spin-clouddriver":{"limits":{"memory":"3Gi"},"replicas":1}}},"features":{"artifacts":true},"persistentStorage":{"persistentStoreType":"s3","s3":{"bucket":"joshuaokosun","region":"us-east-2","rootFolder":"front50"}},"providers":{"kubernetes":{"accounts":[{"cacheThreads":1,"cachingPolicies":[],"checkPermissionsOnStartup":true,"configureImagePullSecrets":true,"customResources":[],"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1","liveManifestCalls":false,"name":"joshua-kube","namespaces":[],"oAuthScopes":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":false,"permissions":{},"providerVersion":"V2"}],"enabled":true,"primaryAccount":"joshua-kube"}},"security":{"apiSecurity":{"overrideBaseUrl":"https://joshua-gate.tse-armory.io"},"authz":{"enabled":true,"groupMembership":{"github":{"accessToken":"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","baseUrl":"https://api.github.com","organization":"joshua-armory","roleProviderType":"GITHUB"},"service":"GITHUB"}},"uiSecurity":{"overrideBaseUrl":"https://joshua-deck.tse-armory.io"}},"version":"2.28.0"},"profiles":{"clouddriver":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/aws-spin-support-access","lambdaEnabled":true,"name":"joshua-spinnaker"}],"features":{"lambda":{"enabled":true},"launch-templates":{"allowed-accounts":"support-dev","allowed-applications":{"all-applications":{"enabled":true}},"enabled":true}}},"logging":{"level":{"com.netflix.spinnaker.clouddriver":"DEBUG"}},"serviceLimits":{"cloudProviderOverrides":{"aws":{"rateLimit":2}}}},"deck":{"settings-local.js":"window.spinnakerSettings.feature.kustomizeEnabled
+      = true;\nwindow.spinnakerSettings.feature.artifactsRewrite =
+      true;\nwindow.spinnakerSettings.feature.terraform =
+      true;\nwindow.spinnakerSettings.providers.aws.serverGroups.enableLaunchTemplates
+      = true;\nwindow.spinnakerSettings.providers.aws.serverGroups.enableIPv6 =
+      true;\nwindow.spinnakerSettings.providers.aws.serverGroups.enableIMDSv2 =
+      true;\nwindow.spinnakerSettings.providers.aws.serverGroups.enableCpuCredits
+      = true;\nwindow.spinnakerSettings.feature.functions =
+      true;\nwindow.spinnakerSettings.authEnabled =
+      false;\n"},"echo":{},"fiat":{},"front50":{},"gate":{"services":{"kayenta":{"canaryConfigStore":true}},"spinnaker":{"extensibility":{"deck-proxy":{"enabled":true,"plugins":{"Aws.LambdaDeploymentPlugin":{"enabled":true,"version":"1.0.9"}}},"repositories":{"awsLambdaDeploymentPluginRepo":{"url":"https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json"}}}}},"igor":{},"kayenta":{"kayenta":{"aws":{"accounts":[{"bucket":"joshuaokosun","name":"monitoring","region":"us-east-2","role":"arn:aws:iam::810711266228:role/aws-spin-support-access","rootFolder":"Kayenta","supportedTypes":["METRICS_STORE"]},{"bucket":"joshuaookosun","name":"canary-aws","region":"us-east-2","rootFolder":"kayenta","supportedTypes":["OBJECT_STORE","CONFIGURATION_STORE"]}],"enabled":true},"cloudwatch":{"enabled":true},"s3":{"enabled":true}}},"orca":{"job":{"preconfigured":{"kubernetes":[{"account":"kubernetes","application":"k8s2","cloudProvider":"kubernetes","credentials":"kubernetes","description":"Echo
+      a configured
+      phrase","label":"Echo","manifest":{"apiVersion":"batch/v1","kind":"Job","metadata":{"name":"say-hello","namespace":"spinnaker"},"spec":{"backoffLimit":0,"template":{"spec":{"containers":[{"command":["echo","$(PHRASE)"],"env":[{"name":"PHRASE","value":"placeholder"}],"image":"alpine:latest","name":"hello"}],"restartPolicy":"Never"}}}},"parameters":[{"defaultValue":"Hello
+      world!","description":"Phrase to be echoed.","label":"Phrase to
+      say","mapping":"manifest.spec.template.spec.containers[0].env[0].value","name":"PHRASE"}],"type":"echoPhrase","waitForCompletion":true}]}},"spinnaker":{"extensibility":{"plugins":{"Aws.LambdaDeploymentPlugin":{"enabled":true,"version":"1.0.9"},"extensions":{"lambdaDeploymentStage":{"config":{"defaultMaxWaitTime":20}}}},"repositories":{"awsLambdaDeploymentPluginRepo":{"id":"awsLambdaDeploymentPluginRepo","url":"https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json"}}}}},"rosco":{},"terraformer":{"profiles":[{"name":"support-dev","variables":[{"kind":"aws","options":{"assumeRole":"arn:aws:iam::810711266228:role/aws-spin-support-managedrole"}}]},{"name":"terraform-cloud","remoteBackendSupport":true,"variables":[{"kind":"tfc","options":{"domain":"app.terraform.io","token":"yNibbWzYHzQbMQ.atlasv1.jxM6TvfqilztUYx2fsoEkZQXWOqd8h4OOwfshCfJn5zNAUEuL0ygu6QatRvy4v0ovIA"}}]}]}},"service-settings":{"clouddriver":{},"deck":{"artifactId":"docker.io/ichi0915/deck:ichi-1.4.0"},"echo":{},"fiat":{},"front50":{},"gate":{},"igor":{},"kayenta":{},"orca":{},"rosco":{},"terraformer":{"env":{"TF_CLI_CONFIG_FILE":"/home/spinnaker/dev.tfrc/dev.tfrc"},"kubernetes":{"Type":"AWS::EC2::Image::Id","volumes":[{"id":"joshtfc","mountPath":"/home/spinnaker/dev.tfrc","type":"configMap"}]}}}},"validation":{"providers":{"kubernetes":{"enabled":true}}}}}
+  creationTimestamp: '2022-09-16T12:16:06Z'
+  generation: 9
+  managedFields:
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:expose:
+            .: {}
+            f:service:
+              .: {}
+              f:overrides: {}
+              f:type: {}
+            f:type: {}
+          f:kustomize:
+            .: {}
+            f:deck:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+            f:gate:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+          f:spinnakerConfig:
+            .: {}
+            f:config:
+              .: {}
+              f:armory: {}
+              f:artifacts: {}
+              f:canary: {}
+              f:deploymentEnvironment: {}
+              f:features: {}
+              f:persistentStorage: {}
+              f:providers: {}
+              f:security: {}
+              f:version: {}
+            f:profiles:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:aws: {}
+                f:logging: {}
+                f:serviceLimits: {}
+              f:deck:
+                .: {}
+                f:settings-local.js: {}
+              f:echo: {}
+              f:fiat: {}
+              f:front50: {}
+              f:gate:
+                .: {}
+                f:services: {}
+                f:spinnaker: {}
+              f:igor: {}
+              f:kayenta:
+                .: {}
+                f:kayenta: {}
+              f:orca:
+                .: {}
+                f:job: {}
+                f:spinnaker: {}
+              f:rosco: {}
+              f:terraformer:
+                .: {}
+                f:profiles: {}
+            f:service-settings:
+              .: {}
+              f:clouddriver: {}
+              f:deck:
+                .: {}
+                f:artifactId: {}
+              f:echo: {}
+              f:fiat: {}
+              f:front50: {}
+              f:gate: {}
+              f:igor: {}
+              f:kayenta: {}
+              f:orca: {}
+              f:rosco: {}
+              f:terraformer:
+                .: {}
+                f:env: {}
+                f:kubernetes: {}
+          f:validation:
+            .: {}
+            f:providers:
+              .: {}
+              f:kubernetes:
+                .: {}
+                f:enabled: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2022-10-06T20:31:22Z'
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiUrl: {}
+          f:lastDeployed:
+            .: {}
+            f:account-Kubernetes-joshua-kube:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:config:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:kustomize:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:validation:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+          f:registrationId: {}
+          f:serviceCount: {}
+          f:services:
+            .: {}
+            k:{"name":"spin-clouddriver"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-deck"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-dinghy"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-echo"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-fiat"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-front50"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-gate"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-kayenta"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-orca"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-redis"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-rosco"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-terraformer"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+          f:status: {}
+          f:uiUrl: {}
+          f:version: {}
+      manager: spinnaker-operator
+      operation: Update
+      time: '2022-10-18T16:43:25Z'
+  name: spinnaker
+  namespace: joshua-operspin
+  resourceVersion: '586987596'
+  uid: af2cf050-6610-4f95-b1b6-4ecbcce9af55
+  selfLink: >-
+    /apis/spinnaker.armory.io/v1alpha2/namespaces/joshua-operspin/spinnakerservices/spinnaker
+status:
+  apiUrl: https://joshua-gate.tse-armory.io
+  lastDeployed:
+    account-Kubernetes-joshua-kube:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-10-06T20:49:13Z'
+    config:
+      hash: e81f7bd56c1bef6105ba03ba50ca2ca5
+      lastUpdatedAt: '2022-10-20T12:02:57Z'
+    kustomize:
+      hash: 6cb243d2d992e33cb7bcee1a54d99c0b
+      lastUpdatedAt: '2022-10-20T12:02:57Z'
+    validation:
+      hash: 1d906ca64fe843557edb9fa085ad2376
+      lastUpdatedAt: '2022-10-06T20:49:13Z'
+  registrationId: a461e0c0-939c-4dfc-953f-f38db9265439
+  serviceCount: 12
+  services:
+    - image: docker.io/ichi0915/deck:ichi-1.4.0
+      name: spin-deck
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/rosco:2.28.0
+      name: spin-rosco
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/orca:2.28.0
+      name: spin-orca
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/terraformer:2.28.0
+      name: spin-terraformer
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/echo:2.28.0
+      name: spin-echo
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/clouddriver:2.28.0
+      name: spin-clouddriver
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/gate:2.28.0
+      name: spin-gate
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/fiat:2.28.0
+      name: spin-fiat
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/kayenta:2.28.0
+      name: spin-kayenta
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/dinghy:2.28.0
+      name: spin-dinghy
+      readyReplicas: 1
+      replicas: 1
+    - image: us-docker.pkg.dev/spinnaker-community/redis/redis-cluster:v2
+      name: spin-redis
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/front50:2.28.0
+      name: spin-front50
+      readyReplicas: 1
+      replicas: 1
+  status: OK
+  uiUrl: https://joshua-deck.tse-armory.io
+  version: 2.28.0
+spec:
+  expose:
+    service:
+      overrides: {}
+      type: NodePort
+    type: service
+  kustomize:
+    deck:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 9000
+                targetPort: 9000
+                nodePort:  30342
+    gate:
+      service:
+        patches:
+          - |-
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 8084
+                targetPort: 8084
+                nodePort: 31961
+  spinnakerConfig:
+    config:
+      armory:
+        dinghy:
+          autoLockPipelines: true
+          dinghyFilename: Dinghyfile
+          enabled: true
+          githubEndpoint: https://api.github.com
+          githubToken: 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
+          notifiers:
+            slack:
+              enabled: true
+          templateOrg: joshua-armory
+          templateRepo: dinghy
+        terraform:
+          enabled: true
+      artifacts:
+        bitbucket:
+          accounts:
+            - name: artifact-test
+              password: PW9VutE22N6FTmkbvJv9
+              username: joshuaokosun
+          enabled: true
+        gitrepo:
+          accounts:
+            - name: AT_GitRepo
+              token: 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
+          enabled: true
+        s3:
+          accounts:
+            - name: joshuaookosun
+              region: us-east-2
+          enabled: true
+      canary:
+        defaultJudge: NetflixACAJudge-v1.0
+        defaultMetricsAccount: canary-aws
+        defaultMetricsStore: prometheus
+        defaultStorageAccount: canary-aws
+        enabled: true
+        reduxLoggerEnabled: true
+        showAllConfigsEnabled: true
+        stagesEnabled: true
+        templatesEnabled: true
+      deploymentEnvironment:
+        customSizing:
+          clouddriver:
+            limits:
+              memory: 2Gi
+          echo:
+            limits:
+              cpu: 250m
+          spin-clouddriver:
+            limits:
+              memory: 3Gi
+            replicas: 1
+      features:
+        artifacts: true
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: joshuaokosun
+          region: us-east-2
+          rootFolder: front50
+      providers:
+        kubernetes:
+          accounts:
+            - cacheThreads: 1
+              cachingPolicies: []
+              checkPermissionsOnStartup: true
+              configureImagePullSecrets: true
+              customResources: []
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              liveManifestCalls: false
+              name: joshua-kube
+              namespaces: []
+              oAuthScopes: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: false
+              permissions: {}
+              providerVersion: V2
+          enabled: true
+          primaryAccount: joshua-kube
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://joshua-gate.tse-armory.io
+        authz:
+          enabled: true
+          groupMembership:
+            github:
+              accessToken: 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
+              baseUrl: https://api.github.com
+              organization: joshua-armory
+              roleProviderType: GITHUB
+            service: GITHUB
+        uiSecurity:
+          overrideBaseUrl: https://joshua-deck.tse-armory.io
+      version: 2.28.0
+    profiles:
+      clouddriver:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-access
+              lambdaEnabled: true
+              name: joshua-spinnaker
+          features:
+            lambda:
+              enabled: true
+            launch-templates:
+              allowed-accounts: support-dev
+              allowed-applications:
+                all-applications:
+                  enabled: true
+              enabled: true
+        logging:
+          level:
+            com.netflix.spinnaker.clouddriver: DEBUG
+        serviceLimits:
+          cloudProviderOverrides:
+            aws:
+              rateLimit: 2
+      deck:
+        settings-local.js: >
+          window.spinnakerSettings.feature.kustomizeEnabled = true;
+
+          window.spinnakerSettings.feature.artifactsRewrite = true;
+
+          window.spinnakerSettings.feature.terraform = true;
+
+          window.spinnakerSettings.providers.aws.serverGroups.enableLaunchTemplates
+          = true;
+
+          window.spinnakerSettings.providers.aws.serverGroups.enableIPv6 = true;
+
+          window.spinnakerSettings.providers.aws.serverGroups.enableIMDSv2 =
+          true;
+
+          window.spinnakerSettings.providers.aws.serverGroups.enableCpuCredits =
+          true;
+
+          window.spinnakerSettings.feature.functions = true;
+
+          window.spinnakerSettings.authEnabled = false;
+      echo: {}
+      fiat: {}
+      front50: {}
+      gate:
+        services:
+          kayenta:
+            canaryConfigStore: true
+        spinnaker:
+          extensibility:
+            deck-proxy:
+              enabled: true
+              plugins:
+                Aws.LambdaDeploymentPlugin:
+                  enabled: true
+                  version: 1.0.9
+            repositories:
+              awsLambdaDeploymentPluginRepo:
+                url: >-
+                  https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
+      igor: {}
+      kayenta:
+        kayenta:
+          aws:
+            accounts:
+              - bucket: joshuaokosun
+                name: monitoring
+                region: us-east-2
+                role: arn:aws:iam::810711266228:role/aws-spin-support-access
+                rootFolder: Kayenta
+                supportedTypes:
+                  - METRICS_STORE
+              - bucket: joshuaookosun
+                name: canary-aws
+                region: us-east-2
+                rootFolder: kayenta
+                supportedTypes:
+                  - OBJECT_STORE
+                  - CONFIGURATION_STORE
+            enabled: true
+          cloudwatch:
+            enabled: true
+          s3:
+            enabled: true
+      orca:
+        job:
+          preconfigured:
+            kubernetes:
+              - account: kubernetes
+                application: k8s2
+                cloudProvider: kubernetes
+                credentials: kubernetes
+                description: Echo a configured phrase
+                label: Echo
+                manifest:
+                  apiVersion: batch/v1
+                  kind: Job
+                  metadata:
+                    name: say-hello
+                    namespace: spinnaker
+                  spec:
+                    backoffLimit: 0
+                    template:
+                      spec:
+                        containers:
+                          - command:
+                              - echo
+                              - $(PHRASE)
+                            env:
+                              - name: PHRASE
+                                value: placeholder
+                            image: alpine:latest
+                            name: hello
+                        restartPolicy: Never
+                parameters:
+                  - defaultValue: Hello world!
+                    description: Phrase to be echoed.
+                    label: Phrase to say
+                    mapping: manifest.spec.template.spec.containers[0].env[0].value
+                    name: PHRASE
+                type: echoPhrase
+                waitForCompletion: true
+        spinnaker:
+          extensibility:
+            plugins:
+              Aws.LambdaDeploymentPlugin:
+                enabled: true
+                version: 1.0.9
+              extensions:
+                lambdaDeploymentStage:
+                  config:
+                    defaultMaxWaitTime: 20
+            repositories:
+              awsLambdaDeploymentPluginRepo:
+                id: awsLambdaDeploymentPluginRepo
+                url: >-
+                  https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
+      rosco: {}
+      terraformer:
+        profiles:
+          - name: support-dev
+            variables:
+              - kind: aws
+                options:
+                  assumeRole: arn:aws:iam::810711266228:role/aws-spin-support-managedrole
+          - name: terraform-cloud
+            remoteBackendSupport: true
+            variables:
+              - kind: tfc
+                options:
+                  domain: app.terraform.io
+                  token: >-
+                    yNibbWzYHzQbMQ.atlasv1.jxM6TvfqilztUYx2fsoEkZQXWOqd8h4OOwfshCfJn5zNAUEuL0ygu6QatRvy4v0ovIA
+    service-settings:
+      clouddriver: {}
+      deck:
+        artifactId: docker.io/ichi0915/deck:ichi-1.4.0
+      echo: {}
+      fiat: {}
+      front50: {}
+      gate: {}
+      igor: {}
+      kayenta: {}
+      orca: {}
+      rosco: {}
+      terraformer:
+        env:
+          TF_CLI_CONFIG_FILE: /home/spinnaker/dev.tfrc/dev.tfrc
+        kubernetes:
+          Type: AWS::EC2::Image::Id
+          volumes:
+            - id: joshtfc
+              mountPath: /home/spinnaker/dev.tfrc
+              type: configMap
+  validation:
+    providers:
+      kubernetes:
+        enabled: true

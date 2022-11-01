@@ -1,0 +1,261 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: spin-kayenta-6bd5f9c6b4-dbk4w
+  generateName: spin-kayenta-6bd5f9c6b4-
+  namespace: joshua-operspin
+  uid: 457a6067-8f4e-4fd3-8b34-09f12781d895
+  resourceVersion: '576517829'
+  creationTimestamp: '2022-10-04T06:07:16Z'
+  labels:
+    app: spin
+    app.kubernetes.io/managed-by: spinnaker-operator
+    app.kubernetes.io/name: kayenta
+    app.kubernetes.io/part-of: spinnaker
+    app.kubernetes.io/version: 2.28.0
+    cluster: spin-kayenta
+    pod-template-hash: 6bd5f9c6b4
+  annotations:
+    kubernetes.io/psp: eks.privileged
+  ownerReferences:
+    - apiVersion: apps/v1
+      kind: ReplicaSet
+      name: spin-kayenta-6bd5f9c6b4
+      uid: 9597b674-2fc3-4554-b6a1-ac6533e45375
+      controller: true
+      blockOwnerDeletion: true
+  managedFields:
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: v1
+      time: '2022-10-04T06:07:15Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:generateName: {}
+          f:labels:
+            .: {}
+            f:app: {}
+            f:app.kubernetes.io/managed-by: {}
+            f:app.kubernetes.io/name: {}
+            f:app.kubernetes.io/part-of: {}
+            f:app.kubernetes.io/version: {}
+            f:cluster: {}
+            f:pod-template-hash: {}
+          f:ownerReferences:
+            .: {}
+            k:{"uid":"9597b674-2fc3-4554-b6a1-ac6533e45375"}:
+              .: {}
+              f:apiVersion: {}
+              f:blockOwnerDeletion: {}
+              f:controller: {}
+              f:kind: {}
+              f:name: {}
+              f:uid: {}
+        f:spec:
+          f:affinity: {}
+          f:containers:
+            k:{"name":"kayenta"}:
+              .: {}
+              f:env:
+                .: {}
+                k:{"name":"JAVA_OPTS"}:
+                  .: {}
+                  f:name: {}
+                  f:value: {}
+              f:image: {}
+              f:imagePullPolicy: {}
+              f:lifecycle: {}
+              f:name: {}
+              f:ports:
+                .: {}
+                k:{"containerPort":8090,"protocol":"TCP"}:
+                  .: {}
+                  f:containerPort: {}
+                  f:protocol: {}
+              f:readinessProbe:
+                .: {}
+                f:exec:
+                  .: {}
+                  f:command: {}
+                f:failureThreshold: {}
+                f:periodSeconds: {}
+                f:successThreshold: {}
+                f:timeoutSeconds: {}
+              f:resources: {}
+              f:terminationMessagePath: {}
+              f:terminationMessagePolicy: {}
+              f:volumeMounts:
+                .: {}
+                k:{"mountPath":"/opt/spinnaker/config"}:
+                  .: {}
+                  f:mountPath: {}
+                  f:name: {}
+          f:dnsPolicy: {}
+          f:enableServiceLinks: {}
+          f:restartPolicy: {}
+          f:schedulerName: {}
+          f:securityContext: {}
+          f:terminationGracePeriodSeconds: {}
+          f:volumes:
+            .: {}
+            k:{"name":"spin-kayenta-files-1935832704"}:
+              .: {}
+              f:name: {}
+              f:secret:
+                .: {}
+                f:defaultMode: {}
+                f:secretName: {}
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2022-10-06T22:26:17Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          f:conditions:
+            k:{"type":"ContainersReady"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Initialized"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+            k:{"type":"Ready"}:
+              .: {}
+              f:lastProbeTime: {}
+              f:lastTransitionTime: {}
+              f:status: {}
+              f:type: {}
+          f:containerStatuses: {}
+          f:hostIP: {}
+          f:phase: {}
+          f:podIP: {}
+          f:podIPs:
+            .: {}
+            k:{"ip":"192.168.191.164"}:
+              .: {}
+              f:ip: {}
+          f:startTime: {}
+  selfLink: /api/v1/namespaces/joshua-operspin/pods/spin-kayenta-6bd5f9c6b4-dbk4w
+status:
+  phase: Running
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-10-04T06:07:16Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-10-06T22:26:17Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-10-06T22:26:17Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2022-10-04T06:07:16Z'
+  hostIP: 192.168.190.253
+  podIP: 192.168.191.164
+  podIPs:
+    - ip: 192.168.191.164
+  startTime: '2022-10-04T06:07:16Z'
+  containerStatuses:
+    - name: kayenta
+      state:
+        running:
+          startedAt: '2022-10-04T06:07:55Z'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: armory/kayenta:2.28.0
+      imageID: >-
+        docker-pullable://armory/kayenta@sha256:01d6f3b812cbd5fa3b1c34fb2972e1d2343663a4728c191b8d9f3a1a6affbc5b
+      containerID: >-
+        docker://6b7fdb7edacf426b98e6a1a9486a101dc55bd8228e166ff58d32da84027cd643
+      started: true
+  qosClass: BestEffort
+spec:
+  volumes:
+    - name: spin-kayenta-files-1935832704
+      secret:
+        secretName: spin-kayenta-files-1935832704
+        defaultMode: 420
+    - name: kube-api-access-b7gzp
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+        defaultMode: 420
+  containers:
+    - name: kayenta
+      image: docker.io/armory/kayenta:2.28.0
+      ports:
+        - containerPort: 8090
+          protocol: TCP
+      env:
+        - name: JAVA_OPTS
+          value: '-XX:MaxRAMPercentage=50.0'
+      resources: {}
+      volumeMounts:
+        - name: spin-kayenta-files-1935832704
+          mountPath: /opt/spinnaker/config
+        - name: kube-api-access-b7gzp
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      readinessProbe:
+        exec:
+          command:
+            - wget
+            - '--no-check-certificate'
+            - '--spider'
+            - '-q'
+            - http://localhost:8090/health
+        timeoutSeconds: 1
+        periodSeconds: 10
+        successThreshold: 1
+        failureThreshold: 3
+      lifecycle: {}
+      terminationMessagePath: /dev/termination-log
+      terminationMessagePolicy: File
+      imagePullPolicy: IfNotPresent
+  restartPolicy: Always
+  terminationGracePeriodSeconds: 60
+  dnsPolicy: ClusterFirst
+  serviceAccountName: default
+  serviceAccount: default
+  nodeName: ip-192-168-190-253.us-east-2.compute.internal
+  securityContext: {}
+  affinity: {}
+  schedulerName: default-scheduler
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+  priority: 0
+  enableServiceLinks: true
+  preemptionPolicy: PreemptLowerPriority

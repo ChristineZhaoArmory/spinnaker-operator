@@ -1,0 +1,1395 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"spinnaker.armory.io/v1alpha2","kind":"SpinnakerService","metadata":{"annotations":{},"name":"spinnaker","namespace":"gowri-operator-spin"},"spec":{"expose":{"service":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"http"},"overrides":{},"type":"NodePort"},"type":"service"},"kustomize":{"clouddriver":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      initContainers:\n      - name:
+      armory-agent-plugin\n        image:
+      docker.io/armory/kubesvc-plugin:0.11.10 # must be compatible with your
+      Armory Enterprise version\n        volumeMounts:\n          - mountPath:
+      /opt/plugin/target\n            name: armory-agent-plugin-vol\n     
+      containers:\n      - name: clouddriver\n        volumeMounts:\n          -
+      mountPath: /opt/clouddriver/lib/plugins\n            name:
+      armory-agent-plugin-vol\n        startupProbe:\n           
+      exec:\n                command:\n                - \"true\"\n           
+      failureThreshold: 30\n            periodSeconds: 10\n           
+      successThreshold: 1\n            timeoutSeconds: 1 \n      volumes:\n     
+      - name: armory-agent-plugin-vol\n        emptyDir: {}\n     
+      tolerations:\n        - key: \"example-key\"\n          operator:
+      \"Exists\"\n          effect:
+      \"NoSchedule\""]}},"deck":{"service":{"patches":["spec:\n  type:
+      NodePort\n  ports:\n  - name: http\n    port: 9000\n    targetPort:
+      9000\n    nodePort: 30674\n"]}},"gate":{"service":{"patches":["spec:\n 
+      type: NodePort\n  ports:\n  - name: http\n    port: 8084\n    targetPort:
+      8084\n    nodePort:
+      32504\n"]}}},"spinnakerConfig":{"config":{"armory":{"dinghy":{"autoLockPipelines":true,"dinghyFilename":"dinghyfile","enabled":true,"fiatUser":"dinghyserviceaccount","githubEndpoint":"https://api.github.com","githubToken":"encrypted:k8s!n:github!k:github-token","notifiers":{"slack":{"enabled":false}},"templateOrg":"gowrigirish","templateRepo":"spinnaker-kustomize-patches"},"secrets":{"vault":{"authMethod":"KUBERNETES","enabled":true,"path":"kubernetes","role":"spinnaker","url":"http://10.100.146.32:8200"}},"terraform":{"enabled":true}},"artifacts":{"github":{"accounts":[{"name":"gitrepo","token":"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","username":"gowrigirish"},{"name":"bitbucket-github","password":"c7mQVxJLDVLAEFUHrK9A","username":"gowrigirish"}],"enabled":true},"http":{"accounts":[{"name":"bitbucket-1"}],"enabled":true},"maven":{"accounts":[{"name":"artifactory-maven","repositoryUrl":"https://artifactoryspindemo2021.jfrog.io/artifactory/default-maven-local"}],"enabled":true},"s3":{"enabled":true}},"canary":{"defaultJudge":"NetflixACAJudge-v1.0","defaultMetricsAccount":"canary-prometheus","defaultMetricsStore":"prometheus","defaultStorageAccount":"canary-aws","enabled":true,"reduxLoggerEnabled":true,"serviceIntegrations":[{"accounts":[{"bucket":"gowri-spin-armory","name":"canary-aws","rootFolder":"kayenta","supportedTypes":["OBJECT_STORE","CONFIGURATION_STORE"]}],"enabled":true,"name":"aws","s3Enabled":true},{"accounts":[{"endpoint":{"baseUrl":"http://prometheus-k8s.monitoring.svc.cluster.local:9090"},"name":"canary-prometheus","supportedTypes":["METRICS_STORE"]}],"enabled":true,"name":"prometheus"}],"showAllConfigsEnabled":true,"stagesEnabled":true,"templatesEnabled":true},"ci":{"codebuild":{"accounts":[{"accountId":810711266228,"assumeRole":"role/eksctl-aws-spin-support-nodegroup-NodeInstanceRole-1HXEJP4FA3D8Z","name":"gowri-codebuild","region":"us-east-2"}],"enabled":true},"concourse":{"enabled":false,"masters":[]},"gcb":{"accounts":[],"enabled":false},"jenkins":{"enabled":true,"masters":[{"address":"https://gowri-jenkins.tse-armory.io/","csrf":true,"name":"gowri-jenkins","password":"118705ea193b7abfb2c1452c104415ac92","username":"admin"}]},"travis":{"enabled":false,"masters":[]},"wercker":{"enabled":false,"masters":[]}},"deploymentEnvironment":{"customSizing":{"spin-clouddriver":{"limits":{"cpu":"1000m","memory":"4Gi"},"replicas":1,"requests":{"cpu":"500m","memory":"2Gi"}},"spin-echo":{"replicas":1},"spin-gate":{"limits":{"cpu":"1000m","memory":"4Gi"},"replicas":1,"requests":{"cpu":"500m","memory":"2Gi"}},"spin-orca":{"replicas":1}}},"features":{"pipelineTemplates":true},"notifications":{"github-status":{"enabled":false},"slack":{"botName":"spinnakertesting","enabled":true,"token":"xoxb-2443665838608-2417081888357-gIQv8MKSDD78WSpRaXmGwBFm"},"twilio":{"baseUrl":"https://api.twilio.com/","enabled":false}},"persistentStorage":{"persistentStoreType":"s3","s3":{"bucket":"gowri-spin-armory","region":"us-east-2","rootFolder":"front50"}},"providers":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/spinnakerManage","name":"gowri-aws","permissions":null,"providerVersion":"V1","regions":[{"name":"us-east-2"},{"name":"us-east-1"}]}],"defaultKeyPairTemplate":"{{\"{{\"}}name{{\"}}\"}}-keypair","defaultRegions":[{"name":"us-east-1"},{"name":"us-east-2"},{"name":"us-west-1"},{"name":"us-west-2"}],"defaults":{"iamRole":"BaseIAMRole"},"enabled":true,"features":{"cloudFormation":{"enabled":true}},"primaryAccount":"gowri-aws"},"kubernetes":{"accounts":[{"cacheThreads":1,"configureImagePullSecrets":true,"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1","kubectlRequestTimeoutSeconds":120,"liveManifestCalls":true,"name":"gowri-spinnaker-1","namespaces":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":true,"permissions":{"READ":["admin-role"],"WRITE":["admin-role"]},"providerVersion":"V2","requiredGroupMembership":[]},{"cacheThreads":1,"configureImagePullSecrets":true,"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1","kubectlRequestTimeoutSeconds":120,"liveManifestCalls":true,"name":"gowri-spinnaker-integration-test","namespaces":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":true,"permissions":{"READ":["admin-role"],"WRITE":["admin-role"]},"providerVersion":"V2","requiredGroupMembership":[]}],"enabled":true,"primaryAccount":"gowri-spinnaker-1"}},"repository":{"artifactory":{"enabled":true,"searches":[{"baseUrl":"https://artifactoryspindemo2021.jfrog.io/artifactory","groupId":"io.armory.services","name":"maven-artifactory","password":"Welcome@123","permissions":{"READ":[],"WRITE":[]},"repo":"default-maven-local","repoType":"maven","username":"gowrishankarleo@gmail.com"}]}},"security":{"apiSecurity":{"overrideBaseUrl":"https://gowri-gate.tse-armory.io","ssl":{"clientAuth":"WANT","enabled":false,"keyAlias":"gate","keyStore":"encryptedFile:k8s!n:spin-gate-secrets1!k:gate.jks","keyStorePassword":"changeit","keyStoreType":"jks","trustStore":"encryptedFile:k8s!n:spin-gate-secrets1!k:gate.jks","trustStorePassword":"changeit","trustStoreType":"jks"}},"authn":{"enabled":true,"oauth2":{"client":{"accessTokenUri":"https://github.com/login/oauth/access_token","clientId":"d98e7b3491ed9f9daff5","clientSecret":"encrypted:k8s!n:oauth-secret!k:oauth-client-secret","preEstablishedRedirectUri":"http://gowri-gate.tse-armory.io/login","scope":"user:email","userAuthorizationUri":"https://github.com/login/oauth/authorize"},"enabled":true,"provider":"GITHUB","resource":{"userInfoUri":"https://api.github.com/user"}},"x509":{"enabled":false,"roleOid":"1.2.840.10070.8.1","subjectPrincipalRegex":"EMAILADDRESS=(.*?)(?:@|$)"}},"authz":{"enabled":true,"groupMembership":{"github":{"accessToken":"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","baseUrl":"https://api.github.com","organization":"armory-io","roleProviderType":"GITHUB"},"service":"GITHUB"}},"uiSecurity":{"overrideBaseUrl":"https://gowri-deck.tse-armory.io"}},"version":"2.28.0"},"files":{"profiles__rosco__packer__aws-vendor-centos-7-latest.json":"{\n
+      \"variables\": {\n \"aws_access_key\": \"\",\n \"aws_secret_key\": \"\",\n
+      \"aws_subnet_id\": \"{{env `AWS_SUBNET_ID`}}\",\n  \"aws_vpc_id\": \"{{env
+      `AWS_VPC_ID`}}\",\n  \"aws_region\": null,\n  \"aws_ssh_username\":
+      null,\n  \"aws_instance_type\": null,\n  \"aws_target_ami\": null,\n 
+      \"aws_associate_public_ip_address\": \"false\",\n  \"aws_ena_support\":
+      \"true\",\n  \"appversion\": \"\",\n  \"build_host\": \"\",\n 
+      \"repository\": \"\",\n  \"package_type\": \"\",\n  \"packages\": \"\",\n 
+      \"configDir\": null,\n  \"source_ami_name\": \"CentOS Linux 7 x86_64 HVM
+      EBS*\",\n  \"source_ami_is_public\": \"true\"\n},\n\"builders\": [{\n 
+      \"type\": \"amazon-ebs\",\n  \"access_key\": \"{{user
+      `aws_access_key`}}\",\n  \"secret_key\": \"{{user `aws_secret_key`}}\",\n 
+      \"subnet_id\": \"{{user `aws_subnet_id`}}\",\n  \"vpc_id\": \"{{user
+      `aws_vpc_id`}}\",\n  \"region\": \"{{user `aws_region`}}\",\n 
+      \"ssh_username\": \"{{user `aws_ssh_username`}}\",\n  \"ssh_pty\":
+      true,\n  \"instance_type\": \"{{user `aws_instance_type`}}\",\n 
+      \"source_ami_filter\": {\n      \"filters\": {\n          \"name\":
+      \"{{user `source_ami_name`}}\",\n          \"virtualization-type\":
+      \"hvm\",\n          \"root-device-type\": \"ebs\",\n         
+      \"is-public\": \"{{user `source_ami_is_public`}}\",\n          \"state\":
+      \"available\"\n      },\n      \"owners\": [\"aws-marketplace\"],\n     
+      \"most_recent\": true\n  },\n  \"ami_name\": \"{{user
+      `aws_target_ami`}}\",\n  \"ami_users\": \"{{user `share_with`}}\",\n 
+      \"associate_public_ip_address\": \"{{user
+      `aws_associate_public_ip_address`}}\",\n  \"ena_support\": \"{{user
+      `aws_ena_support`}}\",\n  \"tags\": {\n    \"appversion\": \"{{user
+      `appversion`}}\",\n    \"build_host\": \"{{user `build_host`}}\",\n   
+      \"build_info_url\": \"{{user `build_info_url`}}\"\n  },\n  \"run_tags\":
+      {\"Packages\": \"{{user `packages`}}\"},\n  \"ami_block_device_mappings\":
+      [{\n    \"device_name\": \"/dev/sda1\",\n    \"delete_on_termination\":
+      true,\n    \"volume_type\": \"gp2\",\n    \"volume_size\": 8\n  }],\n 
+      \"launch_block_device_mappings\": [{\n    \"device_name\":
+      \"/dev/sda1\",\n    \"delete_on_termination\": true,\n    \"volume_type\":
+      \"gp2\",\n    \"volume_size\": 8\n  }]\n}],\n\"provisioners\":
+      []\n}\n"},"profiles":{"clouddriver":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/aws-spin-support-access","lambdaEnabled":true,"name":"gowri-aws"}],"features":{"lambda":{"enabled":true},"launch-templates":{"allowed-accounts":"gowri-aws","allowed-applications":{"all-applications":{"enabled":true}},"enabled":true}}},"endpoints.web":{"exposure.include":"*"},"kubesvc":{"cache":{"operationWaitMs":60000},"cluster":"kubernetes","runtime":{"defaults":{"onlySpinnakerManaged":true}}},"logging":{"level":{"io.armory.kubesvc":"DEBUG"}},"management":{"endpoint":{"health":{"showDetails":"ALWAYS"}}},"redis":{"cache":{"enabled":false},"enabled":false,"scheduler":{"enabled":false},"taskRepository":{"enabled":false}},"serviceLimits":{"accountOverrides":{"gowri-aws":{"rateLimit":2}},"cloudProviderOverrides":{"aws":{"rateLimit":2}}},"spinnaker":{"extensibility":{"plugins":{"Armory.Kubesvc":{"enabled":true}},"pluginsRootPath":"/opt/clouddriver/lib/plugins"}},"sql":{"cache":{"enabled":true,"readBatchSize":500,"writeBatchSize":300},"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2","maxPoolSize":200,"password":"sqladmin","user":"admin"},"tasks":{"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2","maxPoolSize":200,"password":"sqladmin","user":"admin"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2","maxPoolSize":200,"password":"sqladmin","user":"admin"},"read-only":false,"scheduler":{"enabled":true},"taskRepository":{"enabled":true},"unknown-agent-cleanup-agent":{"enabled":true}},"sql.agent.poll.interval-seconds":180},"deck":{"settings-local.js":"window.spinnakerSettings.feature.kustomizeEnabled
+      = true;\nwindow.spinnakerSettings.feature.artifactsRewrite =
+      true;\nwindow.spinnakerSettings.feature.managedServiceAccounts =
+      true;\nwindow.spinnakerSettings.feature.terraform =
+      true;\nwindow.spinnakerSettings.feature.dinghyEvents=
+      true;\nwindow.spinnakerSettings.feature.pipelineTemplates =
+      true;\nwindow.spinnakerSettings.feature.managedPipelineTemplatesV2UI =
+      true;\nwindow.spinnakerSettings = window.spinnakerSettings ||
+      {};\nwindow.spinnakerSettings.notifications =
+      window.spinnakerSettings.notifications ||
+      {};\nwindow.spinnakerSettings.notifications.email =
+      window.spinnakerSettings.notifications.email ||
+      {};\nwindow.spinnakerSettings.feature.managedServiceAccounts =
+      true;\nwindow.spinnakerSettings.feature.functions =
+      true;\nwindow.spinnakerSettings.providers.aws.serverGroups = {\n   
+      enableLaunchTemplates: true,\n    enableIPv6: true,\n    enableIMDSv2:
+      true,\n    enableCpuCredits:
+      true,\n};\n"},"dinghy":{"jsonValidationDisabled":true,"notifiers":{"github":{"enabled":false}},"repoConfig":[{"branch":"main","provider":"github","repo":"dinghy_implementation"}],"sql":{"baseUrl":"gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306","databaseName":"dinghy","enabled":true,"password":"sqladmin","user":"admin"}},"echo":{},"fiat":{"admin":{"roles":["admin-role"]},"auth.permissions.source.application.prefix":{"enabled":true,"prefixes":[{"permissions":{"EXECUTE":["admin-role"],"READ":["admin-role","admin-role"],"WRITE":["admin-role"]},"prefix":"apptest-*"}]}},"front50":{"logging":{"level":{"com.netflix.spinnaker.front50":"DEBUG"}},"migrations":{"migrateToManagedServiceAccounts":true},"spinnaker":{"extensibility":{"plugins":{"Armory.PolicyEngine":{"enabled":true,"failOpen":true,"version":"0.2.2"}}},"migration":{"compositeStorageService":{"enabled":true,"reads":{"previous":true,"primary":true}},"enabled":true,"previousClass":"com.netflix.spinnaker.front50.model.S3StorageService","primaryClass":"com.netflix.spinnaker.front50.model.SqlStorageService"}},"sql":{"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50","maxPoolSize":200,"password":"sqladmin","user":"admin"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50","maxPoolSize":200,"password":"sqladmin","user":"admin"}}},"gate":{"armory.cloud":{"api":{"baseUrl":"https://api.cloud.armory.io"},"enabled":true,"iam":{"clientId":"H33OHIHy4oNqhXAB1K5R8oPsDkGH0n7V","clientSecret":"AGAy-Q4n0HJ9Htxs_6myqAvv7rDqyOJ0PqqJDiewNHiP7afIOw6uDRfZHYCLU587","tokenIssuerUrl":"https://auth.cloud.armory.io/oauth/token"}},"endpoints.web":{"exposure.include":"*"},"logging":{"level":{"com.netflix.spinnaker.gate":"DEBUG"}},"management":{"endpoint":{"health":{"showDetails":"ALWAYS"}}},"services":{"dinghy":{"events":true},"kayenta":{"canaryConfigStore":true}},"spinnaker":{"extensibility":{"deck-proxy":{"enabled":true,"plugins":{"Armory.InstanceRegistration":{"enabled":false},"Armory.PolicyEngine":{"enabled":true,"version":"0.2.2"},"Aws.LambdaDeploymentPlugin":{"enabled":true,"version":"1.0.9"}}},"plugins":{"Armory.InstanceRegistration":{"enabled":false},"Armory.PolicyEngine":{"enabled":true,"version":"0.2.1"}},"repositories":{"awsLambdaDeploymentPluginRepo":{"url":"https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json"}}}}},"igor":{},"kayenta":{"kayenta":{"aws":{"accounts":[{"bucket":"gowri-spin-armory","name":"canary-awscw","region":"us-east-2","supportedTypes":["METRICS_STORE"]},{"bucket":"gowri-spin-armory","name":"canary-aws","region":"us-east-2","rootFolder":"kayenta","supportedTypes":["OBJECT_STORE","CONFIGURATION_STORE"]}],"enabled":true},"cloudwatch":{"enabled":true},"s3":{"enabled":true}}},"orca":{"executionRepository":{"redis":{"enabled":false},"sql":{"enabled":true}},"keiko":{"queue":{"redis":{"enabled":false},"sql":{"enabled":true}}},"monitor":{"activeExecutions":{"redis":false}},"okHttpClient":{"connectTimeoutMs":180000,"readTimeoutMs":180000},"queue":{"pendingExecutionService":{"redis":{"enabled":false},"sql":{"enabled":true}},"zombieCheck":{"enabled":true}},"spinnaker":{"extensibility":{"plugins":{"Aws.LambdaDeploymentPlugin":{"enabled":true,"version":"1.0.9"},"extensions":{"lambdaDeploymentStage":{"config":{"defaultMaxWaitTime":20}}}},"repositories":{"awsLambdaDeploymentPluginRepo":{"id":"awsLambdaDeploymentPluginRepo","url":"https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json"}}}},"sql":{"connectionPool":{"connectionTimeout":5000,"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca_1?enabledTLSProtocols=TLSv1.2","maxLifetime":30000,"maxPoolSize":50,"password":"sqladmin","user":"admin"},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca_1?enabledTLSProtocols=TLSv1.2","password":"sqladmin","user":"admin"}},"tasks":{"daysOfExecutionHistory":180,"logging":{"level":{"com.netflix.spinnaker.orca":"DEBUG"}},"useManagedServiceAccounts":true,"webhook":{"preconfigured":[{"customHeaders":{"Authorization":"encrypted:vault!e:secret!n:customheader!k:github_auth_token"},"description":"Update
+      a Github Commit Status","enabled":true,"label":"Github - Github Commit
+      Status","method":"POST","parameters":[{"description":"The Git Commit to
+      create a status for","label":"Git
+      Commit","name":"gitCommit","type":"string"},{"label":"Status","name":"status","type":"string"},{"label":"Target
+      URL","name":"targetUrl","type":"string"},{"label":"Context","name":"context","type":"string"}],"payload":"{\n
+      \"state\": \"${parameterValues['status']}\",\n \"target_url\":
+      \"${parameterValues['targetUrl']}\",\n \"context\":
+      \"${parameterValues['context']}\"\n}","type":"githubStatus","url":"https://api.github.com/repos/gowrigirish/dummyrepo/statuses/${parameterValues['gitCommit']}"}]}}},"rosco":{"aws":{"accounts":[{"accountId":810711266228,"assumeRole":"role/spinnakerManage","name":"gowri-aws","permissions":null,"providerVersion":"V1","regions":[{"name":"us-east-2"},{"name":"us-east-1"}]}],"bakeryDefaults":{"baseImages":[{"baseImage":{"detailedDescription":"Ubuntu
+      Xenial 16.04 LTS","id":"ubuntu
+      xenial","packageType":"deb","shortDescription":"v16.04"},"virtualizationSettings":[{"instanceType":"t2.micro","region":"us-east-2","sourceAmi":"ami-0bff25b43a4479334","spotPrice":0,"spotPriceAutoProduct":"Linux/UNIX
+      (Amazon
+      VPC)","sshUserName":"ubuntu","virtualizationType":"hvm"}]},{"baseImage":{"detailedDescription":"Ubuntu
+      Trusty Tahr
+      v14.04","id":"trusty","packageType":"deb","shortDescription":"v14.04"},"virtualizationSettings":[{"instanceType":"t2.micro","region":"us-east-2","sourceAmi":"ami-b69abcd3","sshUserName":"ubuntu","virtualizationType":"hvm"}]},{"baseImage":{"detailedDescription":"Windows
+      Server 2012 R2
+      Base","id":"windows-2012-r2","packageType":"NUPKG","shortDescription":"2012
+      R2"},"virtualizationSettings":[{"instanceType":"t2.micro","region":"us-east-2","sourceAmi":"ami-0428fc1ee1bde045a","sshUserName":"ubuntu","virtualizationType":"hvm"}]},{"baseImage":{"detailedDescription":"Latest
+      version of vendor supplied AMI for CentOS Linux 7 x86_64 HVM
+      EBS","id":"vendor-centos-7","packageType":"rpm","shortDescription":"Latest
+      7
+      (Vendor)","templateFile":"aws-vendor-centos-7-latest.json"},"virtualizationSettings":[{"instanceType":"t2.micro","mostRecent":true,"region":"us-east-1","sourceAmi":"CentOS
+      Linux 7 x86_64 HVM
+      EBS*","sshUserName":"centos","virtualizationType":"hvm"}]}]},"defaultKeyPairTemplate":"{{\"{{\"}}name{{\"}}\"}}-keypair","defaultRegions":[{"name":"us-east-1"},{"name":"us-east-2"},{"name":"us-west-1"},{"name":"us-west-2"}],"defaults":{"iamRole":"BaseIAMRole"},"enabled":true,"features":{"cloudFormation":{"enabled":true}},"primaryAccount":"gowri-aws"},"endpoints.web":{"exposure.include":"*"},"logging":{"level":{"com.netflix.spinnaker.rosco":"DEBUG"}},"management":{"endpoint":{"health":{"showDetails":"ALWAYS"}}},"netflix":{"account":"gowri-aws"}},"spinnaker":{"management":{"endpoints.web":{"exposure.include":"health,info,aop-prometheus"}},"server":{"max-http-header-size":"512KB","tomcat":{"compressableMimeTypes":"application/json,application/xml","compression":"on","max-http-header-size":"512KB"}},"spinnaker":{"extensibility":{"plugins":{"Armory.InstanceRegistration":{"enabled":false},"Armory.ObservabilityPlugin":{"config.metrics":{"prometheus":{"enabled":true}},"enabled":true,"version":"1.3.1"}},"repositories":{"armory-observability-plugin-releases":{"url":"https://raw.githubusercontent.com/armory-plugins/armory-observability-plugin-releases/master/repositories.json"}}}}}},"service-settings":{"clouddriver":{"env":{"JAVA_OPTS":"-XX:+HeapDumpOnOutOfMemoryError
+      -XX:HeapDumpPath=/heapdump
+      -XX:MaxRAMPercentage=75.0"},"kubernetes":{"imagePullSecrets":["regcreds"],"volumes":[{"id":"git-token","mountPath":"/tmp/tokenFile.secret","type":"secret"}]}},"deck":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"dinghy":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"echo":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"fiat":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"front50":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"gate":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"igor":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"kayenta":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"orca":{"kubernetes":{"imagePullSecrets":["regcreds"]}},"rosco":{"env":{"SPINNAKER_AWS_DEFAULT_ACCOUNT":"gowri-aws","SPINNAKER_AWS_DEFAULT_REGION":"us-east-2"},"kubernetes":{"imagePullSecrets":["regcreds"]}},"terraformer":{"kubernetes":{"imagePullSecrets":["regcreds"]}}}}}}
+  creationTimestamp: '2022-10-05T19:55:45Z'
+  generation: 6
+  managedFields:
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:expose:
+            .: {}
+            f:service:
+              .: {}
+              f:annotations:
+                .: {}
+                f:service.beta.kubernetes.io/aws-load-balancer-backend-protocol: {}
+              f:overrides: {}
+              f:type: {}
+            f:type: {}
+          f:kustomize:
+            .: {}
+            f:clouddriver:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:deck:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+            f:gate:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+          f:spinnakerConfig:
+            .: {}
+            f:config:
+              .: {}
+              f:armory: {}
+              f:artifacts: {}
+              f:canary: {}
+              f:ci: {}
+              f:deploymentEnvironment: {}
+              f:features: {}
+              f:notifications: {}
+              f:persistentStorage: {}
+              f:providers: {}
+              f:repository: {}
+              f:security: {}
+              f:version: {}
+            f:files:
+              .: {}
+              f:profiles__rosco__packer__aws-vendor-centos-7-latest.json: {}
+            f:profiles:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:aws: {}
+                f:endpoints.web: {}
+                f:kubesvc: {}
+                f:logging: {}
+                f:management: {}
+                f:redis: {}
+                f:serviceLimits: {}
+                f:spinnaker: {}
+                f:sql: {}
+                f:sql.agent.poll.interval-seconds: {}
+              f:deck:
+                .: {}
+                f:settings-local.js: {}
+              f:dinghy:
+                .: {}
+                f:jsonValidationDisabled: {}
+                f:notifiers: {}
+                f:repoConfig: {}
+                f:sql: {}
+              f:echo: {}
+              f:fiat:
+                .: {}
+                f:admin: {}
+                f:auth.permissions.source.application.prefix: {}
+              f:front50:
+                .: {}
+                f:logging: {}
+                f:migrations: {}
+                f:spinnaker: {}
+                f:sql: {}
+              f:gate:
+                .: {}
+                f:armory.cloud: {}
+                f:endpoints.web: {}
+                f:logging: {}
+                f:management: {}
+                f:services: {}
+                f:spinnaker: {}
+              f:igor: {}
+              f:kayenta:
+                .: {}
+                f:kayenta: {}
+              f:orca:
+                .: {}
+                f:executionRepository: {}
+                f:keiko: {}
+                f:monitor: {}
+                f:okHttpClient: {}
+                f:queue: {}
+                f:spinnaker: {}
+                f:sql: {}
+                f:tasks: {}
+              f:rosco:
+                .: {}
+                f:aws: {}
+                f:endpoints.web: {}
+                f:logging: {}
+                f:management: {}
+                f:netflix: {}
+              f:spinnaker:
+                .: {}
+                f:management: {}
+                f:server: {}
+                f:spinnaker: {}
+            f:service-settings:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:env: {}
+                f:kubernetes: {}
+              f:deck:
+                .: {}
+                f:kubernetes: {}
+              f:dinghy:
+                .: {}
+                f:kubernetes: {}
+              f:echo:
+                .: {}
+                f:kubernetes: {}
+              f:fiat:
+                .: {}
+                f:kubernetes: {}
+              f:front50:
+                .: {}
+                f:kubernetes: {}
+              f:gate:
+                .: {}
+                f:kubernetes: {}
+              f:igor:
+                .: {}
+                f:kubernetes: {}
+              f:kayenta:
+                .: {}
+                f:kubernetes: {}
+              f:orca:
+                .: {}
+                f:kubernetes: {}
+              f:rosco:
+                .: {}
+                f:env: {}
+                f:kubernetes: {}
+              f:terraformer:
+                .: {}
+                f:kubernetes: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2022-10-05T19:55:45Z'
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiUrl: {}
+          f:lastDeployed:
+            .: {}
+            f:account-Kubernetes-gowri-spinnaker-1:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:account-Kubernetes-gowri-spinnaker-integration-test:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:config:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:kustomize:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:validation:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+          f:registrationId: {}
+          f:serviceCount: {}
+          f:services:
+            .: {}
+            k:{"name":"spin-clouddriver"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-deck"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-dinghy"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-echo"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-fiat"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-front50"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-gate"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-igor"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-kayenta"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-orca"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-redis"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-rosco"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-terraformer"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+          f:status: {}
+          f:uiUrl: {}
+          f:version: {}
+      manager: spinnaker-operator
+      operation: Update
+      time: '2022-10-06T14:53:39Z'
+  name: spinnaker
+  namespace: gowri-operator-spin
+  resourceVersion: '576313381'
+  uid: db6e3454-a5f7-4786-b759-0bc68465b9be
+  selfLink: >-
+    /apis/spinnaker.armory.io/v1alpha2/namespaces/gowri-operator-spin/spinnakerservices/spinnaker
+status:
+  apiUrl: https://gowri-gate.tse-armory.io
+  lastDeployed:
+    account-Kubernetes-gowri-spinnaker-1:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-10-06T15:47:53Z'
+    account-Kubernetes-gowri-spinnaker-integration-test:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-10-06T15:47:53Z'
+    config:
+      hash: 6e04482b56d17154d0b8f80a0e64006a
+      lastUpdatedAt: '2022-10-06T15:52:05Z'
+    kustomize:
+      hash: 9ef307cac2df7c8ca3c86b44b97bafd9
+      lastUpdatedAt: '2022-10-06T15:52:05Z'
+    validation:
+      hash: 16f9b3e91e2dcefbbce735d35dd140d7
+      lastUpdatedAt: '2022-10-06T15:47:53Z'
+  registrationId: 4cd99543-8a70-4504-8ef5-ba1a2903a195
+  serviceCount: 13
+  services:
+    - image: docker.io/armory/front50:2.28.0
+      name: spin-front50
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/rosco:2.28.0
+      name: spin-rosco
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/deck:2.28.0
+      name: spin-deck
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/fiat:2.28.0
+      name: spin-fiat
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/igor:2.28.0
+      name: spin-igor
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/clouddriver:2.28.0
+      name: spin-clouddriver
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/dinghy:2.28.0
+      name: spin-dinghy
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/echo:2.28.0
+      name: spin-echo
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/gate:2.28.0
+      name: spin-gate
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/kayenta:2.28.0
+      name: spin-kayenta
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/terraformer:2.28.0
+      name: spin-terraformer
+      readyReplicas: 1
+      replicas: 1
+    - image: us-docker.pkg.dev/spinnaker-community/redis/redis-cluster:v2
+      name: spin-redis
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/orca:2.28.0
+      name: spin-orca
+      readyReplicas: 1
+      replicas: 1
+  status: OK
+  uiUrl: https://gowri-deck.tse-armory.io
+  version: 2.28.0
+spec:
+  expose:
+    service:
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+      overrides: {}
+      type: NodePort
+    type: service
+  kustomize:
+    clouddriver:
+      deployment:
+        patchesStrategicMerge:
+          - |-
+            spec:
+              template:
+                spec:
+                  initContainers:
+                  - name: armory-agent-plugin
+                    image: docker.io/armory/kubesvc-plugin:0.11.20 # must be compatible with your Armory Enterprise version
+                    volumeMounts:
+                      - mountPath: /opt/plugin/target
+                        name: armory-agent-plugin-vol
+                  containers:
+                  - name: clouddriver
+                    volumeMounts:
+                      - mountPath: /opt/clouddriver/lib/plugins
+                        name: armory-agent-plugin-vol
+                    startupProbe:
+                        exec:
+                            command:
+                            - "true"
+                        failureThreshold: 30
+                        periodSeconds: 10
+                        successThreshold: 1
+                        timeoutSeconds: 1 
+                  volumes:
+                  - name: armory-agent-plugin-vol
+                    emptyDir: {}
+                  tolerations:
+                    - key: "example-key"
+                      operator: "Exists"
+                      effect: "NoSchedule"
+    deck:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 9000
+                targetPort: 9000
+                nodePort: 30674
+    gate:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: http
+                port: 8084
+                targetPort: 8084
+                nodePort: 32504
+  spinnakerConfig:
+    config:
+      armory:
+        dinghy:
+          autoLockPipelines: true
+          dinghyFilename: dinghyfile
+          enabled: true
+          fiatUser: dinghyserviceaccount
+          githubEndpoint: https://api.github.com
+          githubToken: encrypted:k8s!n:github!k:github-token
+          notifiers:
+            slack:
+              enabled: false
+          templateOrg: gowrigirish
+          templateRepo: spinnaker-kustomize-patches
+        secrets:
+          vault:
+            authMethod: KUBERNETES
+            enabled: true
+            path: kubernetes
+            role: spinnaker
+            url: http://10.100.146.32:8200
+        terraform:
+          enabled: true
+      artifacts:
+        github:
+          accounts:
+            - name: gitrepo
+              token: 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
+              username: gowrigirish
+            - name: bitbucket-github
+              password: c7mQVxJLDVLAEFUHrK9A
+              username: gowrigirish
+          enabled: true
+        http:
+          accounts:
+            - name: bitbucket-1
+          enabled: true
+        maven:
+          accounts:
+            - name: artifactory-maven
+              repositoryUrl: >-
+                https://artifactoryspindemo2021.jfrog.io/artifactory/default-maven-local
+          enabled: true
+        s3:
+          enabled: true
+      canary:
+        defaultJudge: NetflixACAJudge-v1.0
+        defaultMetricsAccount: canary-prometheus
+        defaultMetricsStore: prometheus
+        defaultStorageAccount: canary-aws
+        enabled: true
+        reduxLoggerEnabled: true
+        serviceIntegrations:
+          - accounts:
+              - bucket: gowri-spin-armory
+                name: canary-aws
+                rootFolder: kayenta
+                supportedTypes:
+                  - OBJECT_STORE
+                  - CONFIGURATION_STORE
+            enabled: true
+            name: aws
+            s3Enabled: true
+          - accounts:
+              - endpoint:
+                  baseUrl: http://prometheus-k8s.monitoring.svc.cluster.local:9090
+                name: canary-prometheus
+                supportedTypes:
+                  - METRICS_STORE
+            enabled: true
+            name: prometheus
+        showAllConfigsEnabled: true
+        stagesEnabled: true
+        templatesEnabled: true
+      ci:
+        codebuild:
+          accounts:
+            - accountId: 810711266228
+              assumeRole: >-
+                role/eksctl-aws-spin-support-nodegroup-NodeInstanceRole-1HXEJP4FA3D8Z
+              name: gowri-codebuild
+              region: us-east-2
+          enabled: true
+        concourse:
+          enabled: false
+          masters: []
+        gcb:
+          accounts: []
+          enabled: false
+        jenkins:
+          enabled: true
+          masters:
+            - address: https://gowri-jenkins.tse-armory.io/
+              csrf: true
+              name: gowri-jenkins
+              password: 118705ea193b7abfb2c1452c104415ac92
+              username: admin
+        travis:
+          enabled: false
+          masters: []
+        wercker:
+          enabled: false
+          masters: []
+      deploymentEnvironment:
+        customSizing:
+          spin-clouddriver:
+            limits:
+              cpu: 1000m
+              memory: 4Gi
+            replicas: 1
+            requests:
+              cpu: 500m
+              memory: 2Gi
+          spin-echo:
+            replicas: 1
+          spin-gate:
+            limits:
+              cpu: 1000m
+              memory: 4Gi
+            replicas: 1
+            requests:
+              cpu: 500m
+              memory: 2Gi
+          spin-orca:
+            replicas: 1
+      features:
+        pipelineTemplates: true
+      notifications:
+        github-status:
+          enabled: false
+        slack:
+          botName: spinnakertesting
+          enabled: true
+          token: xoxb-2443665838608-2417081888357-gIQv8MKSDD78WSpRaXmGwBFm
+        twilio:
+          baseUrl: https://api.twilio.com/
+          enabled: false
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: gowri-spin-armory
+          region: us-east-2
+          rootFolder: front50
+      providers:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/spinnakerManage
+              name: gowri-aws
+              permissions: null
+              providerVersion: V1
+              regions:
+                - name: us-east-2
+                - name: us-east-1
+          defaultKeyPairTemplate: '{{"{{"}}name{{"}}"}}-keypair'
+          defaultRegions:
+            - name: us-east-1
+            - name: us-east-2
+            - name: us-west-1
+            - name: us-west-2
+          defaults:
+            iamRole: BaseIAMRole
+          enabled: true
+          features:
+            cloudFormation:
+              enabled: true
+          primaryAccount: gowri-aws
+        kubernetes:
+          accounts:
+            - cacheThreads: 1
+              configureImagePullSecrets: true
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              kubectlRequestTimeoutSeconds: 120
+              liveManifestCalls: true
+              name: gowri-spinnaker-1
+              namespaces: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              permissions:
+                READ:
+                  - admin-role
+                WRITE:
+                  - admin-role
+              providerVersion: V2
+              requiredGroupMembership: []
+            - cacheThreads: 1
+              configureImagePullSecrets: true
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:kubeconfig-secret1
+              kubectlRequestTimeoutSeconds: 120
+              liveManifestCalls: true
+              name: gowri-spinnaker-integration-test
+              namespaces: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              permissions:
+                READ:
+                  - admin-role
+                WRITE:
+                  - admin-role
+              providerVersion: V2
+              requiredGroupMembership: []
+          enabled: true
+          primaryAccount: gowri-spinnaker-1
+      repository:
+        artifactory:
+          enabled: true
+          searches:
+            - baseUrl: https://artifactoryspindemo2021.jfrog.io/artifactory
+              groupId: io.armory.services
+              name: maven-artifactory
+              password: Welcome@123
+              permissions:
+                READ: []
+                WRITE: []
+              repo: default-maven-local
+              repoType: maven
+              username: gowrishankarleo@gmail.com
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://gowri-gate.tse-armory.io
+          ssl:
+            clientAuth: WANT
+            enabled: false
+            keyAlias: gate
+            keyStore: encryptedFile:k8s!n:spin-gate-secrets1!k:gate.jks
+            keyStorePassword: changeit
+            keyStoreType: jks
+            trustStore: encryptedFile:k8s!n:spin-gate-secrets1!k:gate.jks
+            trustStorePassword: changeit
+            trustStoreType: jks
+        authn:
+          enabled: true
+          oauth2:
+            client:
+              accessTokenUri: https://github.com/login/oauth/access_token
+              clientId: d98e7b3491ed9f9daff5
+              clientSecret: encrypted:k8s!n:oauth-secret!k:oauth-client-secret
+              preEstablishedRedirectUri: http://gowri-gate.tse-armory.io/login
+              scope: user:email
+              userAuthorizationUri: https://github.com/login/oauth/authorize
+            enabled: true
+            provider: GITHUB
+            resource:
+              userInfoUri: https://api.github.com/user
+          x509:
+            enabled: false
+            roleOid: 1.2.840.10070.8.1
+            subjectPrincipalRegex: EMAILADDRESS=(.*?)(?:@|$)
+        authz:
+          enabled: true
+          groupMembership:
+            github:
+              accessToken: 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
+              baseUrl: https://api.github.com
+              organization: armory-io
+              roleProviderType: GITHUB
+            service: GITHUB
+        uiSecurity:
+          overrideBaseUrl: https://gowri-deck.tse-armory.io
+      version: 2.28.0
+    files:
+      profiles__rosco__packer__aws-vendor-centos-7-latest.json: |
+        {
+         "variables": {
+         "aws_access_key": "",
+         "aws_secret_key": "",
+         "aws_subnet_id": "{{env `AWS_SUBNET_ID`}}",
+          "aws_vpc_id": "{{env `AWS_VPC_ID`}}",
+          "aws_region": null,
+          "aws_ssh_username": null,
+          "aws_instance_type": null,
+          "aws_target_ami": null,
+          "aws_associate_public_ip_address": "false",
+          "aws_ena_support": "true",
+          "appversion": "",
+          "build_host": "",
+          "repository": "",
+          "package_type": "",
+          "packages": "",
+          "configDir": null,
+          "source_ami_name": "CentOS Linux 7 x86_64 HVM EBS*",
+          "source_ami_is_public": "true"
+        },
+        "builders": [{
+          "type": "amazon-ebs",
+          "access_key": "{{user `aws_access_key`}}",
+          "secret_key": "{{user `aws_secret_key`}}",
+          "subnet_id": "{{user `aws_subnet_id`}}",
+          "vpc_id": "{{user `aws_vpc_id`}}",
+          "region": "{{user `aws_region`}}",
+          "ssh_username": "{{user `aws_ssh_username`}}",
+          "ssh_pty": true,
+          "instance_type": "{{user `aws_instance_type`}}",
+          "source_ami_filter": {
+              "filters": {
+                  "name": "{{user `source_ami_name`}}",
+                  "virtualization-type": "hvm",
+                  "root-device-type": "ebs",
+                  "is-public": "{{user `source_ami_is_public`}}",
+                  "state": "available"
+              },
+              "owners": ["aws-marketplace"],
+              "most_recent": true
+          },
+          "ami_name": "{{user `aws_target_ami`}}",
+          "ami_users": "{{user `share_with`}}",
+          "associate_public_ip_address": "{{user `aws_associate_public_ip_address`}}",
+          "ena_support": "{{user `aws_ena_support`}}",
+          "tags": {
+            "appversion": "{{user `appversion`}}",
+            "build_host": "{{user `build_host`}}",
+            "build_info_url": "{{user `build_info_url`}}"
+          },
+          "run_tags": {"Packages": "{{user `packages`}}"},
+          "ami_block_device_mappings": [{
+            "device_name": "/dev/sda1",
+            "delete_on_termination": true,
+            "volume_type": "gp2",
+            "volume_size": 8
+          }],
+          "launch_block_device_mappings": [{
+            "device_name": "/dev/sda1",
+            "delete_on_termination": true,
+            "volume_type": "gp2",
+            "volume_size": 8
+          }]
+        }],
+        "provisioners": []
+        }
+    profiles:
+      clouddriver:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-access
+              lambdaEnabled: true
+              name: gowri-aws
+          features:
+            lambda:
+              enabled: true
+            launch-templates:
+              allowed-accounts: gowri-aws
+              allowed-applications:
+                all-applications:
+                  enabled: true
+              enabled: true
+        endpoints.web:
+          exposure.include: '*'
+        kubesvc:
+          cache:
+            operationWaitMs: 60000
+          cluster: kubernetes
+          runtime:
+            defaults:
+              onlySpinnakerManaged: true
+        logging:
+          level:
+            io.armory.kubesvc: DEBUG
+        management:
+          endpoint:
+            health:
+              showDetails: ALWAYS
+        redis:
+          cache:
+            enabled: false
+          enabled: false
+          scheduler:
+            enabled: false
+          taskRepository:
+            enabled: false
+        serviceLimits:
+          accountOverrides:
+            gowri-aws:
+              rateLimit: 2
+          cloudProviderOverrides:
+            aws:
+              rateLimit: 2
+        spinnaker:
+          extensibility:
+            plugins:
+              Armory.Kubesvc:
+                enabled: true
+            pluginsRootPath: /opt/clouddriver/lib/plugins
+        sql:
+          cache:
+            enabled: true
+            readBatchSize: 500
+            writeBatchSize: 300
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: >-
+                jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2
+              maxPoolSize: 200
+              password: sqladmin
+              user: admin
+            tasks:
+              jdbcUrl: >-
+                jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2
+              maxPoolSize: 200
+              password: sqladmin
+              user: admin
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver?enabledTLSProtocols=TLSv1.2
+            maxPoolSize: 200
+            password: sqladmin
+            user: admin
+          read-only: false
+          scheduler:
+            enabled: true
+          taskRepository:
+            enabled: true
+          unknown-agent-cleanup-agent:
+            enabled: true
+        sql.agent.poll.interval-seconds: 180
+      deck:
+        settings-local.js: >
+          window.spinnakerSettings.feature.kustomizeEnabled = true;
+
+          window.spinnakerSettings.feature.artifactsRewrite = true;
+
+          window.spinnakerSettings.feature.managedServiceAccounts = true;
+
+          window.spinnakerSettings.feature.terraform = true;
+
+          window.spinnakerSettings.feature.dinghyEvents= true;
+
+          window.spinnakerSettings.feature.pipelineTemplates = true;
+
+          window.spinnakerSettings.feature.managedPipelineTemplatesV2UI = true;
+
+          window.spinnakerSettings = window.spinnakerSettings || {};
+
+          window.spinnakerSettings.notifications =
+          window.spinnakerSettings.notifications || {};
+
+          window.spinnakerSettings.notifications.email =
+          window.spinnakerSettings.notifications.email || {};
+
+          window.spinnakerSettings.feature.managedServiceAccounts = true;
+
+          window.spinnakerSettings.feature.functions = true;
+
+          window.spinnakerSettings.providers.aws.serverGroups = {
+              enableLaunchTemplates: true,
+              enableIPv6: true,
+              enableIMDSv2: true,
+              enableCpuCredits: true,
+          };
+      dinghy:
+        jsonValidationDisabled: true
+        notifiers:
+          github:
+            enabled: false
+        repoConfig:
+          - branch: main
+            provider: github
+            repo: dinghy_implementation
+        sql:
+          baseUrl: >-
+            gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306
+          databaseName: dinghy
+          enabled: true
+          password: sqladmin
+          user: admin
+      echo: {}
+      fiat:
+        admin:
+          roles:
+            - admin-role
+        auth.permissions.source.application.prefix:
+          enabled: true
+          prefixes:
+            - permissions:
+                EXECUTE:
+                  - admin-role
+                READ:
+                  - admin-role
+                  - admin-role
+                WRITE:
+                  - admin-role
+              prefix: apptest-*
+      front50:
+        logging:
+          level:
+            com.netflix.spinnaker.front50: DEBUG
+        migrations:
+          migrateToManagedServiceAccounts: true
+        spinnaker:
+          extensibility:
+            plugins:
+              Armory.PolicyEngine:
+                enabled: true
+                failOpen: true
+                version: 0.2.2
+          migration:
+            compositeStorageService:
+              enabled: true
+              reads:
+                previous: true
+                primary: true
+            enabled: true
+            previousClass: com.netflix.spinnaker.front50.model.S3StorageService
+            primaryClass: com.netflix.spinnaker.front50.model.SqlStorageService
+        sql:
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: >-
+                jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50
+              maxPoolSize: 200
+              password: sqladmin
+              user: admin
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/front50
+            maxPoolSize: 200
+            password: sqladmin
+            user: admin
+      gate:
+        armory.cloud:
+          api:
+            baseUrl: https://api.cloud.armory.io
+          enabled: true
+          iam:
+            clientId: H33OHIHy4oNqhXAB1K5R8oPsDkGH0n7V
+            clientSecret: AGAy-Q4n0HJ9Htxs_6myqAvv7rDqyOJ0PqqJDiewNHiP7afIOw6uDRfZHYCLU587
+            tokenIssuerUrl: https://auth.cloud.armory.io/oauth/token
+        endpoints.web:
+          exposure.include: '*'
+        logging:
+          level:
+            com.netflix.spinnaker.gate: DEBUG
+        management:
+          endpoint:
+            health:
+              showDetails: ALWAYS
+        services:
+          dinghy:
+            events: true
+          kayenta:
+            canaryConfigStore: true
+        spinnaker:
+          extensibility:
+            deck-proxy:
+              enabled: true
+              plugins:
+                Armory.InstanceRegistration:
+                  enabled: false
+                Armory.PolicyEngine:
+                  enabled: true
+                  version: 0.2.2
+                Aws.LambdaDeploymentPlugin:
+                  enabled: true
+                  version: 1.0.9
+            plugins:
+              Armory.InstanceRegistration:
+                enabled: false
+              Armory.PolicyEngine:
+                enabled: true
+                version: 0.2.1
+            repositories:
+              awsLambdaDeploymentPluginRepo:
+                url: >-
+                  https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
+      igor: {}
+      kayenta:
+        kayenta:
+          aws:
+            accounts:
+              - bucket: gowri-spin-armory
+                name: canary-awscw
+                region: us-east-2
+                supportedTypes:
+                  - METRICS_STORE
+              - bucket: gowri-spin-armory
+                name: canary-aws
+                region: us-east-2
+                rootFolder: kayenta
+                supportedTypes:
+                  - OBJECT_STORE
+                  - CONFIGURATION_STORE
+            enabled: true
+          cloudwatch:
+            enabled: true
+          s3:
+            enabled: true
+      orca:
+        executionRepository:
+          redis:
+            enabled: false
+          sql:
+            enabled: true
+        keiko:
+          queue:
+            redis:
+              enabled: false
+            sql:
+              enabled: true
+        monitor:
+          activeExecutions:
+            redis: false
+        okHttpClient:
+          connectTimeoutMs: 180000
+          readTimeoutMs: 180000
+        queue:
+          pendingExecutionService:
+            redis:
+              enabled: false
+            sql:
+              enabled: true
+          zombieCheck:
+            enabled: true
+        spinnaker:
+          extensibility:
+            plugins:
+              Aws.LambdaDeploymentPlugin:
+                enabled: true
+                version: 1.0.9
+              extensions:
+                lambdaDeploymentStage:
+                  config:
+                    defaultMaxWaitTime: 20
+            repositories:
+              awsLambdaDeploymentPluginRepo:
+                id: awsLambdaDeploymentPluginRepo
+                url: >-
+                  https://raw.githubusercontent.com/spinnaker-plugins/aws-lambda-deployment-plugin-spinnaker/master/plugins.json
+        sql:
+          connectionPool:
+            connectionTimeout: 5000
+            jdbcUrl: >-
+              jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca_1?enabledTLSProtocols=TLSv1.2
+            maxLifetime: 30000
+            maxPoolSize: 50
+            password: sqladmin
+            user: admin
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://gowri-spin-mysql-db-instance-1.cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca_1?enabledTLSProtocols=TLSv1.2
+            password: sqladmin
+            user: admin
+        tasks:
+          daysOfExecutionHistory: 180
+          logging:
+            level:
+              com.netflix.spinnaker.orca: DEBUG
+          useManagedServiceAccounts: true
+          webhook:
+            preconfigured:
+              - customHeaders:
+                  Authorization: encrypted:vault!e:secret!n:customheader!k:github_auth_token
+                description: Update a Github Commit Status
+                enabled: true
+                label: Github - Github Commit Status
+                method: POST
+                parameters:
+                  - description: The Git Commit to create a status for
+                    label: Git Commit
+                    name: gitCommit
+                    type: string
+                  - label: Status
+                    name: status
+                    type: string
+                  - label: Target URL
+                    name: targetUrl
+                    type: string
+                  - label: Context
+                    name: context
+                    type: string
+                payload: |-
+                  {
+                   "state": "${parameterValues['status']}",
+                   "target_url": "${parameterValues['targetUrl']}",
+                   "context": "${parameterValues['context']}"
+                  }
+                type: githubStatus
+                url: >-
+                  https://api.github.com/repos/gowrigirish/dummyrepo/statuses/${parameterValues['gitCommit']}
+      rosco:
+        aws:
+          accounts:
+            - accountId: 810711266228
+              assumeRole: role/spinnakerManage
+              name: gowri-aws
+              permissions: null
+              providerVersion: V1
+              regions:
+                - name: us-east-2
+                - name: us-east-1
+          bakeryDefaults:
+            baseImages:
+              - baseImage:
+                  detailedDescription: Ubuntu Xenial 16.04 LTS
+                  id: ubuntu xenial
+                  packageType: deb
+                  shortDescription: v16.04
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    region: us-east-2
+                    sourceAmi: ami-0bff25b43a4479334
+                    spotPrice: 0
+                    spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
+                    sshUserName: ubuntu
+                    virtualizationType: hvm
+              - baseImage:
+                  detailedDescription: Ubuntu Trusty Tahr v14.04
+                  id: trusty
+                  packageType: deb
+                  shortDescription: v14.04
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    region: us-east-2
+                    sourceAmi: ami-b69abcd3
+                    sshUserName: ubuntu
+                    virtualizationType: hvm
+              - baseImage:
+                  detailedDescription: Windows Server 2012 R2 Base
+                  id: windows-2012-r2
+                  packageType: NUPKG
+                  shortDescription: 2012 R2
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    region: us-east-2
+                    sourceAmi: ami-0428fc1ee1bde045a
+                    sshUserName: ubuntu
+                    virtualizationType: hvm
+              - baseImage:
+                  detailedDescription: >-
+                    Latest version of vendor supplied AMI for CentOS Linux 7
+                    x86_64 HVM EBS
+                  id: vendor-centos-7
+                  packageType: rpm
+                  shortDescription: Latest 7 (Vendor)
+                  templateFile: aws-vendor-centos-7-latest.json
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    mostRecent: true
+                    region: us-east-1
+                    sourceAmi: CentOS Linux 7 x86_64 HVM EBS*
+                    sshUserName: centos
+                    virtualizationType: hvm
+          defaultKeyPairTemplate: '{{"{{"}}name{{"}}"}}-keypair'
+          defaultRegions:
+            - name: us-east-1
+            - name: us-east-2
+            - name: us-west-1
+            - name: us-west-2
+          defaults:
+            iamRole: BaseIAMRole
+          enabled: true
+          features:
+            cloudFormation:
+              enabled: true
+          primaryAccount: gowri-aws
+        endpoints.web:
+          exposure.include: '*'
+        logging:
+          level:
+            com.netflix.spinnaker.rosco: DEBUG
+        management:
+          endpoint:
+            health:
+              showDetails: ALWAYS
+        netflix:
+          account: gowri-aws
+      spinnaker:
+        management:
+          endpoints.web:
+            exposure.include: health,info,aop-prometheus
+        server:
+          max-http-header-size: 512KB
+          tomcat:
+            compressableMimeTypes: application/json,application/xml
+            compression: 'on'
+            max-http-header-size: 512KB
+        spinnaker:
+          extensibility:
+            plugins:
+              Armory.InstanceRegistration:
+                enabled: false
+              Armory.ObservabilityPlugin:
+                config.metrics:
+                  prometheus:
+                    enabled: true
+                enabled: true
+                version: 1.3.1
+            repositories:
+              armory-observability-plugin-releases:
+                url: >-
+                  https://raw.githubusercontent.com/armory-plugins/armory-observability-plugin-releases/master/repositories.json
+    service-settings:
+      clouddriver:
+        env:
+          JAVA_OPTS: >-
+            -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/heapdump
+            -XX:MaxRAMPercentage=75.0
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+          volumes:
+            - id: git-token
+              mountPath: /tmp/tokenFile.secret
+              type: secret
+      deck:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      dinghy:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      echo:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      fiat:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      front50:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      gate:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      igor:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      kayenta:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      orca:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      rosco:
+        env:
+          SPINNAKER_AWS_DEFAULT_ACCOUNT: gowri-aws
+          SPINNAKER_AWS_DEFAULT_REGION: us-east-2
+        kubernetes:
+          imagePullSecrets:
+            - regcreds
+      terraformer:
+        kubernetes:
+          imagePullSecrets:
+            - regcreds

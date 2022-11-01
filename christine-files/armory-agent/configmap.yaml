@@ -1,0 +1,28 @@
+clouddriver:
+  grpc: spin-clouddriver-grpc.christine-zhao.svc.cluster.local:9091
+  insecure: true
+  logging:
+    level: debug
+logging:
+  level: debug
+kubernetes:
+  accounts:
+  - name: christine-sa
+    kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+    #kubeconfigFile: encryptedFile:vault!e:secret!p:spinnaker/kubernetes!k:config
+    # insecure:
+    # context:
+    # oAuthScopes:
+    # serviceAccount: true
+    # serviceAccountName: christine-spin-sa
+    # namespaces: [spin-agent,christine-agent]
+    # omitNamespaces: []
+    # onlyNamespacedResources:
+    kinds: []
+    omitKinds: []
+    # customResourceDefinitions: [{kind:}]
+    metrics: false
+    # permissions: []
+    # maxResumableResourceAgeMs:
+    # onlySpinnakerManaged:
+    # noProxy:

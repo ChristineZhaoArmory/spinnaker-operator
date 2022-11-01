@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    deployment.kubernetes.io/revision: "1"
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"apps/v1","kind":"Deployment","metadata":{"annotations":{},"labels":{"app":"spin","app.kubernetes.io/name":"armory-agent","app.kubernetes.io/part-of":"spinnaker","cluster":"spin-armory-agent"},"name":"spin-armory-agent","namespace":"spin-agent"},"spec":{"replicas":1,"selector":{"matchLabels":{"app":"spin","cluster":"spin-armory-agent"}},"template":{"metadata":{"labels":{"app":"spin","app.kubernetes.io/name":"armory-agent","app.kubernetes.io/part-of":"spinnaker","cluster":"spin-armory-agent"}},"spec":{"containers":[{"env":[{"name":"LOG_LEVEL","value":"trace"}],"image":"armory/agent-k8s:1.0.24","imagePullPolicy":"IfNotPresent","livenessProbe":{"failureThreshold":3,"httpGet":{"path":"/health","port":"health"},"periodSeconds":10,"successThreshold":1,"timeoutSeconds":1},"name":"armory-agent","ports":[{"containerPort":8082,"name":"health","protocol":"TCP"},{"containerPort":8008,"name":"metrics","protocol":"TCP"}],"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/opt/armory/config","name":"volume-armory-agent-config"}]}],"restartPolicy":"Always","serviceAccount":"christine-spin-sa","volumes":[{"configMap":{"name":"armory-agent-config"},"name":"volume-armory-agent-config"}]}}}}
+  creationTimestamp: "2022-10-06T18:26:18Z"
+  generation: 1
+  labels:
+    app: spin
+    app.kubernetes.io/name: armory-agent
+    app.kubernetes.io/part-of: spinnaker
+    cluster: spin-armory-agent
+  name: spin-armory-agent
+  namespace: spin-agent
+  resourceVersion: "576415840"
+  uid: 5fe3c7e2-3a53-40e4-b04d-09cf575d62e5
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: spin
+      cluster: spin-armory-agent
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: spin
+        app.kubernetes.io/name: armory-agent
+        app.kubernetes.io/part-of: spinnaker
+        cluster: spin-armory-agent
+    spec:
+      containers:
+      - env:
+        - name: LOG_LEVEL
+          value: trace
+        image: armory/agent-k8s:1.0.24
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /health
+            port: health
+            scheme: HTTP
+          periodSeconds: 10
+          successThreshold: 1
+          timeoutSeconds: 1
+        name: armory-agent
+        ports:
+        - containerPort: 8082
+          name: health
+          protocol: TCP
+        - containerPort: 8008
+          name: metrics
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /opt/armory/config
+          name: volume-armory-agent-config
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: christine-spin-sa
+      serviceAccountName: christine-spin-sa
+      terminationGracePeriodSeconds: 30
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: armory-agent-config
+        name: volume-armory-agent-config
+status:
+  availableReplicas: 1
+  conditions:
+  - lastTransitionTime: "2022-10-06T18:26:18Z"
+    lastUpdateTime: "2022-10-06T18:26:20Z"
+    message: ReplicaSet "spin-armory-agent-8668bc9c89" has successfully progressed.
+    reason: NewReplicaSetAvailable
+    status: "True"
+    type: Progressing
+  - lastTransitionTime: "2022-10-06T19:07:10Z"
+    lastUpdateTime: "2022-10-06T19:07:10Z"
+    message: Deployment has minimum availability.
+    reason: MinimumReplicasAvailable
+    status: "True"
+    type: Available
+  observedGeneration: 1
+  readyReplicas: 1
+  replicas: 1
+  updatedReplicas: 1

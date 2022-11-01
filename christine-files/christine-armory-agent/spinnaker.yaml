@@ -1,0 +1,843 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"spinnaker.armory.io/v1alpha2","kind":"SpinnakerService","metadata":{"annotations":{},"name":"spinnaker","namespace":"christine-zhao"},"spec":{"expose":{"service":{"annotations":{"service.beta.kubernetes.io/aws-load-balancer-backend-protocol":"http"},"overrides":{},"type":"NodePort"},"type":"service"},"kustomize":{"clouddriver":{"deployment":{"patchesStrategicMerge":["spec:\n 
+      template:\n    spec:\n      initContainers:\n      - name:
+      armory-agent-plugin\n        image:
+      docker.io/armory/kubesvc-plugin:0.11.0\n        volumeMounts:\n          -
+      mountPath: /opt/plugin/target\n            name:
+      armory-agent-plugin-vol\n      containers:\n      - name:
+      clouddriver\n        volumeMounts:\n          - mountPath:
+      /opt/clouddriver/lib/plugins\n            name:
+      armory-agent-plugin-vol\n      volumes:\n      - name:
+      armory-agent-plugin-vol\n        emptyDir:
+      {}"]}},"deck":{"service":{"patches":["spec:\n  type: NodePort\n  ports:\n 
+      - name: deck-tcp\n    port: 9000\n    targetPort: 9000\n    nodePort:
+      30725\n"]}},"gate":{"service":{"patches":["spec:\n  type: NodePort\n 
+      ports:\n  - name: gate-tcp\n    port: 8084\n    targetPort: 8084\n   
+      nodePort:
+      31395"]}}},"spinnakerConfig":{"config":{"armory":{"diagnostics":{"enabled":true,"logging":{"enabled":true,"endpoint":"https://debug.armory.io/v1/logs"},"uuid":"fc62cd32-2325-11ed-861d-0242ac120002"},"dinghy":{"autoLockPipelines":true,"dinghyFilename":"dinghyfile","enabled":true,"githubEndpoint":"https://api.github.com","githubToken":"encrypted:k8s!n:spin-secrets!k:github-token","notifiers":{"slack":{"channel":"christine-notification-test","enabled":true}},"templateOrg":"ChristineZhaoArmory","templateRepo":"dinghyTemplates"},"terraform":{"enabled":true}},"artifacts":{"github":{"accounts":[{"name":"AT_Github","token":"encrypted:k8s!n:spin-secrets!k:github-token","username":"ChristineZhaoArmory"}],"enabled":true},"gitrepo":{"accounts":[{"name":"AT_GitRepo","token":"encrypted:k8s!n:spin-secrets!k:github-token","username":"ChristineZhaoArmory"}],"enabled":true},"s3":{"accounts":[{"name":"AT_S3","region":"us-east-2"}],"enabled":true}},"ci":{"jenkins":{"enabled":true,"masters":[{"address":"https://christine-jenkins.tse-armory.io/","csrf":true,"name":"jenkins-master","password":"admin","username":"admin"}]}},"deploymentEnvironment":{"customSizing":{"clouddriver":{},"echo":{},"spin-clouddriver":{"sreplicas":2}}},"persistentStorage":{"persistentStoreType":"s3","s3":{"bucket":"christine-zhao-s3","region":"us-east-2","rootFolder":"front50"}},"providers":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/aws-spin-support-managedrole","name":"christine-aws","providerVersion":"V1","regions":[{"name":"us-east-2"},{"name":"us-east-1"},{"name":"us-west-1"},{"name":"us-west-2"}],"requiredGroupMembership":[]}],"bakeryDefaults":{"baseImages":[{"baseImage":{"detailedDescription":"debian11","id":"debian","packageType":"deb","shortDescription":"v11","templateFile":"aws-ebs.json"},"virtualizationSettings":[{"instanceType":"t2.micro","region":"us-west-2","sourceAmi":"ami-071e6cafc48327ca2","spotPrice":"“0”","spotPriceAutoProduct":"Linux/UNIX
+      (Amazon
+      VPC)","sshUserName":"admin","virtualizationType":"hvm"},{"instanceType":"t2.micro","region":"us-east-2","sourceAmi":"ami-071e6cafc48327ca2","spotPrice":"“0”","spotPriceAutoProduct":"Linux/UNIX
+      (Amazon
+      VPC)","sshUserName":"admin","virtualizationType":"hvm"}]}]},"defaultKeyPairTemplate":"‘{{“{{“}}name{{“}}“}}-keypair’","defaultRegions":[{"name":"us-east-1"},{"name":"us-east-2"},{"name":"us-west-1"},{"name":"us-west-2"}],"defaults":{"iamRole":"BaseIAMRole"},"enabled":true,"features":{"cloudFormation":{"enabled":true}},"primaryAccount":"christine-aws"},"ecs":{"accounts":[{"awsAccount":"christine-aws","name":"christine-ecs","permissions":{},"providerVersion":"V1","requiredGroupMembership":[]}],"enabled":true,"primaryAccount":"christine-ecs"},"kubernetes":{"accounts":[{"cacheThreads":1,"cachingPolicies":[],"configureImagePullSecrets":true,"customResources":[],"dockerRegistries":[],"kinds":[],"kubeconfigFile":"encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret","name":"christine-sa","namespaces":[],"oAuthScopes":[],"omitKinds":[],"omitNamespaces":[],"onlySpinnakerManaged":true,"permissions":{},"providerVersion":"V2","requiredGroupMembership":[]}],"enabled":true,"primaryAccount":"christine-sa"}},"security":{"apiSecurity":{"overrideBaseUrl":"https://christine-spin-gate.tse-armory.io"},"authn":{"oauth2":{"client":{"clientId":"f074440fd5b990f4aca0","clientSecret":"encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token","preEstablishedRedirectUri":"https://christine-spin-gate.tse-armory.io/login","scope":"user:org,user:email","userAuthorizationUri":"https://github.com/login/oauth/authorize"},"enabled":true,"provider":"GITHUB"}},"uiSecurity":{"overrideBaseUrl":"https://christine-spin-deck.tse-armory.io"}},"stats":{"enabled":false,"instanceId":"disable-echo-always-recreating"},"telemetry":{"connectionTimeoutMillis":3000,"enabled":true,"endpoint":"https://stats.spinnaker.io","readTimeoutMillis":5000},"version":"2.28.0"},"files":{},"profiles":{"clouddriver":{"aws":{"accounts":[{"accountId":"810711266228","assumeRole":"role/aws-spin-support-access","lambdaEnabled":true,"name":"christine-aws"}],"features":{"lambda":{"enabled":true},"launch-templates":{"allowed-accounts":"support-dev","allowed-applications":{"all-applications":{"enabled":true}},"enabled":true}}},"kubesvc":{"cluster":"kubernetes"},"logging":{"level":{"com.netflix.spinnaker.clouddriver":"DEBUG","io.armory.kubesvc":"DEBUG"}},"redis":{"cache":{"enabled":false},"enabled":false,"scheduler":{"enabled":false},"taskRepository":{"enabled":false}},"serviceLimits":{"cloudProviderOverrides":{"aws":{"rateLimit":10}},"implementationLimits":{"AmazonAutoScaling":{"defaults":{"rateLimit":3}},"AmazonElasticLoadBalancing":{"defaults":{"rateLimit":10}}},"rateLimit":10},"spinnaker":{"extensibility":{"plugins":{"Armory.Kubesvc":{"enabled":true}},"pluginsRootPath":"/opt/clouddriver/lib/plugins"}},"sql":{"cache":{"enabled":true,"readBatchSize":500,"writeBatchSize":300},"connectionPools":{"default":{"default":true,"jdbcUrl":"jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"armory","user":"clouddriver_service"},"tasks":{"jdbcUrl":"jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"armory","user":"clouddriver_service"}},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver","password":"armory","user":"clouddriver_migrate"},"read-only":false,"scheduler":{"enabled":true},"taskRepository":{"enabled":true},"unknown-agent-cleanup-agent":{"enabled":true}}},"deck":{"settings-local.js":"window.spinnakerSettings
+      = window.spinnakerSettings || {};\nwindow.spinnakerSettings.notifications
+      = window.spinnakerSettings.notifications ||
+      {};\nwindow.spinnakerSettings.notifications.email =
+      window.spinnakerSettings.notifications.email ||
+      {};\nwindow.spinnakerSettings.notifications.email.enabled =
+      true;\nwindow.spinnakerSettings.feature.kustomizeEnabled =
+      true;\nwindow.spinnakerSettings.feature.artifactsRewrite =
+      true;\nwindow.spinnakerSettings.feature.terraform =
+      true;\nwindow.spinnakerSettings.feature.functions =
+      true;\nwindow.spinnakerSettings.pubsubProviders = ['google',
+      'amazon'];\nwindow.spinnakerSettings.providers.aws.serverGroups = {\n   
+      enableLaunchTemplates: true,\n    enableIPv6: true,\n    enableIMDSv2:
+      true,\n    enableCpuCredits:
+      true,\n};\nwindow.spinnakerSettings.feature.quietPeriod =
+      true;\n"},"dinghy":{"repoConfig":[{"branch":"main","provider":"github","repo":"one-step"},{"branch":"dev","provider":"github","repo":"myrepo"}]},"echo":{"debug":"true
+      \u003c- this is useful if you are mucking around with smtp
+      properties","mail":{"enabled":true,"from":"christine.zhao@armory.com"},"orca.enabled":true,"spring":{"mail":{"host":"smtp.gmail.com","port":587,"properties":{"mail":{"smtp":{"auth":true,"starttls":{"enable":true}},"transport":{"protocol":"smtp"}}},"username":"christine.zhao@armory.com"}}},"fiat":{},"front50":{},"gate":{"proxies":[{"id":"terraform","methods":["GET"],"uri":"http://spin-terraformer:7088"}],"spinnaker":{"extensibility":{"deck-proxy":{"enabled":true,"plugins":{"Armory.EvaluateArtifactsPlugin":{"enabled":true,"version":"0.1.1"}}}}}},"igor":{},"kayenta":{},"orca":{"executionRepository":{"redis":{"enabled":false},"sql":{"enabled":true}},"keiko":{"queue":{"redis":{"enabled":false},"sql":{"enabled":true}}},"logging":{"level":{"com.netflix.spinnaker.orca":"DEBUG"}},"monitor":{"activeExecutions":{"redis":false}},"pollers":{"oldPipelineCleanup":{"enabled":true,"intervalMs":3600000,"minimumPipelineExecutions":5,"thresholdDays":30}},"queue":{"pendingExecutionService":{"redis":{"enabled":false},"sql":{"enabled":true}},"zombieCheck":{"enabled":true}},"sql":{"connectionPool":{"connectionTimeout":5000,"jdbcUrl":"jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca","maxLifetime":30000,"maxPoolSize":50,"password":"armory","user":"orca_service"},"enabled":true,"migration":{"jdbcUrl":"jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca","password":"armory","user":"orca_migrate"}},"tasks":{"daysOfExecutionHistory":180}},"rosco":{},"spinnaker":{"management":{"endpoints":{"web":{"exposure.include":"health,info,aop-prometheus"}}},"spinnaker":{"extensibility":{"plugins":{"Armory.EvaluateArtifactsPlugin":{"enabled":true,"version":"0.1.1"},"Armory.ObservabilityPlugin":{"config.metrics":{"prometheus":{"enabled":true,"meterRegistryConfig.armoryRecommendedFiltersEnabled":true}},"enabled":true,"version":"1.3.1"}},"repositories":{"armory-observability-plugin-releases":{"url":"https://raw.githubusercontent.com/armory-plugins/armory-observability-plugin-releases/master/repositories.json"},"evaluateArtifacts":{"url":"https://raw.githubusercontent.com/armory-plugins/evaluate-artifacts-releases/master/repositories.json"}}}}},"terraformer":{"profiles":[{"name":"aws-with-session-tokens","variables":[{"kind":"static","options":{"name":"AWS_ACCESS_KEY_ID","value":"encrypted:k8s!n:spin-secrets!k:aws_access_key_id"}},{"kind":"static","options":{"name":"AWS_SECRET_ACCESS_KEY","value":"encrypted:k8s!n:spin-secrets!k:aws-secret-key"}},{"kind":"static","options":{"name":"AWS_SESSION_TOKEN","value":"encrypted:k8s!n:spin-secrets!k:aws-session-token"}}]}]}},"service-settings":{"clouddriver":{"kubernetes":{"volumes":[{"defaultMode":420,"id":"logback-config","mountPath":"/opt/spinnaker/config/logging","type":"configMap"}]}},"deck":{},"echo":{},"fiat":{},"front50":{},"gate":{},"igor":{},"kayenta":{},"orca":{},"rosco":{},"spinnaker":{"kubernetes":{"podAnnotations":{"prometheus.io/path":"armory-observability/metrics","prometheus.io/scrape":"true"}}},"terraformer":{"kubernetes":{"securityContext":{"fsGroup":1000,"runAsGroup":1000,"runAsUser":1000}}}}}}}
+  creationTimestamp: '2022-09-27T12:10:02Z'
+  generation: 11
+  managedFields:
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:spec:
+          f:spinnakerConfig:
+            f:profiles:
+              f:gate:
+                f:redis: {}
+      manager: node-fetch
+      operation: Update
+      time: '2022-09-27T12:28:50Z'
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+        f:spec:
+          .: {}
+          f:expose:
+            .: {}
+            f:service:
+              .: {}
+              f:annotations:
+                .: {}
+                f:service.beta.kubernetes.io/aws-load-balancer-backend-protocol: {}
+              f:overrides: {}
+              f:type: {}
+            f:type: {}
+          f:kustomize:
+            .: {}
+            f:clouddriver:
+              .: {}
+              f:deployment:
+                .: {}
+                f:patchesStrategicMerge: {}
+            f:deck:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+            f:gate:
+              .: {}
+              f:service:
+                .: {}
+                f:patches: {}
+          f:spinnakerConfig:
+            .: {}
+            f:config:
+              .: {}
+              f:armory: {}
+              f:artifacts: {}
+              f:ci: {}
+              f:deploymentEnvironment: {}
+              f:persistentStorage: {}
+              f:providers: {}
+              f:security: {}
+              f:stats: {}
+              f:telemetry: {}
+              f:version: {}
+            f:files: {}
+            f:profiles:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:aws: {}
+                f:kubesvc: {}
+                f:logging: {}
+                f:redis: {}
+                f:serviceLimits: {}
+                f:spinnaker: {}
+                f:sql: {}
+              f:deck:
+                .: {}
+                f:settings-local.js: {}
+              f:dinghy:
+                .: {}
+                f:repoConfig: {}
+              f:echo:
+                .: {}
+                f:debug: {}
+                f:mail: {}
+                f:orca.enabled: {}
+                f:spring: {}
+              f:fiat: {}
+              f:front50: {}
+              f:gate:
+                .: {}
+                f:proxies: {}
+                f:spinnaker: {}
+              f:igor: {}
+              f:kayenta: {}
+              f:orca:
+                .: {}
+                f:executionRepository: {}
+                f:keiko: {}
+                f:logging: {}
+                f:monitor: {}
+                f:pollers: {}
+                f:queue: {}
+                f:sql: {}
+                f:tasks: {}
+              f:rosco: {}
+              f:spinnaker:
+                .: {}
+                f:management: {}
+                f:spinnaker: {}
+              f:terraformer:
+                .: {}
+                f:profiles: {}
+            f:service-settings:
+              .: {}
+              f:clouddriver:
+                .: {}
+                f:kubernetes: {}
+              f:deck: {}
+              f:echo: {}
+              f:fiat: {}
+              f:front50: {}
+              f:gate: {}
+              f:igor: {}
+              f:kayenta: {}
+              f:orca: {}
+              f:rosco: {}
+              f:spinnaker:
+                .: {}
+                f:kubernetes: {}
+              f:terraformer:
+                .: {}
+                f:kubernetes: {}
+      manager: kubectl-client-side-apply
+      operation: Update
+      time: '2022-10-06T14:33:13Z'
+    - apiVersion: spinnaker.armory.io/v1alpha2
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:status:
+          .: {}
+          f:apiUrl: {}
+          f:lastDeployed:
+            .: {}
+            f:account-Kubernetes-christine-sa:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:config:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:kustomize:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+            f:validation:
+              .: {}
+              f:hash: {}
+              f:lastUpdatedAt: {}
+          f:registrationId: {}
+          f:serviceCount: {}
+          f:services:
+            .: {}
+            k:{"name":"spin-clouddriver"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:replicas: {}
+            k:{"name":"spin-deck"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-dinghy"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-echo"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-front50"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-gate"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-igor"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-orca"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-redis"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-rosco"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+            k:{"name":"spin-terraformer"}:
+              .: {}
+              f:image: {}
+              f:name: {}
+              f:readyReplicas: {}
+              f:replicas: {}
+          f:status: {}
+          f:uiUrl: {}
+          f:version: {}
+      manager: spinnaker-operator
+      operation: Update
+      time: '2022-10-06T15:54:27Z'
+  name: spinnaker
+  namespace: christine-zhao
+  resourceVersion: '576314553'
+  uid: c5fa9cff-76a3-4e89-8038-40194100d888
+  selfLink: >-
+    /apis/spinnaker.armory.io/v1alpha2/namespaces/christine-zhao/spinnakerservices/spinnaker
+status:
+  apiUrl: https://christine-spin-gate.tse-armory.io
+  lastDeployed:
+    account-Kubernetes-christine-sa:
+      hash: 37a6259cc0c1dae299a7866489dff0bd
+      lastUpdatedAt: '2022-10-06T15:04:45Z'
+    config:
+      hash: 4201025e0be1a1c50607c0898c0c7d35
+      lastUpdatedAt: '2022-10-06T15:54:28Z'
+    kustomize:
+      hash: bdb037a06a5df67cf58feba3d34acef5
+      lastUpdatedAt: '2022-10-06T15:54:28Z'
+    validation:
+      hash: a6140e6ae667eddbf92db39bd5fe2394
+      lastUpdatedAt: '2022-10-06T15:04:45Z'
+  registrationId: fc62cd32-2325-11ed-861d-0242ac120002
+  serviceCount: 11
+  services:
+    - image: docker.io/armory/front50:2.28.0
+      name: spin-front50
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/echo:2.28.0
+      name: spin-echo
+      readyReplicas: 1
+      replicas: 1
+    - image: us-docker.pkg.dev/spinnaker-community/redis/redis-cluster:v2
+      name: spin-redis
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/dinghy:2.28.0
+      name: spin-dinghy
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/igor:2.28.0
+      name: spin-igor
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/terraformer:2.28.0
+      name: spin-terraformer
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/gate:2.28.0
+      name: spin-gate
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/clouddriver:2.28.0
+      name: spin-clouddriver
+      replicas: 1
+    - image: docker.io/armory/orca:2.28.0
+      name: spin-orca
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/deck:2.28.0
+      name: spin-deck
+      readyReplicas: 1
+      replicas: 1
+    - image: docker.io/armory/rosco:2.28.0
+      name: spin-rosco
+      readyReplicas: 1
+      replicas: 1
+  status: Failure
+  uiUrl: https://christine-spin-deck.tse-armory.io
+  version: 2.28.0
+spec:
+  expose:
+    service:
+      annotations:
+        service.beta.kubernetes.io/aws-load-balancer-backend-protocol: http
+      overrides: {}
+      type: NodePort
+    type: service
+  kustomize:
+    clouddriver:
+      deployment:
+        patchesStrategicMerge:
+          - |-
+            spec:
+              template:
+                spec:
+                  initContainers:
+                  - name: armory-agent-plugin
+                    image: docker.io/armory/kubesvc-plugin:0.11.0
+                    volumeMounts:
+                      - mountPath: /opt/plugin/target
+                        name: armory-agent-plugin-vol
+                  containers:
+                  - name: clouddriver
+                    volumeMounts:
+                      - mountPath: /opt/clouddriver/lib/plugins
+                        name: armory-agent-plugin-vol
+                  volumes:
+                  - name: armory-agent-plugin-vol
+                    emptyDir: {}
+    deck:
+      service:
+        patches:
+          - |
+            spec:
+              type: NodePort
+              ports:
+              - name: deck-tcp
+                port: 9000
+                targetPort: 9000
+                nodePort: 30725
+    gate:
+      service:
+        patches:
+          - |-
+            spec:
+              type: NodePort
+              ports:
+              - name: gate-tcp
+                port: 8084
+                targetPort: 8084
+                nodePort: 31395
+  spinnakerConfig:
+    config:
+      armory:
+        diagnostics:
+          enabled: true
+          logging:
+            enabled: true
+            endpoint: https://debug.armory.io/v1/logs
+          uuid: fc62cd32-2325-11ed-861d-0242ac120002
+        dinghy:
+          autoLockPipelines: true
+          dinghyFilename: dinghyfile
+          enabled: true
+          githubEndpoint: https://api.github.com
+          githubToken: encrypted:k8s!n:spin-secrets!k:github-token
+          notifiers:
+            slack:
+              channel: christine-notification-test
+              enabled: true
+          templateOrg: ChristineZhaoArmory
+          templateRepo: dinghyTemplates
+        terraform:
+          enabled: true
+      artifacts:
+        github:
+          accounts:
+            - name: AT_Github
+              token: encrypted:k8s!n:spin-secrets!k:github-token
+              username: ChristineZhaoArmory
+          enabled: true
+        gitrepo:
+          accounts:
+            - name: AT_GitRepo
+              token: encrypted:k8s!n:spin-secrets!k:github-token
+              username: ChristineZhaoArmory
+          enabled: true
+        s3:
+          accounts:
+            - name: AT_S3
+              region: us-east-2
+          enabled: true
+      ci:
+        jenkins:
+          enabled: true
+          masters:
+            - address: https://christine-jenkins.tse-armory.io/
+              csrf: true
+              name: jenkins-master
+              password: admin
+              username: admin
+      deploymentEnvironment:
+        customSizing:
+          clouddriver: {}
+          echo: {}
+          spin-clouddriver:
+            sreplicas: 2
+      persistentStorage:
+        persistentStoreType: s3
+        s3:
+          bucket: christine-zhao-s3
+          region: us-east-2
+          rootFolder: front50
+      providers:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-managedrole
+              name: christine-aws
+              providerVersion: V1
+              regions:
+                - name: us-east-2
+                - name: us-east-1
+                - name: us-west-1
+                - name: us-west-2
+              requiredGroupMembership: []
+          bakeryDefaults:
+            baseImages:
+              - baseImage:
+                  detailedDescription: debian11
+                  id: debian
+                  packageType: deb
+                  shortDescription: v11
+                  templateFile: aws-ebs.json
+                virtualizationSettings:
+                  - instanceType: t2.micro
+                    region: us-west-2
+                    sourceAmi: ami-071e6cafc48327ca2
+                    spotPrice: “0”
+                    spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
+                    sshUserName: admin
+                    virtualizationType: hvm
+                  - instanceType: t2.micro
+                    region: us-east-2
+                    sourceAmi: ami-071e6cafc48327ca2
+                    spotPrice: “0”
+                    spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
+                    sshUserName: admin
+                    virtualizationType: hvm
+          defaultKeyPairTemplate: ‘{{“{{“}}name{{“}}“}}-keypair’
+          defaultRegions:
+            - name: us-east-1
+            - name: us-east-2
+            - name: us-west-1
+            - name: us-west-2
+          defaults:
+            iamRole: BaseIAMRole
+          enabled: true
+          features:
+            cloudFormation:
+              enabled: true
+          primaryAccount: christine-aws
+        ecs:
+          accounts:
+            - awsAccount: christine-aws
+              name: christine-ecs
+              permissions: {}
+              providerVersion: V1
+              requiredGroupMembership: []
+          enabled: true
+          primaryAccount: christine-ecs
+        kubernetes:
+          accounts:
+            - cacheThreads: 1
+              cachingPolicies: []
+              configureImagePullSecrets: true
+              customResources: []
+              dockerRegistries: []
+              kinds: []
+              kubeconfigFile: >-
+                encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+              name: christine-sa
+              namespaces: []
+              oAuthScopes: []
+              omitKinds: []
+              omitNamespaces: []
+              onlySpinnakerManaged: true
+              permissions: {}
+              providerVersion: V2
+              requiredGroupMembership: []
+          enabled: true
+          primaryAccount: christine-sa
+      security:
+        apiSecurity:
+          overrideBaseUrl: https://christine-spin-gate.tse-armory.io
+        authn:
+          oauth2:
+            client:
+              clientId: f074440fd5b990f4aca0
+              clientSecret: >-
+                encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token
+              preEstablishedRedirectUri: https://christine-spin-gate.tse-armory.io/login
+              scope: user:org,user:email
+              userAuthorizationUri: https://github.com/login/oauth/authorize
+            enabled: true
+            provider: GITHUB
+        uiSecurity:
+          overrideBaseUrl: https://christine-spin-deck.tse-armory.io
+      stats:
+        enabled: false
+        instanceId: disable-echo-always-recreating
+      telemetry:
+        connectionTimeoutMillis: 3000
+        enabled: true
+        endpoint: https://stats.spinnaker.io
+        readTimeoutMillis: 5000
+      version: 2.28.0
+    files: {}
+    profiles:
+      clouddriver:
+        aws:
+          accounts:
+            - accountId: '810711266228'
+              assumeRole: role/aws-spin-support-access
+              lambdaEnabled: true
+              name: christine-aws
+          features:
+            lambda:
+              enabled: true
+            launch-templates:
+              allowed-accounts: support-dev
+              allowed-applications:
+                all-applications:
+                  enabled: true
+              enabled: true
+        kubesvc:
+          cluster: kubernetes
+        logging:
+          level:
+            com.netflix.spinnaker.clouddriver: DEBUG
+            io.armory.kubesvc: DEBUG
+        redis:
+          cache:
+            enabled: false
+          enabled: false
+          scheduler:
+            enabled: false
+          taskRepository:
+            enabled: false
+        serviceLimits:
+          cloudProviderOverrides:
+            aws:
+              rateLimit: 10
+          implementationLimits:
+            AmazonAutoScaling:
+              defaults:
+                rateLimit: 3
+            AmazonElasticLoadBalancing:
+              defaults:
+                rateLimit: 10
+          rateLimit: 10
+        spinnaker:
+          extensibility:
+            plugins:
+              Armory.Kubesvc:
+                enabled: true
+            pluginsRootPath: /opt/clouddriver/lib/plugins
+        sql:
+          cache:
+            enabled: true
+            readBatchSize: 500
+            writeBatchSize: 300
+          connectionPools:
+            default:
+              default: true
+              jdbcUrl: >-
+                jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              password: armory
+              user: clouddriver_service
+            tasks:
+              jdbcUrl: >-
+                jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+              password: armory
+              user: clouddriver_service
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
+            password: armory
+            user: clouddriver_migrate
+          read-only: false
+          scheduler:
+            enabled: true
+          taskRepository:
+            enabled: true
+          unknown-agent-cleanup-agent:
+            enabled: true
+      deck:
+        settings-local.js: >
+          window.spinnakerSettings = window.spinnakerSettings || {};
+
+          window.spinnakerSettings.notifications =
+          window.spinnakerSettings.notifications || {};
+
+          window.spinnakerSettings.notifications.email =
+          window.spinnakerSettings.notifications.email || {};
+
+          window.spinnakerSettings.notifications.email.enabled = true;
+
+          window.spinnakerSettings.feature.kustomizeEnabled = true;
+
+          window.spinnakerSettings.feature.artifactsRewrite = true;
+
+          window.spinnakerSettings.feature.terraform = true;
+
+          window.spinnakerSettings.feature.functions = true;
+
+          window.spinnakerSettings.pubsubProviders = ['google', 'amazon'];
+
+          window.spinnakerSettings.providers.aws.serverGroups = {
+              enableLaunchTemplates: true,
+              enableIPv6: true,
+              enableIMDSv2: true,
+              enableCpuCredits: true,
+          };
+
+          window.spinnakerSettings.feature.quietPeriod = true;
+      dinghy:
+        repoConfig:
+          - branch: main
+            provider: github
+            repo: one-step
+          - branch: dev
+            provider: github
+            repo: myrepo
+      echo:
+        debug: true <- this is useful if you are mucking around with smtp properties
+        mail:
+          enabled: true
+          from: christine.zhao@armory.com
+        orca.enabled: true
+        spring:
+          mail:
+            host: smtp.gmail.com
+            port: 587
+            properties:
+              mail:
+                smtp:
+                  auth: true
+                  starttls:
+                    enable: true
+                transport:
+                  protocol: smtp
+            username: christine.zhao@armory.com
+      fiat: {}
+      front50: {}
+      gate:
+        proxies:
+          - id: terraform
+            methods:
+              - GET
+            uri: http://spin-terraformer:7088
+        redis:
+          configuration:
+            secure: true
+        spinnaker:
+          extensibility:
+            deck-proxy:
+              enabled: true
+              plugins:
+                Armory.EvaluateArtifactsPlugin:
+                  enabled: true
+                  version: 0.1.1
+      igor: {}
+      kayenta: {}
+      orca:
+        executionRepository:
+          redis:
+            enabled: false
+          sql:
+            enabled: true
+        keiko:
+          queue:
+            redis:
+              enabled: false
+            sql:
+              enabled: true
+        logging:
+          level:
+            com.netflix.spinnaker.orca: DEBUG
+        monitor:
+          activeExecutions:
+            redis: false
+        pollers:
+          oldPipelineCleanup:
+            enabled: true
+            intervalMs: 3600000
+            minimumPipelineExecutions: 5
+            thresholdDays: 30
+        queue:
+          pendingExecutionService:
+            redis:
+              enabled: false
+            sql:
+              enabled: true
+          zombieCheck:
+            enabled: true
+        sql:
+          connectionPool:
+            connectionTimeout: 5000
+            jdbcUrl: >-
+              jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+            maxLifetime: 30000
+            maxPoolSize: 50
+            password: armory
+            user: orca_service
+          enabled: true
+          migration:
+            jdbcUrl: >-
+              jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+            password: armory
+            user: orca_migrate
+        tasks:
+          daysOfExecutionHistory: 180
+      rosco: {}
+      spinnaker:
+        management:
+          endpoints:
+            web:
+              exposure.include: health,info,aop-prometheus
+        spinnaker:
+          extensibility:
+            plugins:
+              Armory.EvaluateArtifactsPlugin:
+                enabled: true
+                version: 0.1.1
+              Armory.ObservabilityPlugin:
+                config.metrics:
+                  prometheus:
+                    enabled: true
+                    meterRegistryConfig.armoryRecommendedFiltersEnabled: true
+                enabled: true
+                version: 1.3.1
+            repositories:
+              armory-observability-plugin-releases:
+                url: >-
+                  https://raw.githubusercontent.com/armory-plugins/armory-observability-plugin-releases/master/repositories.json
+              evaluateArtifacts:
+                url: >-
+                  https://raw.githubusercontent.com/armory-plugins/evaluate-artifacts-releases/master/repositories.json
+      terraformer:
+        profiles:
+          - name: aws-with-session-tokens
+            variables:
+              - kind: static
+                options:
+                  name: AWS_ACCESS_KEY_ID
+                  value: encrypted:k8s!n:spin-secrets!k:aws_access_key_id
+              - kind: static
+                options:
+                  name: AWS_SECRET_ACCESS_KEY
+                  value: encrypted:k8s!n:spin-secrets!k:aws-secret-key
+              - kind: static
+                options:
+                  name: AWS_SESSION_TOKEN
+                  value: encrypted:k8s!n:spin-secrets!k:aws-session-token
+    service-settings:
+      clouddriver:
+        kubernetes:
+          volumes:
+            - defaultMode: 420
+              id: logback-config
+              mountPath: /opt/spinnaker/config/logging
+              type: configMap
+      deck: {}
+      echo: {}
+      fiat: {}
+      front50: {}
+      gate: {}
+      igor: {}
+      kayenta: {}
+      orca: {}
+      rosco: {}
+      spinnaker:
+        kubernetes:
+          podAnnotations:
+            prometheus.io/path: armory-observability/metrics
+            prometheus.io/scrape: 'true'
+      terraformer:
+        kubernetes:
+          securityContext:
+            fsGroup: 1000
+            runAsGroup: 1000
+            runAsUser: 1000

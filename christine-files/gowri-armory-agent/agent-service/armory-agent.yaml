@@ -1,0 +1,36 @@
+kubernetes:
+  accounts: 
+  # Add your accounts here, /kubeconfigfiles is the path where kubeconfig files added
+  # to kustomization.yaml are mounted. ######## This will not take into effect if Dynamic account is enabled
+  - kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+    name: christine-spinnaker
+    metrics: false
+    kinds: []
+    omitKinds: []
+    # You can add all the other fields from clouddriver settings, they'll be ignored.
+#  - kubeconfigFile: encryptedFile:vault!e:secret!p:kubeconfig!k:account01
+#    name: account01
+#    metrics: false
+#    kinds: []
+#    omitKinds: []
+#secrets:
+#  vault:
+#    enabled: true
+#    authMethod: KUBERNETES
+#    url: http://10.100.146.32:8200
+#    role: spinnaker
+#    path: kubernetes
+clouddriver:
+  grpc: spin-clouddriver-grpc:9091
+  insecure: true
+
+logging:
+    level: warn
+server:
+  port: 8082
+  
+prometheus:
+  enabled: false
+  # port: 8008
+
+
