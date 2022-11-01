@@ -17,10 +17,10 @@ armory-agent/plugin.clouddriver.yml
 ✅ Set clouddriver service:
 armory-agent/service.clouddriver.yml
 
-✅ Set agent configmap in spin-agent namespace:
+✅ Set agent configmap in christine-spin namespace:
 armory-agent/agent.configmap.yml
 
-✅ Set agent deployment in spin-agent namespace:
+✅ Set agent deployment in christine-spin namespace:
 armory-agent/agent.deployment.yml
 
 ✅ port forward clouddriver pod to local

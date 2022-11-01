@@ -20,14 +20,14 @@ spec:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
               token: encrypted:k8s!n:spin-secrets!k:github-token 
-              #token: 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  #2022-08-25 change to text token
+              #token: ghp_xxx  #2022-10-30 turn off
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
               token: encrypted:k8s!n:spin-secrets!k:github-token
-              #token: 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  #2022-08-25 change to text token
+              #token: ghp_xxx  #2022-10-30 turn off
         # christine- 2022-06-13 have problem. Need check later
         s3:
           enabled: true
@@ -44,6 +44,11 @@ spec:
           bucket: christine-zhao-s3
           rootFolder: front50
           region: us-east-2
+      # security:
+      #   apiSecurity:
+      #     overrideBaseUrl: http://localhost:8084
+      #   uiSecurity:
+      #     overrideBaseUrl: http://localhost:9000
       security:
         apiSecurity:
           overrideBaseUrl: https://christine-spin-gate.tse-armory.io  # Specify your DNS name for Gate with https scheme
@@ -66,7 +71,11 @@ spec:
           - name: christine-sa
             requiredGroupMembership: []
             providerVersion: V2
-            permissions: {}
+            permissions:
+              READ:
+              WRITE:
+              EXECUTE:
+              CREATE:
             dockerRegistries: []
             configureImagePullSecrets: true
             cacheThreads: 1
@@ -132,15 +141,15 @@ spec:
               enabled: true
           primaryAccount: christine-aws
         # END 2022-08-15 close for removing exceptions
-        # ecs:
-        #   enabled: true
-        #   accounts:
-        #   - name: aws-dev-ecs
-        #     requiredGroupMembership: []
-        #     providerVersion: V1
-        #     permissions: {}
-        #     awsAccount: aws-dev                   # Must be one of the configured AWS accounts
-        #   primaryAccount: aws-dev-ecs             # Must be one of the configured AWS ECS accounts
+        ecs:
+          enabled: true
+          accounts:
+          - name: christine-ecs
+            requiredGroupMembership: []
+            providerVersion: V1
+            permissions: {}
+            awsAccount: christine-aws                   # Must be one of the configured AWS accounts
+          primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
       ci:
         jenkins:
           enabled: true

@@ -1,7 +1,7 @@
 [
     {
       "deployManifest": {
-        "account": "christine-sa",
+        "account": "christine-spin-sa",
         "enableTraffic": true,
         "optionalArtifacts": [],
         "cloudProvider": "kubernetes",
@@ -23,7 +23,7 @@
             "kind": "Deployment",
             "metadata": {
               "name": "nginx",
-              "namespace": "spin-agent"
+              "namespace": "christine-rna"
             },
             "spec": {
               "replicas": 2,

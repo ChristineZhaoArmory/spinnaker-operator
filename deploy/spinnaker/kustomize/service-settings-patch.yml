@@ -15,13 +15,14 @@ spec:
         #overrideBaseUrl: redis://christine-redis-2.uyh0wx.ng.0001.use2.cache.amazonaws.com:6379
         #skipLifeCycleManagement: true
       #
-      clouddriver:
-        kubernetes:
-          volumes:
-          - id: logback-config
-            type: configMap
-            mountPath: /opt/spinnaker/config/logging
-            defaultMode: 420
+      clouddriver: {}
+      # clouddriver:
+      #   kubernetes:
+      #     volumes:
+      #     - id: logback-config
+      #       type: configMap
+      #       mountPath: /opt/spinnaker/config/logging
+      #       defaultMode: 420
       deck: {}
       echo: {}
       fiat: {}

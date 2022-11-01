@@ -13,10 +13,10 @@ spec:
       armory:
         dinghy:
           enabled: true
-          templateOrg: ChristineZhaoArmory
-          templateRepo: dinghyTemplates
-          #templateOrg: ChristineZhaoArmory        # SCM organization or namespace where application and template repositories are located
-          #templateRepo: dinghy-templates          # SCM repository where module templates are located
+          # templateOrg: ChristineZhaoArmory
+          # templateRepo: dinghyTemplates
+          templateOrg: ChristineZhaoArmory        # SCM organization or namespace where application and template repositories are located
+          templateRepo: dinghy-templates          # SCM repository where module templates are located
 #           fiatUser: dinghy-sa                   # Service account for dinghy to use, required if fiat is enabled
           # --- github settings
           # personal token dinghy, repo, workflow, hook
@@ -74,15 +74,15 @@ spec:
 #        parserFormat: hcl   # Must be one of: hcl, yaml, json. Use an alternate format for dinghy files.
         # Custom branch configuration (see https://docs.armory.io/docs/spinnaker/install-dinghy/#custom-branch-configuration)
         repoConfig:
-          - branch: main
+          - branch: prod
             provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
-            repo: one-step
-          # - branch: branch1
-          #   provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
-          #   repo: dinghy-templates
+            repo: myrepo-prod
           - branch: dev  # 2022-08-18 testing multi branch of git
             provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
             repo: myrepo
+          - branch: main  # 2022-10-15 testing multi branch of git
+            provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
+            repo: one-step
         # Use an external redis instance (recommended for production)
 #        redis:
 #          baseUrl: "redis://redis.myorg:6379"

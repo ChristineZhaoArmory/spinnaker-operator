@@ -15,12 +15,24 @@ spec:
         # Plugin config
         kubesvc:
           cluster: kubernetes
+        logging:
+          level:
+            io.armory.kubesvc: DEBUG
+          # cache:
+          #   operationWaitMs: 60000
+          # runtime:
+          #   defaults:
+          #     onlySpinnakerManaged: true
           # cluster-kubernetes:
           #   kubeconfigFile: <path-to-file> # (Optional, default: null). If configured, the plugin uses this file to discover Endpoints. If not configured, it uses the service account mounted to the pod.
           #   verifySsl: <true|false> # Optional, default: true). Whether to verify the Kubernetes API cert or not.
           #   namespace: <string> # (Optional, default: null). If configured, the plugin watches Endpoints in this namespace. If null, it watches endpoints in the namespace indicated in the file "/var/run/secrets/kubernetes.io/serviceaccount/namespace".
           #   httpPortName: <string> # (Optional, default: http). Name of the port configured in the Clouddriver Service that forwards traffic to the Clouddriver HTTP port for REST requests.
           #   clouddriverServiceNamePrefix: <string> # (Optional, default: spin-clouddriver). Name prefix of the Kubernetes Service pointing to the Clouddriver standard HTTP port.
+
+                                                                  # 2022-10-06 Armory Enterpriseversion 2.28
+                                                                  # https://v2-27.docs.armory.io/armory-enterprise/release-notes/rn-armory-agent/agent-plugin/
+                                                                  # must be compatible with your Armory Enterprise version
   kustomize:
     clouddriver:
       deployment:
@@ -31,7 +43,7 @@ spec:
                 spec:
                   initContainers:
                   - name: armory-agent-plugin
-                    image: docker.io/armory/kubesvc-plugin:0.10.38 # must be compatible with your Armory Enterprise version
+                    image: docker.io/armory/kubesvc-plugin:0.11.12 # must be compatible with your Armory Enterprise version
                     volumeMounts:
                       - mountPath: /opt/plugin/target
                         name: armory-agent-plugin-vol

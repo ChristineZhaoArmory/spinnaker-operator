@@ -112,7 +112,7 @@ rules:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
-  namespace: christine-zhao
+  namespace: christine-spin
   name: christine-spin-sa
 ---
 kind: ClusterRoleBinding
@@ -122,7 +122,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: christine-spin-sa
-    namespace: christine-zhao
+    namespace: christine-spin
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

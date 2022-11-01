@@ -11,7 +11,8 @@ spec:
         aws:
           accounts:
             - accountId: '810711266228'
-              assumeRole: role/aws-spin-support-access
+              #assumeRole: role/aws-spin-support-access
+              assumeRole: role/aws-spin-support-managedrole
               lambdaEnabled: true
               name: christine-aws
           features:
@@ -53,23 +54,23 @@ spec:
           scheduler:
             enabled: true
           unknown-agent-cleanup-agent:
-            enabled: false
+            enabled: true # 2022-09-07 Enable the cleanup agent - clean up spinnaker by deleting these decom'd clusters
           connectionPools:
             default:
               default: true
               jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
               user: clouddriver_service
-              password: armory
+              password: armory # Christine 2022-09-29
             tasks:
               user: clouddriver_service
               jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
-              password: armory
+              password: armory # Christine 2022-09-29
           migration:
             user: clouddriver_migrate
             jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
-            password: armory
+            password: armory # Christine 2022-09-29
         redis:
-          enabled: true # Christine- 2022-05-31 change from false to true
+          enabled: false # Christine 2022-09-29
           cache:
             enabled: false
           scheduler:

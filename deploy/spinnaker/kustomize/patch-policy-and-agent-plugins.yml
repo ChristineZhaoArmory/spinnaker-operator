@@ -183,7 +183,7 @@ spec:
   #                       - mountPath: /opt/policy-engine-plugin/target
   #                         name: policy-engine-plugin-vol
   #                   - name: kubesvc-plugin
-  #                     image: docker.io/armory/kubesvc-plugin:0.10.38 #Check version compatibility at https://docs.armory.io/docs/armory-agent/armory-agent-quick/#compatibility-matrix
+  #                     image: docker.io/armory/kubesvc-plugin:v0.11.19 #Check version compatibility at https://docs.armory.io/docs/armory-agent/armory-agent-quick/#compatibility-matrix
   #                     volumeMounts:
   #                       - mountPath: /opt/plugin/target
   #                         name: armory-agent-plugin-vol

@@ -10,7 +10,7 @@ metadata:
 spec:
   spinnakerConfig:
     config:
-       notifications:
-         github-status:
-           enabled: true
-           token: encrypted:k8s!n:spin-secrets!k:github-token # (Secret). Github authentication token.
+      notifications:
+        github-status:
+          enabled: true
+          token: encrypted:k8s!n:spin-secrets!k:github-token # (Secret). Github authentication token.

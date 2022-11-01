@@ -15,10 +15,9 @@ resources:
 #- logback-config.yml # 2022-08-24 add generic logback
                       # 2022-08-27 closed because too much logs
 
-- armory-agent/service.clouddriver.yml
-
-- armory-agent/agent.configmap.yml
-- armory-agent/agent.deployment.yml
+# - armory-agent/service.clouddriver.yml
+# - armory-agent/agent.configmap.yml
+# - armory-agent/agent.deployment.yml
 
 #- spin-agent-clouddriver.yml  # agent step 2: This create spin-clouddriver-gRPC service to acconnect clouddriver plugin
 # move spin-agent-clouddriver to armory-agent/kustomization.yaml
@@ -38,18 +37,22 @@ patchesStrategicMerge:
 - config-patch.yml
 - files-patch.yml
 - service-settings-patch.yml
-- service-patch.yml
+- service-patch.yml  # 2022-10-19 temporary remove to test pere snap badpipine
 - profiles-patch.yml
+- profile-orca.yml
 - profile-clouddriver.yml
 - notifications/patch-email.yml
 
-#- armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
+- armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
                                        # 2022-08-24 resume agent later
+                                       # 2022-10-06 resume agent
 #- patch-logging.yml    # 2022-08-23 add logback 
                         # 2022-08-24 mergered into profile-clouddriver an service-settings-patch.yml
 
 - plugin-observability.yml #2022-08-22 prometheus
 - patch-diagnostics.yml # 2022-08-23 added
+
+- canary/prometheus.yml # 2022-10-29 added
 
 #- patch-dockerhub.yml
 
@@ -65,7 +68,7 @@ patchesStrategicMerge:
 # - patch-policy-engine-plugin.yml # 2022-08-11 Change to this version for testing
                                  # 2022-08-25 temporary close to test others
 
-#- patch-startupprobes.yml
+- patch-startupprobes.yml
 
 # configMapGenerator:  # Added 2022-06-13 for policy engine
 #   # ConfigMap holding OPA policy definitions to use by Armory's policy engine. Required by patch-policyengine.yml
