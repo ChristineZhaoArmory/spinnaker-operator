@@ -7,7 +7,7 @@ spec:
   spinnakerConfig:
     # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.28.0   # the version of Spinnaker to be deployed, see config-patch.yml
+      version: 2.28.1-rc3   # 2022-11-03 the version of Spinnaker to be deployed, see config-patch.yml
       persistentStorage:
         persistentStoreType: s3
         s3:
@@ -18,12 +18,12 @@ spec:
     profiles:
       clouddriver: {} # is the contents of ~/.hal/default/profiles/clouddriver.yml
       # deck has a special key "settings-local.js" for the contents of settings-local.js
-      deck:
+      deck: {}
         # settings-local.js - contents of ~/.hal/default/profiles/settings-local.js
         # Use the | YAML symbol to indicate a block-style multiline string
-        settings-local.js: |
-          window.spinnakerSettings.feature.kustomizeEnabled = true;
-          window.spinnakerSettings.feature.artifactsRewrite = true;
+        # 2022-11-16 move below to profiles-patch.yml
+        # settings-local.js: |
+        #   window.spinnakerSettings.feature.artifactsRewrite = true;
       echo: {}    # is the contents of ~/.hal/default/profiles/echo.yml
       fiat: {}    # is the contents of ~/.hal/default/profiles/fiat.yml
       front50: {} # is the contents of ~/.hal/default/profiles/front50.yml

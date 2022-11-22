@@ -47,21 +47,21 @@ spec:
             com.netflix.spinnaker.clouddriver: DEBUG
         #   config: /opt/spinnaker/config/logging/logback-config.xml #2022-08-27 closed because too much logs
         sql:
-          enabled: false
+          enabled: true
           read-only: false 
           taskRepository:
-            enabled: false
+            enabled: true
           cache:
-            enabled: false
+            enabled: true
             readBatchSize: 500
             writeBatchSize: 300
           scheduler:
-            enabled: false
+            enabled: true
           unknown-agent-cleanup-agent:
-            enabled: false # 2022-09-07 Enable the cleanup agent - clean up spinnaker by deleting these decom'd clusters
+            enabled: true # 2022-09-07 Enable the cleanup agent - clean up spinnaker by deleting these decom'd clusters
           connectionPools:
             default:
-              default: false
+              default: true
               jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
               user: clouddriver_service
               password: armory # Christine 2022-09-29
@@ -74,10 +74,10 @@ spec:
             jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/clouddriver
             password: armory # Christine 2022-09-29
         redis:
-          enabled: true # Christine 2022-09-29
+          enabled: false # Christine 2022-09-29
           cache:
-            enabled: true
+            enabled: false
           scheduler:
-            enabled: true
+            enabled: false
           taskRepository:
-            enabled: true
+            enabled: false

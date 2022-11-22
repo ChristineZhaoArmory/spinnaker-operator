@@ -13,7 +13,19 @@ spec:
     #   - Use the | YAML symbol to indicate a block-style multiline string
     #   - We currently only support string files
     #   - NOTE: Kubernetes has a manifest size limitation of 1MB
-    files: {}
+    # files: {}
+    files:
+      rolemappings.yml: |
+        users:
+        - username: ChristineZhaoArmory
+          roles:
+          - spin-admin
+        - username: christinezhaogmail
+          roles:
+          - restricted
+        - username: christine.zhao@armory.io
+          roles:
+          - spin-admin
 #      profiles__rosco__packer__example-packer-config.json: |
 #        {
 #          "packerSetting": "someValue"

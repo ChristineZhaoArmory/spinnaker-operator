@@ -1,0 +1,10 @@
+users:
+- username: ChristineZhaoArmory
+  roles:
+  - spin-admin
+- username: christinezhaogmail
+  roles:
+  - restricted
+- username: christine.zhao@armory.io
+  roles:
+  - spin-admin

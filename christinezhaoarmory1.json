@@ -1,0 +1,26 @@
+{
+    "email": "christine.zhao@armory.io",
+    "username": "christine.zhao@armory.io",
+    "firstName": null,
+    "lastName": null,
+    "roles": [
+        "everyone",
+        "spin-admin"
+    ],
+    "allowedAccounts": [
+        "christine-sa",
+        "christine-aws"
+    ],
+    "accountNonLocked": true,
+    "accountNonExpired": true,
+    "credentialsNonExpired": true,
+    "authorities": [
+        {
+            "authority": "everyone"
+        },
+        {
+            "authority": "spin-admin"
+        }
+    ],
+    "enabled": true
+}

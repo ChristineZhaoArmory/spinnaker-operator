@@ -14,14 +14,14 @@ spec:
         sql:
           enabled: true
           connectionPool:
-            jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+            jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca?enabledTLSProtocols=TLSv1.2
             user: orca_service
             password: armory
             connectionTimeout: 5000
             maxLifetime: 30000
             maxPoolSize: 50
           migration:
-            jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca
+            jdbcUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306/orca?enabledTLSProtocols=TLSv1.2
             user: orca_migrate
             password: armory
 

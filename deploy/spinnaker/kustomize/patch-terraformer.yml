@@ -41,24 +41,30 @@ spec:
             uri: http://spin-terraformer:7088
             methods:
               - GET
-      terraformer:
-        # Terraformer named profiles, for supplying credentials to terraformer
+      terraformer:  #
         profiles:
           - name: aws-with-session-tokens
             variables:
-              - kind: static
+              - kind: aws
                 options:
-                  name: AWS_ACCESS_KEY_ID
-                  #value: ASIA3ZQRIGO2HPDJUWHD
-                  value: encrypted:k8s!n:spin-secrets!k:aws_access_key_id
-              - kind: static
-                options:
-                  name: AWS_SECRET_ACCESS_KEY
-                  value: encrypted:k8s!n:spin-secrets!k:aws-secret-key
-              - kind: static
-                options:
-                  name: AWS_SESSION_TOKEN
-                  value: encrypted:k8s!n:spin-secrets!k:aws-session-token
+                  assumeRole: arn:aws:iam::810711266228:role/aws-spin-support-managedrole
+      # terraformer:
+      #   # Terraformer named profiles, for supplying credentials to terraformer
+      #   profiles:
+      #     - name: aws-with-session-tokens
+      #       variables:
+      #         - kind: static
+      #           options:
+      #             name: AWS_ACCESS_KEY_ID
+      #             value: encrypted:k8s!n:spin-secrets!k:aws_access_key_id
+      #         - kind: static
+      #           options:
+      #             name: AWS_SECRET_ACCESS_KEY
+      #             value: encrypted:k8s!n:spin-secrets!k:aws-secret-key
+      #         - kind: static
+      #           options:
+      #             name: AWS_SESSION_TOKEN
+      #             value: encrypted:k8s!n:spin-secrets!k:aws-session-token
         # Used for connecting to an external Redis instance
 #        redis:
 #          baseUrl: "redis://spin-redis:6379"

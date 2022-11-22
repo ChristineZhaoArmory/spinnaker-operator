@@ -7,7 +7,7 @@ resources:
 #--------------------THIS ARE TOOLS. CANNOT BE REMVOED--------------------
 #- k8s-sql-debug.yml
 #- jenkins.yml # 2022-08-22 added
-#- servicemonitor.yml
+#- servicemonitor.yml # 2022-11-02 Prometheus ServiceMonitor
 #- infrastructure/debugging-tools.yml # (Optional). A pod with some tools for troubleshooting spinnaker (curl, kubectl, vault, etc.)
 #--------------------THIS ARE TOOLS. CANNOT BE REMVOED--------------------
 
@@ -35,32 +35,34 @@ resources:
 # Apply the patches top down order
 patchesStrategicMerge:
 - config-patch.yml
+- config-customsizing-limits.yml # 2022-11-14 move this part out from config-patch.yml
+#- version.yml    # 2022-11-09 test version 2.24.2 for 4730
 - files-patch.yml
 - service-settings-patch.yml
 - service-patch.yml  # 2022-10-19 temporary remove to test pere snap badpipine
 - profiles-patch.yml
-- profile-orca.yml
+# - profile-orca.yml  # 2022-11-16 disable to test 2.28.1-rc3
 - profile-clouddriver.yml
 - notifications/patch-email.yml
 
-- armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
-                                       # 2022-08-24 resume agent later
-                                       # 2022-10-06 resume agent
+#- armory-agent/plugin.clouddriver.yml # agent step 1: This create clouddriver plugin
+                                       # 2022-11-09 resume agent later
 #- patch-logging.yml    # 2022-08-23 add logback 
                         # 2022-08-24 mergered into profile-clouddriver an service-settings-patch.yml
 
-- plugin-observability.yml #2022-08-22 prometheus
-- patch-diagnostics.yml # 2022-08-23 added
+#- plugin-observability.yml #2022-11-04 prometheus
+#- patch-diagnostics.yml # 2022-08-23 added
 
-- canary/prometheus.yml # 2022-10-29 added
+#- canary/prometheus.yml # 2022-10-29 added
 
 #- patch-dockerhub.yml
-
-#- patch-external-authz.yml # 2022-08-16 This cause Access denied to account christine-sa. 
-                            # need to Check later
+- patch-external-authz.yml # 2022-11-22 This cause Access denied to account christine-sa. 
+- security/patch-saml.yml  # 2022-11-22 
+#- security/patch-fiat-create-app-roles.yml # 2022-11-20 added
+#- security/patch-file-authz.yml            # 2022-11-20 added
 
 # Armory features
-- patch-dinghy.yml         # Store spinnaker pipelines as code under source control
+#- patch-dinghy.yml         # Store spinnaker pipelines as code under source control
 - patch-terraformer.yml    # Store infrastructure as code under source control
 
 #- patch-policy-and-agent-plugins.yml # Added 2022-06-13 for policy engine
@@ -68,7 +70,7 @@ patchesStrategicMerge:
 # - patch-policy-engine-plugin.yml # 2022-08-11 Change to this version for testing
                                  # 2022-08-25 temporary close to test others
 
-- patch-startupprobes.yml
+#- patch-startupprobes.yml # 2022-11-09 pass clouddriver
 
 # configMapGenerator:  # Added 2022-06-13 for policy engine
 #   # ConfigMap holding OPA policy definitions to use by Armory's policy engine. Required by patch-policyengine.yml

@@ -1,0 +1,32 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker  # name doesn't matter since this is a patch
+spec:
+  # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  spinnakerConfig:
+    profiles:
+     fiat: 
+        admin:
+          roles:
+            - spin-admin
+        auth.permissions.source.application.prefix:
+          enabled: true
+          prefixes:
+            # Defines the prefix `apptest-x`.
+          - prefix: "*"
+            permissions:
+              # Defines permission requirements for all applications that match the prefix `apptest-*` based on roles.
+              # role-one and role-two have READ permission
+              READ:
+              - "spin-admin"
+              - "restricted"
+              # role-one has write permission
+              WRITE:
+              - "spin-admin"
+              # role-one has execute permission
+              EXECUTE:
+              - "spin-admin"
+              - "restricted"
+              CREATE:
+              - "spin-admin"

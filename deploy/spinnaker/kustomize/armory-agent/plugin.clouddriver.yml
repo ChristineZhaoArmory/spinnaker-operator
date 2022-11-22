@@ -6,6 +6,7 @@ spec:
   spinnakerConfig:
     profiles:
       clouddriver:
+        logging.level.io.armory.kubesvc.services.ops.cluster.kubernetes: DEBUG # 2022-11-03 by Adan
         spinnaker:
           extensibility:
             pluginsRootPath: /opt/clouddriver/lib/plugins
@@ -15,20 +16,20 @@ spec:
         # Plugin config
         kubesvc:
           cluster: kubernetes
-        logging:
-          level:
-            io.armory.kubesvc: DEBUG
+        # logging:
+        #   level:
+        #     io.armory.kubesvc: DEBUG
           # cache:
           #   operationWaitMs: 60000
           # runtime:
           #   defaults:
           #     onlySpinnakerManaged: true
-          # cluster-kubernetes:
-          #   kubeconfigFile: <path-to-file> # (Optional, default: null). If configured, the plugin uses this file to discover Endpoints. If not configured, it uses the service account mounted to the pod.
-          #   verifySsl: <true|false> # Optional, default: true). Whether to verify the Kubernetes API cert or not.
-          #   namespace: <string> # (Optional, default: null). If configured, the plugin watches Endpoints in this namespace. If null, it watches endpoints in the namespace indicated in the file "/var/run/secrets/kubernetes.io/serviceaccount/namespace".
-          #   httpPortName: <string> # (Optional, default: http). Name of the port configured in the Clouddriver Service that forwards traffic to the Clouddriver HTTP port for REST requests.
-          #   clouddriverServiceNamePrefix: <string> # (Optional, default: spin-clouddriver). Name prefix of the Kubernetes Service pointing to the Clouddriver standard HTTP port.
+          cluster-kubernetes:
+            kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret # (Optional, default: null). If configured, the plugin uses this file to discover Endpoints. If not configured, it uses the service account mounted to the pod.
+            verifySsl:   # Optional, default: true). Whether to verify the Kubernetes API cert or not.
+            namespace:   # (Optional, default: null). If configured, the plugin watches Endpoints in this namespace. If null, it watches endpoints in the namespace indicated in the file "/var/run/secrets/kubernetes.io/serviceaccount/namespace".
+            httpPortName: # (Optional, default: http). Name of the port configured in the Clouddriver Service that forwards traffic to the Clouddriver HTTP port for REST requests.
+            clouddriverServiceNamePrefix: # (Optional, default: spin-clouddriver). Name prefix of the Kubernetes Service pointing to the Clouddriver standard HTTP port.
 
                                                                   # 2022-10-06 Armory Enterpriseversion 2.28
                                                                   # https://v2-27.docs.armory.io/armory-enterprise/release-notes/rn-armory-agent/agent-plugin/

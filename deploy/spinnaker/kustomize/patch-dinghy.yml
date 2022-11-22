@@ -31,7 +31,7 @@ spec:
           # --- gitlab settings
 #          gitlabToken: encrypted:k8s!n:spin-secrets!k:gitlab-token # (Secret). GitLab token
 #          gitlabEndpoint: https://my-endpoint                      # GitLab endpoint
-          autoLockPipelines: true
+          autoLockPipelines: false # 2022-11-02 change to false from true
           dinghyFilename: dinghyfile
           notifiers:
             slack:
@@ -87,3 +87,9 @@ spec:
 #        redis:
 #          baseUrl: "redis://redis.myorg:6379"
 #          password: encrypted:k8s!n:spin-secrets!k:redis-password
+        # sql:  # 2022-11-16 test sql. https://docs.armory.io/armory-enterprise/armory-admin/dinghy-enable/#configuring-sql
+        #   baseUrl: jdbc:mysql://christine-aurora-mysql.cluster-cddfke67dweh.us-east-2.rds.amazonaws.com:3306
+        #   databaseName: dinghy
+        #   enabled: true
+        #   password: armory
+        #   user: dinghy_service

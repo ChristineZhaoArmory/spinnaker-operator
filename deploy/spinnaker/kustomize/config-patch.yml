@@ -7,27 +7,36 @@ spec:
   spinnakerConfig:
   # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.28.0  # the version of Spinnaker to be deployed
+      version: 2.28.1-rc3  # the version of Spinnaker to be deployed
       artifacts:
         # helm:
         #   enabled: true
         #   accounts:
         #     name: jfrog
         #     repository: https://charts.jfrog.io
+        bitbucket:
+          enabled: false
+          accounts:
+          # - name: bitbucket
+          #   username: ChristineZhaoArmory
+            # password:
+            # token:
+            # tokenFile:
+            # usernamePasswordFile:
         gitrepo:
           enabled: true
           accounts:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
-              token: encrypted:k8s!n:spin-secrets!k:github-token 
-              #token: ghp_xxx  #2022-10-30 turn off
+              #token: encrypted:k8s!n:spin-secrets!k:github-token 
+              token: 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  #2022-11-02 turn off
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
-              token: encrypted:k8s!n:spin-secrets!k:github-token
-              #token: ghp_xxx  #2022-10-30 turn off
+              #token: encrypted:k8s!n:spin-secrets!k:github-token
+              token: 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  #2022-11-02 turn off
         # christine- 2022-06-13 have problem. Need check later
         s3:
           enabled: true
@@ -36,8 +45,8 @@ spec:
             region: us-east-2
           # - name: us_east_1_S3
           #   region: us-east-1
-        #     awsAccessKeyId: ASIA3ZQRIGO2LOT4OUGH
-        #     awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
+            # awsAccessKeyId: ASIA3ZQRIGO2ERDAOK6U
+            # awsSecretAccessKey: encrypted:k8s!n:spin-secrets!k:aws-secret-key
       persistentStorage:
         persistentStoreType: s3
         s3:
@@ -56,7 +65,7 @@ spec:
           overrideBaseUrl: https://christine-spin-deck.tse-armory.io       # Specify your DNS name for Deck with https scheme
         authn:
           oauth2:
-            enabled: true
+            enabled: false  # 2022-11-22 change from true to false to test saml
             client:
               clientId: f074440fd5b990f4aca0
               clientSecret: encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token
@@ -64,19 +73,36 @@ spec:
               scope: user:org,user:email
               preEstablishedRedirectUri: https://christine-spin-gate.tse-armory.io/login
             provider: GITHUB
+        # authz:
+        #   enabled: true
+        #   groupMembership:
+        #     github:
+        #       accessToken: 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
+        #       baseUrl: https://api.github.com
+        #       organization: armory-io
+        #       roleProviderType: GITHUB
+        #     service: GITHUB
       providers:
         kubernetes:
           enabled: true
           accounts:
           - name: christine-sa
+            #serviceAccount: true
             requiredGroupMembership: []
             providerVersion: V2
+            # permissions: {}
             permissions:
               READ:
+               - spin-admin
+               - spin-read-only
               WRITE:
+               - spin-admin
               EXECUTE:
+               - spin-admin
               CREATE:
+               - spin-admin
             dockerRegistries: []
+            checkPermissionsOnStartup: true  # When false, clouddriver will skip the permission checks for all Kubernetes Kinds at startup. This can save a great deal of time during clouddriver startup when you have many Kubernetes accounts configured. This disables the log messages at startup about missing permissions.
             configureImagePullSecrets: true
             cacheThreads: 1
             namespaces: []
@@ -101,6 +127,16 @@ spec:
             - name: us-west-1
             - name: us-west-2
             assumeRole: role/aws-spin-support-managedrole
+            permissions: {}
+            # permissions:
+            #   READ:
+            #   - spin-admin
+            #   WRITE:
+            #   - spin-admin
+            #   EXECUTE:
+            #   - spin-admin
+            #   CREATE:
+            #   - spin-admin
             requiredGroupMembership: []
           bakeryDefaults:
             baseImages:
@@ -141,15 +177,15 @@ spec:
               enabled: true
           primaryAccount: christine-aws
         # END 2022-08-15 close for removing exceptions
-        ecs:
-          enabled: true
-          accounts:
-          - name: christine-ecs
-            requiredGroupMembership: []
-            providerVersion: V1
-            permissions: {}
-            awsAccount: christine-aws                   # Must be one of the configured AWS accounts
-          primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
+        # ecs:
+        #   enabled: true
+        #   accounts:
+        #   - name: christine-ecs
+        #     requiredGroupMembership: []
+        #     providerVersion: V1
+        #     permissions: {}
+        #     awsAccount: christine-aws                   # Must be one of the configured AWS accounts
+        #   primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
       ci:
         jenkins:
           enabled: true
@@ -163,33 +199,33 @@ spec:
               csrf: true
               password: admin
               username: admin
-      deploymentEnvironment:
-        customSizing:
-          echo:
-            limits:
-            #  cpu: 250m
-            # memory: 512Mi
-            # requests:
-            #   cpu: 100m
-            #   memory: 128Mi
-          spin-clouddriver:
-            sreplicas: 2
-            limits:
-              # cpu: 600m
-            #  memory: 3Gi
-            # requests:
-            #   cpu: 250m
-            #   memory: 512Mi
-          clouddriver:
-            limits:
-              # cpu: 801m
-            #  memory: 2Gi
-            # requests:
-            #   cpu: 250m
-            #   memory: 512Mi
-      armory:
-        terraform:
-          enabled: true
+      # deploymentEnvironment:
+      #   customSizing:
+      #     echo:
+      #       limits:
+      #       #  cpu: 250m
+      #       # memory: 512Mi
+      #       # requests:
+      #       #   cpu: 100m
+      #       #   memory: 128Mi
+      #     spin-clouddriver:
+      #       replicas: 1
+      #       limits:
+      #         # cpu: 600m
+      #       #  memory: 3Gi
+      #       # requests:
+      #       #   cpu: 250m
+      #       #   memory: 512Mi
+      #     clouddriver:
+      #       limits:
+      #         # cpu: 801m
+      #       #  memory: 2Gi
+      #       # requests:
+      #       #   cpu: 250m
+      #       #   memory: 512Mi
+      # armory:
+      #   terraform:
+      #     enabled: true
 
         # christine- 2022-05-31 below is enable diagnostics and logging
         # https://docs.armory.io/armory-enterprise/armory-admin/observe/diagnostics-configure/

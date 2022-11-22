@@ -1,0 +1,64 @@
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker
+spec:
+  spinnakerConfig:
+    profiles:
+    #  deck: # Enable this setting under core/patches/ui-feature-flags.yml
+    #    settings-local.js: |
+    #      window.spinnakerSettings.authEnabled = true;
+      fiat:
+        auth:
+          permissions:
+            provider:
+              application: aggregate
+            source:
+              application:
+                prefix:
+                  accounts:
+                    - name: christine-sa
+                    #- name: christine-aws
+                      permissions:
+                        CREATE:
+                          - spin-admin
+                        EXECUTE:
+                          - spin-admin
+                        READ:
+                          - spin-admin
+                        WRITE:
+                          - spin-admin
+                      users:
+                        - roles:
+                            - spin-admin
+                          username: ChristineZhaoArmory
+                        - roles:
+                            - spin-admin
+                          username: christine.zhao@armory.io
+                        - roles:
+                            - restricted
+                          username: christinezhaogmail
+                  enabled: true
+                  prefixes:
+                  - prefix: "*"
+                    permissions:
+                      CREATE:
+                      #- "group-b-spingo" # group members that CAN create applications if enabled
+                      - spin-admin
+                      READ:
+                      #- "spinnaker-admins"
+                      - spin-admin
+                      WRITE:
+                      - spin-admin
+                      EXECUTE:
+                      - spin-admin
+        auth.permissions.source.application.front50.enabled: false
+        fiat:
+          redis:
+            repository:
+              checkLastModifiedTimeout: PT0.5S
+              getPermissionTimeout: PT2S
+        fiat.restrictApplicationCreation: true
+        writeMode:
+          syncDelayMs: 600000
+          syncDelayTimeoutMs: 30000
