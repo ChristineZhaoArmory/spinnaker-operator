@@ -88,6 +88,7 @@ spec:
         #2022-09-26 below for EvaluateArtifactsPlugin
         spinnaker:
           extensibility:
+            enableDefaultRepositories: false # 2022-12-20 added to test SUPPORT-4704
             deck-proxy:
               enabled: true
               plugins:
@@ -95,7 +96,10 @@ spec:
                   enabled: true
                   version: 0.1.1 # Replace with the version you want to use. For example, use 0.1.0.
       igor: {}    # is the contents of ~/.hal/default/profiles/igor.yml
-      kayenta: {} # is the contents of ~/.hal/default/profiles/kayenta.yml
+      kayenta:  # is the contents of ~/.hal/default/profiles/kayenta.yml
+        spinnaker:
+          extensibility:
+            enableDefaultRepositories: false # 2022-12-20 added to test SUPPORT-4704
       rosco:      # is the contents of ~/.hal/default/profiles/rosco.yml
         logging:
           level:

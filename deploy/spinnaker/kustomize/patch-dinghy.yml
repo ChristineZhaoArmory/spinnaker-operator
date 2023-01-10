@@ -73,16 +73,17 @@ spec:
       dinghy:
 #        parserFormat: hcl   # Must be one of: hcl, yaml, json. Use an alternate format for dinghy files.
         # Custom branch configuration (see https://docs.armory.io/docs/spinnaker/install-dinghy/#custom-branch-configuration)
+        multipleBranchesEnabled: true
         repoConfig:
-          - branch: prod
-            provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
-            repo: myrepo-prod
-          - branch: dev  # 2022-08-18 testing multi branch of git
+          - branch: dev
             provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
             repo: myrepo
-          - branch: main  # 2022-10-15 testing multi branch of git
+          - branch: prod  # 2022-12-13 testing multi branch of git
             provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
-            repo: one-step
+            repo: myrepo
+          - branch: main  # 2022-12-13 testing multi branch of git
+            provider: github  # Must be one of: github, bitbucket-cloud, bitbucket-server
+            repo: myrepo
         # Use an external redis instance (recommended for production)
 #        redis:
 #          baseUrl: "redis://redis.myorg:6379"

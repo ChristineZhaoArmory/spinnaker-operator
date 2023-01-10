@@ -1,0 +1,59 @@
+#-----------------------------------------------------------------------------------------------------------------
+# Example configuration for enabling canary through dynatrace endpoints
+#-----------------------------------------------------------------------------------------------------------------
+apiVersion: spinnaker.armory.io/v1alpha2
+kind: SpinnakerService
+metadata:
+  name: spinnaker  # name doesn't matter since this is a patch
+spec:
+  # spec.spinnakerConfig - This section is how to specify configuration spinnaker
+  spinnakerConfig:
+    config:
+      canary:
+        defaultJudge: NetflixACAJudge-v1.0
+        defaultMetricsAccount: canary-awscw
+        defaultMetricsStore: aws
+        defaultStorageAccount: canary-aws
+        enabled: true
+        reduxLoggerEnabled: true
+        serviceIntegrations:
+          - accounts:
+              - bucket: christine-zhao-s3
+                name: canary-aws
+                rootFolder: kayenta
+                supportedTypes:
+                  - OBJECT_STORE
+                  - CONFIGURATION_STORE
+            enabled: true
+            name: aws
+            s3Enabled: true
+        showAllConfigsEnabled: true
+        stagesEnabled: true
+        templatesEnabled: true
+    # spec.spinnakerConfig.profiles - This section contains the YAML of each service's profile
+    profiles:
+      kayenta: # is the contents of ~/.hal/default/profiles/kayenta.yml
+        kayenta:
+          aws:
+            accounts:
+              - bucket: christine-zhao-s3
+                name: canary-awscw
+                region: us-east-2
+                supportedTypes:
+                  - METRICS_STORE
+              - bucket: christine-zhao-s3
+                name: canary-aws
+                region: us-east-2
+                rootFolder: kayenta
+                supportedTypes:
+                  - OBJECT_STORE
+                  - CONFIGURATION_STORE
+            enabled: true
+          cloudwatch:
+            enabled: true
+          s3:
+            enabled: true
+      gate:
+        services:
+          kayenta:
+            canaryConfigStore: true

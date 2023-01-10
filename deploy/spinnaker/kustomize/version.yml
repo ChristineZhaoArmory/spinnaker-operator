@@ -5,25 +5,40 @@ metadata:
 spec:
   spinnakerConfig:
     config:
-      version: 2.24.7            # Spinnaker version to deploy
+      version: 2.26.4            # Spinnaker version to deploy
     service-settings:       
 #https://docs.armory.io/armory-enterprise/release-notes/rn-armory-spinnaker/armoryspinnaker_v2-24-2/
 # 2022-11-09 test version 2.24.2
-      clouddriver:
-        artifactId: armory/clouddriver:2.24.24
-      orca:
-        artifactId: armory/orca:2.24.14
-      rosco:
-        artifactId: armory/rosco:2.24.15
-      spin-front50:
-        artifactId: armory/front50:2.24.14
-      spin-echo:
-        artifactId: armory/echo:2.24.12
-      spin-deck:
-        artifactId: armory/deck:2.24.4
-      spin-gate:
-        artifactId: armory/gate:2.24.15
-      spin-igor:
-        artifactId: armory/igor:2.24.10
-      spin-terraformer:
-        artifactId: armory/terraformer:2.24.7
+# 2022-12-12 test korkVersion 7.153.0
+# 2022-12-20 test SUPPORT-4704
+      #clouddriver:
+        #artifactId: armory/clouddriver:2.24.24
+        #artifactId: docker.io/armory/clouddriver:2.28.2-rc2
+      #  artifactId: armory/clouddriver-armory:2022.12.09.17.16.30.master
+        #artifactId: armory/clouddriver-armory:2022.11.25.06.53.28.master
+        #artifactId: armory/clouddriver-armory:2022.11.24.17.01.00.master
+      #rosco:
+        #artifactId: armory/rosco:2.24.15
+        #artifactId: armory/rosco-armory:2022.12.08.22.01.33.master
+      #deck:
+      #   artifactId: armory/deck:2.24.4
+      #  artifactId: docker.io/armory/clouddriver:2.28.2-rc2
+        #artifactId: armory/deck-armory:2022.12.12.16.45.20.master        
+      # orca:
+        #artifactId: armory/orca:2.24.14
+        #artifactId: armory/orca-armory:2022.12.09.17.44.56.master
+        #artifactId: armory/orca-armory:2022.11.24.17.03.01.master
+        #artifactId: armory/orca-armory:2022.11.23.20.45.46.master
+      # front50:
+      #   artifactId: armory/front50:2.24.14
+      # echo:
+      #   artifactId: armory/echo:2.24.12
+      gate:
+        # artifactId: armory/gate:2.24.15
+        # artifactId: christinezhaoarmory/gate:2.26.12-christine # 2022-12-20 SUPPORT-4871
+      # igor:
+      #   artifactId: armory/igor:2.24.10
+      # terraformer:
+      #   artifactId: armory/terraformer:2.24.7
+      kayenta:
+        # artifactId: christinezhaoarmory/kayenta:2.26.13-christine # 2022-12-20 SUPPORT-4871

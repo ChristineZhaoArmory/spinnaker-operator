@@ -12,22 +12,27 @@ data:
       level: debug
     kubernetes:
       accounts:
-      - name: christine-spin-sa
-        kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
-        #kubeconfigFile: encryptedFile:vault!e:secret!p:spinnaker/kubernetes!k:config
-        # insecure:
-        # context:
-        # oAuthScopes:
-        # serviceAccount: true
-        serviceAccountName: christine-spin-sa
-        namespaces: [christine-rna,christine-spin,christine-zhao]
-        # omitNamespaces: []
-        # onlyNamespacedResources:
+      # - name: christine-spin-sa
+      #   kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+      #   #kubeconfigFile: encryptedFile:vault!e:secret!p:spinnaker/kubernetes!k:config
+      #   # insecure:
+      #   # context:
+      #   # oAuthScopes:
+      #   # serviceAccount: true
+      #   serviceAccountName: christine-spin-sa
+      #   namespaces: [christine-spin]
+      #   # omitNamespaces: []
+      #   # onlyNamespacedResources:
+      #   kinds: []
+      #   omitKinds: []
+      #   # customResourceDefinitions: [{kind:}]
+      #   metrics: false
+      #   # permissions: []
+      #   # maxResumableResourceAgeMs:
+      #   # onlySpinnakerManaged:
+      #   # noProxy:
+      - name: spin-sa
         kinds: []
         omitKinds: []
-        # customResourceDefinitions: [{kind:}]
-        metrics: false
-        # permissions: []
-        # maxResumableResourceAgeMs:
-        # onlySpinnakerManaged:
-        # noProxy:
+        #kubeconfigFile: /kubeconfigfiles/kubecfg-remote
+        kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secrets-remote

@@ -30,6 +30,7 @@ spec:
                 enabled: true
                 # The init container will install plugins.json to this path.
                 url: https://raw.githubusercontent.com/armory-plugins/policy-engine-releases/master/repositories.json
+                #url: https://raw.githubusercontent.com/ChristineZhaoArmory/policy-engine-releases/master/plugins.json
       gate:
         spinnaker:
           extensibility:
@@ -42,7 +43,7 @@ spec:
               plugins:
                 Armory.PolicyEngine:
                   enabled: true
-                  version: &version 0.2.2
+                  version: &version 0.2.1
             #   plugins:
             #     Armory.RandomWaitPlugin:
             #       enabled: true

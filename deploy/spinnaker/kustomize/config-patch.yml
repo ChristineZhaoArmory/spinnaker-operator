@@ -7,7 +7,9 @@ spec:
   spinnakerConfig:
   # spec.spinnakerConfig.config - This section contains the contents of a deployment found in a halconfig .deploymentConfigurations[0]
     config:
-      version: 2.28.1-rc3  # the version of Spinnaker to be deployed
+      version: 2.27.4  # the version of Spinnaker to be deployed
+                       # 2022-12-20 test 2.26.4 for SUPPORT-4871
+                       # 2022-12-22 test 2.27.4 for SUPPORT-4891
       artifacts:
         # helm:
         #   enabled: true
@@ -29,14 +31,14 @@ spec:
             - name: AT_GitRepo
               username: ChristineZhaoArmory                # Git username.
               #token: encrypted:k8s!n:spin-secrets!k:github-token 
-              token: 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  #2022-11-02 turn off
+              token:  ghp_xxx  #2022-11-02 turn off
         github:
           enabled: true
           accounts:
             - name: AT_Github
               username: ChristineZhaoArmory                # Git username.
               #token: encrypted:k8s!n:spin-secrets!k:github-token
-              token: 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  #2022-11-02 turn off
+              token:  ghp_xxx  #2022-11-02 turn off
         # christine- 2022-06-13 have problem. Need check later
         s3:
           enabled: true
@@ -65,7 +67,7 @@ spec:
           overrideBaseUrl: https://christine-spin-deck.tse-armory.io       # Specify your DNS name for Deck with https scheme
         authn:
           oauth2:
-            enabled: false  # 2022-11-22 change from true to false to test saml
+            enabled: true  # 2022-11-22 change from true to false to test saml
             client:
               clientId: f074440fd5b990f4aca0
               clientSecret: encrypted:s3!r:us-east-2!b:christine-zhao-s3!f:secret/spinnaker-secrets.yml!k:github.token
@@ -73,11 +75,11 @@ spec:
               scope: user:org,user:email
               preEstablishedRedirectUri: https://christine-spin-gate.tse-armory.io/login
             provider: GITHUB
-        # authz:
+        # authz:             # 2022-12-15 does not work, need to check
         #   enabled: true
         #   groupMembership:
         #     github:
-        #       accessToken: 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
+        #       accessToken:  ghp_xxx
         #       baseUrl: https://api.github.com
         #       organization: armory-io
         #       roleProviderType: GITHUB
@@ -90,19 +92,20 @@ spec:
             #serviceAccount: true
             requiredGroupMembership: []
             providerVersion: V2
-            # permissions: {}
-            permissions:
-              READ:
-               - spin-admin
-               - spin-read-only
-              WRITE:
-               - spin-admin
-              EXECUTE:
-               - spin-admin
-              CREATE:
-               - spin-admin
+            permissions: {}  # 2022-12-15 changed
+            # permissions:
+            #   READ:
+            #    - spin-admin
+            #    - spin-read-only
+            #   WRITE:
+            #    - spin-admin
+            #   EXECUTE:
+            #    - spin-admin
+            #   CREATE:
+            #    - spin-admin
             dockerRegistries: []
             checkPermissionsOnStartup: true  # When false, clouddriver will skip the permission checks for all Kubernetes Kinds at startup. This can save a great deal of time during clouddriver startup when you have many Kubernetes accounts configured. This disables the log messages at startup about missing permissions.
+            #liveManifestCalls: false         # When true, clouddriver will query manifest status during pipeline executions using live data rather than the cache. This eliminates all time spent in the “force cache refresh” task in pipelines, greatly reducing execution time. However, turning on this setting has known bugs: https://github.com/spinnaker/spinnaker/issues/5607
             configureImagePullSecrets: true
             cacheThreads: 1
             namespaces: []
@@ -113,7 +116,30 @@ spec:
             cachingPolicies: []
             oAuthScopes: []
             onlySpinnakerManaged: true
+            rawResourcesEndpointConfig: # 2022-12-13 added for testing special image BOB-30889
+              kindExpressions: []
+              omitKindExpressions: []
             kubeconfigFile: encryptedFile:secrets-manager!r:us-east-2!s:christine-spin-secret
+
+          # Account for some remote Kubernetes cluster using a kubeconfig file stored in a Kubernetes secret
+          # 2023-01-06 test later
+          # - name: spin-sa
+          #   providerVersion: V2
+          #   permissions: {}
+          #   dockerRegistries: []
+          #   cacheThreads: 1
+          #   namespaces: []
+          #   omitNamespaces: []
+          #   kinds: []
+          #   omitKinds: []
+          #   customResources: []
+          #   checkPermissionsOnStartup: true
+          #   liveManifestCalls: false
+          #   cachingPolicies: []
+          #   oAuthScopes: []
+          #   onlySpinnakerManaged: false
+          #   kubeconfigFile: encryptedFile:k8s!n:spin-secrets-remote!k:kubecfg-remote # (Secret).
+
           primaryAccount: christine-sa
         # BEGIN 2022-08-15 close for removing exceptions
         aws:
@@ -141,28 +167,38 @@ spec:
           bakeryDefaults:
             baseImages:
             - baseImage:
-                detailedDescription: debian11
+                detailedDescription: Debian 11 (HVM), SSD Volume Type
                 id: debian
                 shortDescription: v11
                 packageType: deb
-                templateFile: aws-ebs.json
+                # templateFile: aws-ebs.json
               virtualizationSettings:
               - instanceType: t2.micro
                 region: us-west-2
-                # sourceAmi: ami-0d70546e43a941d70 #ubuntu
-                sourceAmi: ami-071e6cafc48327ca2
-                spotPrice: “0”
+                #sourceAmi: ami-071e6cafc48327ca2
+                sourceAmi: ami-0b8db56f1634f78b5
+                #spotPrice: “0”
                 spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
                 sshUserName: admin
                 virtualizationType: hvm
               - instanceType: t2.micro
                 region: us-east-2
-                # sourceAmi: ami-0d70546e43a941d70 #ubuntu
-                sourceAmi: ami-071e6cafc48327ca2
-                spotPrice: “0”
+                sourceAmi: ami-0b3e2bb9a70a08ad3
+                #spotPrice: “0”
                 spotPriceAutoProduct: Linux/UNIX (Amazon VPC)
                 sshUserName: admin
                 virtualizationType: hvm
+            # - baseImage:
+            #     detailedDescription: Ubuntu Trusty Tahr v14.04
+            #     id: trusty
+            #     packageType: deb
+            #     shortDescription: v14.04
+            #   virtualizationSettings:
+            #     - instanceType: t2.micro
+            #       region: us-east-2
+            #       sourceAmi: ami-b69abcd3
+            #       sshUserName: ubuntu
+            #       virtualizationType: hvm
           defaultKeyPairTemplate: ‘{{“{{“}}name{{“}}“}}-keypair’
           defaultRegions:
           - name: us-east-1
@@ -177,15 +213,15 @@ spec:
               enabled: true
           primaryAccount: christine-aws
         # END 2022-08-15 close for removing exceptions
-        # ecs:
-        #   enabled: true
-        #   accounts:
-        #   - name: christine-ecs
-        #     requiredGroupMembership: []
-        #     providerVersion: V1
-        #     permissions: {}
-        #     awsAccount: christine-aws                   # Must be one of the configured AWS accounts
-        #   primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
+        ecs:
+          enabled: true
+          accounts:
+          - name: christine-ecs
+            requiredGroupMembership: []
+            providerVersion: V1
+            permissions: {}
+            awsAccount: christine-aws                   # Must be one of the configured AWS accounts
+          primaryAccount: christine-ecs            # Must be one of the configured AWS ECS accounts
       ci:
         jenkins:
           enabled: true
